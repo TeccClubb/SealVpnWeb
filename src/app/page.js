@@ -1,4 +1,4 @@
-import FeaturesSection from "@/components/vpn-feature/vpn-feature";
+import FeaturesSection from "@/components/homeSections/vpn-feature";
 import Image from "next/image";
 
 export default function Home() {

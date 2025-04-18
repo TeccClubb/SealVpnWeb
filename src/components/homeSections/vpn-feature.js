@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function FeaturesSection() {
+export default function VpnFeature() {
   return (
     <section className="bg-gray-50 py-16 px-6 sm:px-10 lg:px-20">
       {/* Heading */}
