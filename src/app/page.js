@@ -1,9 +1,10 @@
+import FeaturesSection from "@/components/vpn-feature/vpn-feature";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      hellow sell vpn
+    <FeaturesSection></FeaturesSection>
       
     </div>
   );
