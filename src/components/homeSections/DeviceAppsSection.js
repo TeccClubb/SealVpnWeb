@@ -19,8 +19,8 @@ export default function DeviceAppsSection() {
         {/* Left Text Section */}
 
         <section className="flex-1 text-center md:text-left">
-          <div className="max-w-xl mx-auto md:mx-0">
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+          <div className="max-w-xl mx-auto md:mx-0 ">
+            <h2 className="text-2xl sm:text-3xl text-center font-semibold mb-4">
               Easy-to-use apps for all your devices
             </h2>
             <p className="text-base sm:text-lg mb-6">
