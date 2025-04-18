@@ -1,6 +1,8 @@
 'use client';
 
+import BrowseCountries from '@/components/homeSections/browseCountry';
 import DeviceAppsSection from '@/components/homeSections/DeviceAppsSection';
+import FeaturesSection from '@/components/homeSections/featuresSection';
 import PartnersSection from '@/components/partnersSection/partnersSection';
 import Image from 'next/image';
 // import BearImg from '/public/bear.png'; // Make sure this image exists
@@ -43,6 +45,13 @@ export default function HeroSection() {
      </div>
      <div>
         <DeviceAppsSection></DeviceAppsSection>
+     </div>
+     
+     <div>
+      <FeaturesSection></FeaturesSection>
+     </div>
+     <div>
+      <BrowseCountries></BrowseCountries>
      </div>
     </div>
   );
