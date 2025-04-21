@@ -9,6 +9,7 @@ import Image from 'next/image';
 import VpnFeature from '@/components/homeSections/vpn-feature';
 import DawnloadSection from '@/components/homeSections/dawnloadSection';
 import FaqTestimonialSection from '@/components/pricing/frequnetQuestion';
+import FAQSection from '@/components/homeSections/frequentQuestionSection';
 // import BearImg from '/public/bear.png'; // Make sure this image exists
 
 export default function HeroSection() {
@@ -61,7 +62,7 @@ export default function HeroSection() {
       <VpnFeature></VpnFeature>
      </div>
      <div>
-       <FaqTestimonialSection></FaqTestimonialSection>
+       <FAQSection></FAQSection>
      </div>
      <div>
       <DawnloadSection></DawnloadSection>
