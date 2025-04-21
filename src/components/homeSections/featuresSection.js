@@ -28,7 +28,7 @@ export default function FeaturesSection() {
       desc: 'Ad services use your IP address to track your behavior across sites. SeeIVpn stops them by assigning you a new IP.'
     },
     {
-      img: '/icons/more.svg',
+      img: '/wayMoreImg.svg',
       title: 'And way, way more',
       desc: 'Play on new game servers, prevent speed throttling, and unblock apps and websites on school and work networks.'
     },
