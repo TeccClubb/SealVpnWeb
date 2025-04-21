@@ -6,18 +6,18 @@
 import Image from 'next/image';
 
 const countries = [
-  { name: 'Argentina', flag: '🇦🇷' },
-  { name: 'Australia', flag: '🇦🇺' },
-  { name: 'Austria', flag: '🇦🇹' },
-  { name: 'Belgium', flag: '🇧🇪' },
-  { name: 'Brazil', flag: '🇧🇷' },
+  { name: 'Argentina', flag: './argentin.png' },
+  { name: 'Australia', flag: '/austria.png' },
+  { name: 'Austria', flag: '/austria.png' },
+  { name: 'Belgium', flag: 'Bulgaria.png' },
+  { name: 'Brazil', flag: '/brazil.png' },
   { name: 'Bulgaria', flag: '🇧🇬' },
   { name: 'Canada', flag: '🇨🇦' },
   { name: 'Chile', flag: '🇨🇱' },
   { name: 'Colombia', flag: '🇨🇴' },
-  { name: 'Cyprus', flag: '🇨🇾' },
+  { name: 'Cyprus', flag: '/cyprus.png' },
   { name: 'Czech Republic', flag: '🇨🇿' },
-  { name: 'Denmark', flag: '🇩🇰' },
+  { name: 'Denmark', flag: '/danmark.png' },
   { name: 'Finland', flag: '🇫🇮' },
   { name: 'France', flag: '🇫🇷' },
   { name: 'Germany', flag: '🇩🇪' },
@@ -34,10 +34,10 @@ const countries = [
   { name: 'Mexico', flag: '🇲🇽' },
   { name: 'Moldova', flag: '🇲🇩' },
   { name: 'Netherlands', flag: '🇳🇱' },
-  { name: 'New Zealand', flag: '🇳🇿' },
+  { name: 'New Zealand', flag: '/newziland.png' },
   { name: 'Nigeria', flag: '🇳🇬' },
   { name: 'Norway', flag: '🇳🇴' },
-  { name: 'Peru', flag: '🇵🇪' },
+  { name: 'Peru', flag: '/peru.png' },
   { name: 'Philippines', flag: '🇵🇭' },
   { name: 'Poland', flag: '🇵🇱' },
   { name: 'Portugal', flag: '🇵🇹' },
@@ -50,8 +50,8 @@ const countries = [
   { name: 'Spain', flag: '🇪🇸' },
   { name: 'Sweden', flag: '🇸🇪' },
   { name: 'Switzerland', flag: '🇨🇭' },
-  { name: 'Taiwan', flag: '🇹🇼' },
-  { name: 'UK', flag: '🇬🇧' },
+  { name: 'Taiwan', flag: '/taiwan.png' },
+  { name: 'UK', flag: '/ukflag.png' },
   { name: 'USA', flag: '🇺🇸' },
 ];
 
@@ -82,13 +82,13 @@ const BrowseCountries = () => {
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm text-gray-100">
-  {countries.map((country) => (
-    <div key={country.name} className="flex items-center space-x-2">
-      <span>{country.flag}</span>
-      <span>{country.name}</span>
-    </div>
-  ))}
-</div>
+            {countries.map((country) => (
+              <div key={country.name} className="flex items-center space-x-2">
+                <img src={country.flag} alt={`${country.name} flag`} className="w-6 h-4" />
+                <span>{country.name}</span>
+              </div>
+            ))}
+          </div>
 
         </div>
       </div>
