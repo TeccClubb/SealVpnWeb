@@ -1,12 +1,12 @@
-'use client';
-import PricingPlans from "@/components/pricing/pricingPlans";
-import Image from "next/image";
+import FaqTestimonialSection from "@/components/pricingSection/frequnetQuestion";
 
 
-export default function Pricing() {
-  return (
-    <div>
-        <PricingPlans></PricingPlans>
-    </div>
-  );
+
+export default function pricing(){
+
+    return(
+        <div>
+            <FaqTestimonialSection></FaqTestimonialSection>
+        </div>
+    )
 }
