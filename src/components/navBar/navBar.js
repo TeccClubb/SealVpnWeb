@@ -20,7 +20,7 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center space-x-6 text-gray-600">
-          <Link href="#" className="hover:text-black">Plans</Link>
+          <Link href="/pricing" className="hover:text-black">Plans</Link>
 
           <div className="relative">
             <button
@@ -32,23 +32,23 @@ export default function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="absolute top-6 left-0 mt-2 w-44 bg-white border rounded shadow-md text-sm z-10">
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100">Why VPN?</Link>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100">Feature</Link>
+                <Link href="/what-is-vpn" className="block px-4 py-2 hover:bg-gray-100">Why VPN?</Link>
+                <Link href="/vpnFeature" className="block px-4 py-2 hover:bg-gray-100">Feature</Link>
                 <Link href="#" className="block px-4 py-2 hover:bg-gray-100">Online Privacy</Link>
                 <Link href="#" className="block px-4 py-2 hover:bg-gray-100">VPN for WFH</Link>
               </div>
             )}
           </div>
 
-          <Link href="#" className="hover:text-black">Download</Link>
+          <Link href="Download" className="hover:text-black">Download</Link>
           <Link href="#" className="hover:text-black">  Help</Link>
-          <Link href="#" className="hover:text-black">Log In</Link>
+          <Link href="/login" className="hover:text-black">Log In</Link>
         </div>
 
         {/* Right CTA Button (Desktop) */}
         <div className="hidden lg:block">
           <Link
-            href="#"
+            href="/pricing"
             className="ml-4 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
           >
             Get SeeVpn

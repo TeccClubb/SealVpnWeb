@@ -11,10 +11,25 @@ export default function CheckoutPage() {
             <p className="text-center text-gray-600 mb-10">
                 Includes all SeelVpn apps, priority customer support, and unlimited data.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-8 max-w-4xl mx-auto px-4">
-                <div className="border rounded-lg p-6  relative text-center cursor-pointer hover:border-green-500 w-70 h-32">
-                    <p className="font-semibold">1 Month</p>
+            <div className="flex flex-wrap  gap-3 mb-8 max-w-4xl mx-auto px-4">
+                <div className="border rounded-lg p-6  relative   cursor-pointer hover:border-green-500 w-70 h-32">
+                <div className="flex items-center space-x-3">
+                        <div className="text-green-500 text-xl">
+                            <Image
+                                src="/tickIcon.svg"
+                                alt="Teams Plan"
+                                width={20}
+                                height={20}
+
+
+                            />
+                        </div>
+                        <h3 className="text-xl font-semibold">1 Month</h3>
+                    </div>
+                    <b>
                     <p className="text-lg">$9.99<span className="text-sm">/month</span></p>
+                        
+                    </b>
                     <p className="text-sm text-gray-600 absolute bottom-3 mt-1 ">$39.99 billed for the first year</p>
 
                 </div>
@@ -55,9 +70,24 @@ export default function CheckoutPage() {
 
 
 
-                <div className="border rounded-lg p-6 text-center cursor-pointer hover:border-green-500 w-70 h-32">
-                    <p className="font-semibold">3 Years</p>
-                    <p className="text-lg">$3.33<span className="text-sm">/month</span></p>
+                <div className="border rounded-lg p-6  cursor-pointer hover:border-green-500 w-70 h-32">
+                <div className="flex items-center space-x-3">
+                        <div className="text-green-500 text-xl">
+                            <Image
+                                src="/tickIcon.svg"
+                                alt="Teams Plan"
+                                width={20}
+                                height={20}
+
+
+                            />
+                        </div>
+                        <h3 className="text-xl font-semibold">3 Year</h3>
+                    </div>
+                    <b>
+
+                        <p className="text-lg">$3.33<span className="text-sm">/month</span></p>
+                        </b>
                     <p className="text-sm text-gray-600 mt-1">$39.99 billed for the first year</p>
 
                 </div>

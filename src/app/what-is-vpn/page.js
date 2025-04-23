@@ -70,7 +70,7 @@ export default function WhatIsVPN() {
                 </div>
                 <div className="flex flex-col items-center">
                     <Image
-                        src="/vpnIcons/lock-icon.png" // replace with actual icon
+                         src="/whatIsVpnImg/vpnSearch.png" // replace with actual icon
                         alt="Encrypted Icon"
                         width={64}
                         height={64}
