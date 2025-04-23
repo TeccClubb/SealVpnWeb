@@ -5,6 +5,7 @@ import FAQSection from '@/components/homeSections/frequentQuestionSection';
 import Image from 'next/image';
 
 export default function Checkout() {
+    
     return (
        <div>
         <CheckoutPage></CheckoutPage>
