@@ -8,7 +8,7 @@ import PartnersSection from '@/components/partnersSection/partnersSection';
 import Image from 'next/image';
 import VpnFeature from '@/components/homeSections/vpn-feature';
 import DawnloadSection from '@/components/homeSections/dawnloadSection';
-import FaqTestimonialSection from '@/components/pricing/frequnetQuestion';
+import FaqTestimonialSection from '@/components/pricingSection/frequnetQuestion';
 import FAQSection from '@/components/homeSections/frequentQuestionSection';
 // import BearImg from '/public/bear.png'; // Make sure this image exists
 

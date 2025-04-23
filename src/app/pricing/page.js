@@ -1,8 +1,8 @@
  
 
 
-import FaqTestimonialSection from "@/components/pricing/frequnetQuestion"
-import PricingPlans from "@/components/pricing/pricingPlans"
+import FaqTestimonialSection from "@/components/pricingSection/frequnetQuestion"
+import PricingPlans from "@/components/pricingSection/pricingPlans"
 export default function pricing(){
 
     return(
