@@ -3,16 +3,18 @@
 import { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+let router=useRouter();
   return (
+
     <nav className="bg-white w-full shadow-sm">
-      <div className="w-[90%] mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="w-[90%] mx-auto px-4 py-3 flex cursor-pointer items-center justify-between">
         {/* Logo */}
-        <div className="text-3xl font-bold text-gray-800">
+        <div onClick={()=>router.push("/Home")} className="text-3xl font-bold text-gray-800">
           <span className="italic">Seel</span>
           <span className="font-medium">Vpn</span>
 
