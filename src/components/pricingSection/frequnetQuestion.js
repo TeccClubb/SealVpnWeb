@@ -9,7 +9,7 @@ const faqItems = [
   
    
   {
-    question: 'Is my online privacy worth the cost?',
+    question: 'Is my online privacy worth th cost?',
     answer: `Some internet service providers can legally package and sell details about everything you do online, so it really depends on how comfortable you are with your personal data being made available to others.`,
   },
   {
