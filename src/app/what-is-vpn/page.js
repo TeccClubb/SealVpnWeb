@@ -1,7 +1,11 @@
+import WhatIsVpnFirstSection from "@/components/whatIs-vpn/whats-vpn";
 import Image from "next/image";
 
 export default function WhatIsVPN() {
     return (
+      <div>
+        <WhatIsVpnFirstSection></WhatIsVpnFirstSection>
+
         <div className="bg-white px-4 py-12 md:py-20 text-center text-gray-800">
             <h2 className="text-2xl md:text-3xl font-semibold mb-6">What is a VPN?</h2>
 
@@ -92,5 +96,6 @@ export default function WhatIsVPN() {
             </div>
         </div>
         </div>
+      </div>
     );
 }

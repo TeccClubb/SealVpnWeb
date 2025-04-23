@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function WhatIsVpn() {
+export default function WhatIsVpnFirstSection() {
   const topics = [
     'What is a VPN?',
     'Why do I need a VPN?',
