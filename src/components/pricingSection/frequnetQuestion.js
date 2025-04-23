@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const faqItems = [
   {
-    question: 'How does SeelVpn work?',
+    question: 'How does SeelVpn work',
     answer: `SeelVpn encrypts your device's incoming and outgoing data. That means when an internet service provider, network owner, or even hacker tries to snoop on your online activity, all they'll see is garbled, unreadable junk.`,
   },
   
