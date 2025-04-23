@@ -3,21 +3,21 @@
 import { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-let router=useRouter();
-  return (
+  const router = useRouter();
+  const pathname = usePathname(); // Get current route
 
-    <nav className="bg-white w-full shadow-sm">
+  return (
+    <nav className={`w-full shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[90%] mx-auto px-4 py-3 flex cursor-pointer items-center justify-between">
         {/* Logo */}
-        <div onClick={()=>router.push("/Home")} className="text-3xl font-bold text-gray-800">
+        <div onClick={() => router.push("/Home")} className="text-3xl font-bold text-gray-800">
           <span className="italic">Seel</span>
           <span className="font-medium">Vpn</span>
-
         </div>
 
         {/* Desktop Nav */}
@@ -43,7 +43,7 @@ let router=useRouter();
           </div>
 
           <Link href="Download" className="hover:text-black">Download</Link>
-          <Link href="#" className="hover:text-black">  Help</Link>
+          <Link href="#" className="hover:text-black">Help</Link>
           <Link href="/login" className="hover:text-black">Log In</Link>
         </div>
 
