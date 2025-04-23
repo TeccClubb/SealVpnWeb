@@ -11,7 +11,7 @@ export default function DeviceAppsSection() {
             Easy-to-use apps for <br className="hidden sm:block" />
             all your devices
           </h2>
-          <p className="text-base sm:text-lg mb-4 text-gray-200">
+          <p className="text-base sm:text-lg mb-4 text-[#6E6E6E]">
             Just open the SeelVpn app, select a country,<br />
             and flip the switch. Once you're connected,<br />
             SeelVpn will work quietly in the background<br />
@@ -20,7 +20,7 @@ export default function DeviceAppsSection() {
         </div>
 
         {/* Platform Icons */}
-        <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm text-gray-300">
+        <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm text-[#6E6E6E]">
           <div className="flex flex-col items-center">
             <img src="/appleimg.svg" alt="Apple" className="h-6 mb-1" />
             Mac
