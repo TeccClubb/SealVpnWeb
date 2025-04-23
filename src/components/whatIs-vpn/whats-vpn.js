@@ -41,6 +41,8 @@ export default function WhatIsVpn() {
       </h2>
 
       {/* List with Numbered Circles */}
+      <div  className="w-full flex justify-start max-w-2xl">
+
       <div className="max-w-2xl  text-gray-600 mb-12">
 
       <ul className="text-gray-700 space-y-4 text-base max-w-2xl ">
@@ -53,6 +55,7 @@ export default function WhatIsVpn() {
           </li>
         ))}
       </ul>
+      </div>
       </div>
 
       {/* Optional SeelVpn Bot */}
