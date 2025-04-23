@@ -14,7 +14,7 @@ export default function DownloadPage() {
               {/* <br />
               <span className="block">for Windows</span> */}
             </h1>
-            <p className="mt-4 text-[#6E6E6E] text-sm sm:text-base text-center leading-relaxed">
+            <p className="mt-4 text-neutral-500  text-sm sm:text-base text-center leading-relaxed">
               Your SeelVpn download should start automatically.
               
               If it doesn’t, <a href="#" className="text-gray-500 underline">restart the download</a>,
@@ -54,9 +54,9 @@ export default function DownloadPage() {
       <span className="w-5 h-5 rounded-full bg-[#4DB8AC] text-white text-xs flex items-center justify-center font-semibold">
         1
       </span>
-      <span className="text-gray-600 font-semibold">Install the app</span>
+      <span className="text-neutral-500 font-semibold">Install the app</span>
     </p>
-    <p className="text-[#6E6E6E] text-xs leading-relaxed text-center">
+    <p className="text-neutral-500  text-xs leading-relaxed text-center">
       Double-click the new SeelVpn icon and follow the on-screen instructions
     </p>
   </div>
@@ -74,9 +74,9 @@ export default function DownloadPage() {
       <span className="w-5 h-5 rounded-full bg-[#4DB8AC] text-white text-xs flex items-center justify-center font-semibold">
         2
       </span>
-      <span className="text-gray-600 font-semibold">Sign up or log in</span>
+      <span className="text-neutral-500  font-semibold">Sign up or log in</span>
     </p>
-    <p className="text-[#6E6E6E] text-xs leading-relaxed text-center">
+    <p className="text-neutral-500  text-xs leading-relaxed text-center">
       Follow the on-screen instructions to log in or create an account
     </p>
   </div>
@@ -94,9 +94,9 @@ export default function DownloadPage() {
       <span className="w-5 h-5 rounded-full bg-[#4DB8AC] text-white text-xs flex items-center justify-center font-semibold">
         3
       </span>
-      <span className="text-gray-600 font-semibold">Start tunneling</span>
+      <span className="text-neutral-500  font-semibold">Start tunneling</span>
     </p>
-    <p className="text-[#6E6E6E] text-xs text-center leading-relaxed">
+    <p className="text-neutral-500  text-xs text-center leading-relaxed">
       Pick a country or select Fastest for the fastest speeds, then toggle the switch ON!
     </p>
   </div>
@@ -105,7 +105,7 @@ export default function DownloadPage() {
       </section>
 
       {/* Footer Links Section */}
-      <footer className="py-8 text-xs text-center text-[#6E6E6E]">
+      <footer className="py-8 text-xs text-center text-neutral-500 ">
         <div className="max-w-2xl mx-auto flex justify-between mb-2">
           <a href="#" className=" ml-[127px]">Notice and Attribution</a>
           <a href="#" className=" mr-[127px]">Uninstall SeelVpn</a>

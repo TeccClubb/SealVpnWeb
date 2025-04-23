@@ -22,7 +22,7 @@ export default function WhatIsVpnFirstSection() {
       />
 
       {/* Description Section */}
-      <div className="max-w-2xl  text-gray-600 mb-12">
+      <div className="max-w-2xl text-neutral-500  mb-12">
         <p className="mb-4">
           If your device is connected to the internet, your internet service provider can see
           everything you do. Every search. Every file you download. Everything. To protect their
@@ -46,15 +46,14 @@ export default function WhatIsVpnFirstSection() {
       <div className="max-w-2xl  text-gray-600 mb-12">
 
       <ul className="text-gray-700 space-y-4 text-base max-w-2xl ">
-        {topics.map((item, index) => (
-          <li key={index} className="flex items-start gap-3">
-            <div className="w-6 h-6 rounded-full bg-teal-500 text-white text-xs flex items-center justify-center font-semibold mt-1">
-              {index + 1}
-            </div>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
+  {topics.map((item, index) => (
+    <li key={index} className="flex items-start gap-3">
+      <img src="/whatIsVpnImg/checkSvg.svg" alt="Check" className="w-6 h-6 mt-1" />
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>
+
       </div>
       </div>
 
