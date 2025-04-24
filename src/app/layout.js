@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "seelVpn",
-  description: "seelVpn web",
+  title: "SealVPN - Secure Your Internet Connection", // Updated title
+  description: "SealVPN provides a secure and anonymous VPN service for your privacy.", // Updated description
 };
 
 export default function RootLayout({ children }) {
@@ -24,9 +24,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar></Navbar>
+        <Navbar />
         {children}
-        <Footer></Footer>
+        <Footer />
       </body>
     </html>
   );
