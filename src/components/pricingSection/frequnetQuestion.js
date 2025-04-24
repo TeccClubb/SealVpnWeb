@@ -1,5 +1,9 @@
 
 import Image from 'next/image';
+import { use } from 'react';
+import { useEffect } from 'react';  
+import AOS from 'aos';  // Import AOS library for animations
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const faqItems = [
   {
@@ -31,6 +35,11 @@ const faqItems = [
 ];
 
 export default function FaqTestimonialSection() {
+
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
   return (
     <section className="bg-gray-50 py-16 px-4">
       <div className="max-w-4xl mx-auto">
@@ -82,7 +91,7 @@ export default function FaqTestimonialSection() {
         </h2>
 
         {/* FAQ Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+        <div data-oas="fade-right" className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
           {faqItems.map((item, idx) => (
             <div key={idx}>
               <h3 className="text-[#3D3D3D] font-medium text-base sm:text-lg mb-2">

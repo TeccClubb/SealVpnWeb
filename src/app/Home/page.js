@@ -14,7 +14,7 @@ import FAQSection from '@/components/homeSections/frequentQuestionSection';
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles if you don't want to import
-export default function HeroSection() {
+export default function HomePage() {
 
 
 

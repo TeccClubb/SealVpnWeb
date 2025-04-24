@@ -1,9 +1,18 @@
 'use client';
 
 import Image from "next/image";
+import { use } from "react";
+import { useEffect } from "react";
+import AOS from "aos"; // Import AOS library for animations
+import 'aos/dist/aos.css'; // Import AOS styles
 
 
 export default function PricingPlans() {
+  useEffect(() => { 
+    const AOS = require('aos');
+    AOS.init({ duration: 1200, once: true });
+  }
+  , []);
   return (
     <section className="py-16 px-6 bg-white text-gray-800">
       <h2 className="text-3xl md:text-4xl mb-20 font-bold text-center ">
@@ -14,13 +23,12 @@ export default function PricingPlans() {
       </h2> */}
       <div className="flex justify-center">
 
-        <div className="grid md:grid-cols-4   justify-center pt-15 gap-8 max-w-7xl mx-auto" style={{ display: "flex" }}
-        >
+        <div className="grid md:grid-cols-4   justify-center pt-15 gap-8 max-w-7xl mx-auto" style={{ display: "flex" }}  >
 
           {/* Free Plan */}
-          <div className="flex rounded-2xl text-neutral-500 shadow-2xl">
+          <div   className="flex rounded-2xl text-neutral-500 shadow-2xl">
 
-            <div className="flex flex-col items-center text-center p-6  relative rounded-2xl ">
+            <div  className="flex flex-col items-center text-center p-6  relative rounded-2xl ">
               <Image src="/pricing/freeOfferImg.svg" alt="Free Plan" width={100} height={100} />
               <h3 className="text-2xl font-semibold my-4">Free</h3>
               <p className=" mb-6 text-neutral-500">Testing and limited usage</p>
@@ -44,7 +52,7 @@ export default function PricingPlans() {
 
               {/* <button className="bg-green-500 absolute bottom-6  text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"></button> */}
             </div>
-            <div className="flex flex-col items-center text-neutral-500 text-center p-6 relative  rounded-2xl ">
+            <div  className="flex flex-col items-center text-neutral-500 text-center p-6 relative  rounded-2xl ">
               <Image
                 src="/pricing/heroCardImg.svg"
                 alt="Unlimited Plan"
@@ -116,7 +124,7 @@ export default function PricingPlans() {
 
 
           {/* Teams Plan with overlapping image */}
-          <div className="flex flex-col items-center text-center p-6 relative  rounded-2xl shadow-2xl">
+          <div  className="flex flex-col items-center text-center p-6 relative  rounded-2xl shadow-2xl">
             <Image
               src="/pricing/teamImage.svg"
               alt="Teams Plan"
@@ -202,14 +210,8 @@ export default function PricingPlans() {
 
 
       {/* Payment Icons */}
-      <div className="flex items-center justify-center gap-4 mt-12">
+    
 
-        <Image src="/pricing/visa.png" alt="Bitcoin" width={300} height={100} />
-      </div>
-
-      <p className="text-center text-sm text-gray-500 mt-4">
-        All pricing shown in USD
-      </p>
     </section>
   );
 }
