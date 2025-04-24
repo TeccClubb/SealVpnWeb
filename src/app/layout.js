@@ -25,9 +25,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="/SEALVPN_LOGO+Text 1.png" />
-        <link rel="icon" href="/SEALVPN_LOGO+Text 1.png" sizes="any" />
-        <link rel="icon" href="/SEALVPN_LOGO+Text 1.png" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/seelvpnlogo.png" />
+        <link rel="icon" href="/seelvpnlogo.png" sizes="any" />
+        <link rel="icon" href="/seelvpnlogo.png" type="image/svg+xml" />
         </head>
       <body
       //   className={`${geistSans.variable} ${geistMono.variable} antialiased`
