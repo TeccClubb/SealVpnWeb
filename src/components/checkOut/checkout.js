@@ -159,7 +159,7 @@ export default function CheckoutPage() {
                         </p>
                     </div>
 
-                    <button className="w-full mt-3 bg-blue-500 text-white py-3 rounded-3xl hover:bg-blue-600 transition text-lg font-semibold">
+                    <button className="w-full mt-3 bg-emerald-400 text-white py-3 rounded-3xl hover:bg-emerald-600 transition text-lg font-semibold">
                         Buy Now
                     </button>
                 </div>
