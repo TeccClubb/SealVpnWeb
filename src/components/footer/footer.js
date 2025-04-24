@@ -60,7 +60,7 @@ export default function Footer(){
   {/* Left - Logo Section */}
   <div className="text-center">
     <p className="font-bold mb-2">Get The Seal ESSENTIALS</p>
-    <img src="/SEALVPN_LOGO+Text 1.png" alt="Logo" className="w-12 h-12 mx-auto" />
+    <img src="/seelvpnlogo.png" alt="Logo" className="w-28 h-20 mx-auto" />
   </div>
 
   {/* Right - Text Section */}
