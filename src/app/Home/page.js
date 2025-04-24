@@ -11,13 +11,21 @@ import DawnloadSection from '@/components/homeSections/dawnloadSection';
 import FaqTestimonialSection from '@/components/pricingSection/frequnetQuestion';
 import FAQSection from '@/components/homeSections/frequentQuestionSection';
 // import BearImg from '/public/bear.png'; // Make sure this image exists
-
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles if you don't want to import
 export default function HeroSection() {
+
+
+
+  useEffect(() => {
+    AOS.init({ duration: 1200, once: true });
+  }, []);
   return (
     <div className="w-full bg-white">
-      <section className="w-full py-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-20 px-4 md:px-20">
+      <section data-aos="fade-down" className="w-full py-10 flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-20 px-4 md:px-20">
         {/* Left Text Section */}
-        <div className="text-center md:text-left max-w-xl flex-1">
+        <div data-aos="fade-right" className=" text-center md:text-left max-w-xl flex-1">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-800 leading-snug">
             A more secure way <br /> to <span className="text-black font-bold">browse the web</span>
           </h1>
@@ -39,32 +47,32 @@ export default function HeroSection() {
         </div>
 
         {/* Right Bear Image */}
-        <div className="flex-1 flex justify-center">
+        <div data-aos="fade-left" className="flex-1 flex justify-center">
           <img className='w-[400px]' src='imageofHero.png'></img>
         </div>
       </section>
 
       {/* Logos / Partners Section */}
-     <div>  
+     <div data-aos="fade-up">  
         <PartnersSection></PartnersSection>
      </div>
-     <div>
+     <div data-aos="fade-left">
         <DeviceAppsSection></DeviceAppsSection>
      </div>
      
-     <div>
-      <FeaturesSection></FeaturesSection>
+     <div data-aos="fade-up">
+      <FeaturesSection  ></FeaturesSection>
      </div>
-     <div>
+     <div data-aos="fade-down">
       <BrowseCountries></BrowseCountries>
      </div>
-     <div>
+     <div data-aos="fade-left">
       <VpnFeature></VpnFeature>
      </div>
-     <div>
+     <div data-aos="fade-right">
        <FAQSection></FAQSection>
      </div>
-     <div>
+     <div data-aos="fade-up">
       <DawnloadSection></DawnloadSection>
      </div>
     </div>

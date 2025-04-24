@@ -4,6 +4,9 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect } from 'react';
+import AOS from 'aos';  // Import AOS library for animations
+import 'aos/dist/aos.css'; // Import AOS styles
 
 const countries = [
   { name: 'Argentina', flag: './argentin.png' },
@@ -56,11 +59,14 @@ const countries = [
 ];
 
 const BrowseCountries = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
   return (
     <div className="bg-gray-900 text-white px-6 py-12 md:py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Globe Image */}
-        <div className="flex justify-center">
+        <div data-aos="fade-left" className="flex justify-center">
           <div className="relative w-64 h-64 md:w-96 md:h-96">
             {/* Replace with actual image */}
             <Image
@@ -73,9 +79,9 @@ const BrowseCountries = () => {
         </div>
 
         {/* Text + Countries List */}
-        <div>
+        <div data-aos="fade-right" className="flex flex-col items-start space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Browse the internet from <span className="text-orange-400">47 countries</span>
+            Browse the internet from  47 countries 
           </h2>
           <p className="text-gray-300 mb-6">
             Discover something new, or tunnel back home to enjoy your favourite websites and apps while travelling or living abroad.
