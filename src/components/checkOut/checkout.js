@@ -93,6 +93,8 @@ export default function CheckoutPage() {
                 </div>
             </div>
 
+            
+
             <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
 
                 <div>
