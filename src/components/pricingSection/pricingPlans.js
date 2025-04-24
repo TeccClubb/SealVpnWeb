@@ -5,14 +5,21 @@ import { use } from "react";
 import { useEffect } from "react";
 import AOS from "aos"; // Import AOS library for animations
 import 'aos/dist/aos.css'; // Import AOS styles
+import { useRouter } from "next/navigation";
 
 
 export default function PricingPlans() {
-  useEffect(() => { 
+  useEffect(() => {
     const AOS = require('aos');
     AOS.init({ duration: 1200, once: true });
   }
-  , []);
+    , []);
+    const router=useRouter()
+  const handleClick = () => { 
+    // Perform any action you want when the button is clicked
+    // For example, navigate to a different page
+    router.push('/account/checkout');
+  }
   return (
     <section className="py-16 px-6 bg-white text-gray-800">
       <h2 className="text-3xl md:text-4xl mb-20 font-bold text-center ">
@@ -26,9 +33,9 @@ export default function PricingPlans() {
         <div className="grid md:grid-cols-4   justify-center pt-15 gap-8 max-w-7xl mx-auto" style={{ display: "flex" }}  >
 
           {/* Free Plan */}
-          <div   className="flex rounded-2xl text-neutral-500 shadow-2xl">
+          <div className="flex rounded-2xl text-neutral-500 shadow-2xl">
 
-            <div  className="flex flex-col items-center text-center p-6  relative rounded-2xl ">
+            <div data-aos="zoom-in-up" className="flex flex-col items-center text-center p-6  relative rounded-2xl ">
               <Image src="/pricing/freeOfferImg.svg" alt="Free Plan" width={100} height={100} />
               <h3 className="text-2xl font-semibold my-4">Free</h3>
               <p className=" mb-6 text-neutral-500">Testing and limited usage</p>
@@ -48,11 +55,11 @@ export default function PricingPlans() {
                   </div>
                 </div>
               </p>
-              <button className="w-64 h-13 absolute  bottom-3   bg-[#4DB8AC] rounded-[40px] text-white    ">Try for free</button>
+              <button onClick={handleClick} className="w-64 h-13 absolute  bottom-3   bg-[#4DB8AC] rounded-[40px] text-white    ">Try for free</button>
 
               {/* <button className="bg-green-500 absolute bottom-6  text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"></button> */}
             </div>
-            <div  className="flex flex-col items-center text-neutral-500 text-center p-6 relative  rounded-2xl ">
+            <div data-aos="zoom-in-down" className="flex flex-col items-center text-neutral-500 text-center p-6 relative  rounded-2xl ">
               <Image
                 src="/pricing/heroCardImg.svg"
                 alt="Unlimited Plan"
@@ -114,7 +121,7 @@ export default function PricingPlans() {
               <div className="absolute bottom-2 text-neutral-500">
                 <p className=" text-xl font-normal mb-3 leading-snug ">from $3.33/mo</p>
 
-                <button className="w-64 h-13      bg-[#4DB8AC] rounded-[40px]   text-white  ">Get Started</button>
+                <button onClick={handleClick} className="w-64 h-13      bg-[#4DB8AC] rounded-[40px]   text-white  ">Get Started</button>
               </div>
 
             </div>
@@ -124,7 +131,7 @@ export default function PricingPlans() {
 
 
           {/* Teams Plan with overlapping image */}
-          <div  className="flex flex-col items-center text-center p-6 relative  rounded-2xl shadow-2xl">
+          <div data-aos="zoom-in-up" className="flex flex-col items-center text-center p-6 relative  rounded-2xl shadow-2xl">
             <Image
               src="/pricing/teamImage.svg"
               alt="Teams Plan"
@@ -132,7 +139,7 @@ export default function PricingPlans() {
               height={200}
               className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
             />
-            <h3 className="text-2xl font-semibold my-4 pt-22">Teams</h3>
+            <h3 className="text-2xl font-semibold my-4 pt-22 text-neutral-500">Teams</h3>
             <p className=" mb-6 text-neutral-500">For businesses securing 2+ users</p>
             <ul className=" text-left mb-6 space-y-2 text-neutral-500">
               <li className="flex gap-2">
@@ -200,7 +207,7 @@ export default function PricingPlans() {
                 /> Admin & manager tools</li>
               <p className="text-lg text-center  font-bold mb-8   mt-4">$3.75/mo per user</p>
             </ul>
-            <button className="w-64 h-13 absolute  bottom-3  text-white  bg-[#4DB8AC] rounded-[40px]    ">Get Started</button>
+            <button onClick={handleClick} className="w-64 h-13 absolute  bottom-3  text-white  bg-[#4DB8AC] rounded-[40px]    ">Get Started</button>
 
             {/* <button className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">Get started</button> */}
           </div>
@@ -210,7 +217,7 @@ export default function PricingPlans() {
 
 
       {/* Payment Icons */}
-    
+
 
     </section>
   );

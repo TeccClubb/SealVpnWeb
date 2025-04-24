@@ -24,7 +24,7 @@ export default function pricing(){
             <div data-aos="fade-right" >
                 <VisaSection></VisaSection>
             </div>
-            <div data-aos="fade-up"> 
+            <div data-aos="zoom-out"> 
 
             <FaqTestimonialSection></FaqTestimonialSection>
             </div>
