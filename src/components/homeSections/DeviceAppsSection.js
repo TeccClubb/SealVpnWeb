@@ -22,7 +22,7 @@ export default function DeviceAppsSection() {
         {/* Platform Icons */}
         <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm text-[#6E6E6E]">
           <div className="flex flex-col items-center">
-            <img src="/appleimg.svg" alt="Apple" className="h-6 mb-1" />
+            <img src="/appleImg.svg" alt="Apple" className="h-6 mb-1" />
             Mac
           </div>
           <div className="flex flex-col items-center">
