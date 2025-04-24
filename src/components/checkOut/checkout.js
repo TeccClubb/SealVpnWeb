@@ -1,8 +1,17 @@
 'use client';
 
 import Image from 'next/image';
-
+import { useEffect } from 'react';
+import 'aos/dist/aos.css'; // Import AOS styles
+import AOS from 'aos';  // Import AOS library for animations
+import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 export default function CheckoutPage() {
+
+
+    useEffect(() => {
+        const AOS = require('aos');  // // Import AOS library for animations
+        AOS.init({ duration: 1200, once: true });
+    }, []);
     return (
         <section className="py-16 px-4 bg-white text-gray-800">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
@@ -12,8 +21,8 @@ export default function CheckoutPage() {
                 Includes all SeelVpn apps, priority customer support, and unlimited data.
             </p>
             <div className="flex flex-wrap  gap-3 mb-8 max-w-4xl mx-auto px-4">
-                <div className="border rounded-lg p-6  relative   cursor-pointer hover:border-green-500 w-70 h-32">
-                <div className="flex items-center space-x-3">
+                <div data-aos="zoom-in-up" className="border rounded-lg p-6  relative   cursor-pointer hover:border-green-500 w-70 h-32">
+                    <div className="flex items-center space-x-3">
                         <div className="text-green-500 text-xl">
                             <Image
                                 src="/tickIcon.svg"
@@ -27,13 +36,13 @@ export default function CheckoutPage() {
                         <h3 className="text-xl font-semibold">1 Month</h3>
                     </div>
                     <b>
-                    <p className="text-lg">$9.99<span className="text-sm">/month</span></p>
-                        
+                        <p className="text-lg">$9.99<span className="text-sm">/month</span></p>
+
                     </b>
                     <p className="text-sm text-gray-600 absolute bottom-3 mt-1 ">$39.99 billed for the first year</p>
 
                 </div>
-                <div className="relative border-2 border-green-400 rounded-lg p-4 w-70 max-w-sm bg-[#f9fff6] shadow-md overflow-visible">
+                <div data-aos="zoom-in-down" className="relative border-2 border-green-400 rounded-lg p-4 w-70 max-w-sm bg-[#f9fff6] shadow-md overflow-visible">
                     {/* Top-right Ribbon */}
                     <div className="absolute top-2 -right-[36px] transform rotate-45 bg-teal-500 text-white text-xs font-bold px-6 py-1 rounded-sm shadow-md">
                         <div className="text-[10px] leading-none">SPRING SALE!</div>
@@ -70,8 +79,8 @@ export default function CheckoutPage() {
 
 
 
-                <div className="border rounded-lg p-6  cursor-pointer hover:border-green-500 w-70 h-32">
-                <div className="flex items-center space-x-3">
+                <div data-aos="zoom-in-up" className="border rounded-lg p-6  cursor-pointer hover:border-green-500 w-70 h-32">
+                    <div className="flex items-center space-x-3">
                         <div className="text-green-500 text-xl">
                             <Image
                                 src="/tickIcon.svg"
@@ -87,13 +96,13 @@ export default function CheckoutPage() {
                     <b>
 
                         <p className="text-lg">$3.33<span className="text-sm">/month</span></p>
-                        </b>
+                    </b>
                     <p className="text-sm text-gray-600 mt-1">$39.99 billed for the first year</p>
 
                 </div>
             </div>
 
-            
+
 
             <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
 
@@ -150,7 +159,7 @@ export default function CheckoutPage() {
                         </p>
                     </div>
 
-                    <button className="w-full mt-3 bg-blue-500 text-white py-3 rounded-3xl hover:bg-blue-600 transition text-lg font-semibold">
+                    <button className="w-full mt-3 bg-emerald-400 text-white py-3 rounded-3xl hover:bg-emerald-600 transition text-lg font-semibold">
                         Buy Now
                     </button>
                 </div>
@@ -167,8 +176,8 @@ export default function CheckoutPage() {
                         className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
                     />
                     <h3 className="text-xl font-semibold my-4 pt-27">What you get with your SeelVpn plan</h3>
-                    <ul className="text-gray-700 text-left mb-6 space-y-2">
-                        <li className='flex gap-2'>
+                    <ul  className="text-gray-700 text-left mb-6 space-y-2">
+                        <li data-aos="zoom-in-up" className='flex gap-2'>
                             <Image
                                 src="/tickIcon.svg"
                                 alt="Teams Plan"
@@ -179,7 +188,7 @@ export default function CheckoutPage() {
                             />
 
                             Unlimited data</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -187,7 +196,7 @@ export default function CheckoutPage() {
 
 
                         />  Unlimited device</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -195,7 +204,7 @@ export default function CheckoutPage() {
 
 
                         />  Access to over 8000 VPN servers</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -203,7 +212,7 @@ export default function CheckoutPage() {
 
 
                         />  The best and latest VPN tech</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -211,7 +220,7 @@ export default function CheckoutPage() {
 
 
                         />  Core VPN features</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -219,7 +228,7 @@ export default function CheckoutPage() {
 
 
                         />  City-level server selection</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -227,7 +236,7 @@ export default function CheckoutPage() {
 
 
                         />  47 countries worldwide</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -235,7 +244,7 @@ export default function CheckoutPage() {
 
 
                         />  Publicly audited apps</li>
-                        <li className='flex gap-2'> <Image
+                        <li data-aos="zoom-in-up" className='flex gap-2'> <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
@@ -243,7 +252,7 @@ export default function CheckoutPage() {
 
 
                         />  Best-in-class 256-bit AES encryption</li>
-                        <li className='flex gap-2'>  <Image
+                        <li data-aos="zoom-in-down" className='flex gap-2'>  <Image
                             src="/tickIcon.svg"
                             alt="Teams Plan"
                             width={20}
