@@ -1,9 +1,9 @@
-
-
-
 'use client';
 
+import { useEffect } from 'react';
 import Image from 'next/image';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const countries = [
   { name: 'Argentina', flag: 'https://flagcdn.com/w320/ar.png' },
@@ -56,20 +56,20 @@ const countries = [
 ];
 
 const BrowseCountries = () => {
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
+
   return (
-    <div className="bg-gray-900   text-white px-20 py-5">
-      <div className='flex justify-center'>
-         <h1 className='font-bold text-4xl pb-4'>Browse 46+ countries</h1>
+    <div className="bg-gray-900 text-white px-20 py-5">
+      <div className="flex justify-center" data-aos="fade-up">
+        <h1 className="font-bold text-4xl pb-4">Browse 46+ countries</h1>
       </div>
       <div className="max-w-7xl w-[87%] m-auto mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        {/* Globe Image */}
-       
-
         {/* Text + Countries List */}
-        <div>
-          
+        <div data-aos="fade-right">
           <p className="text-gray-300 text-center mb-6">
-          Browse all over the globe in our ever-expanding network of over 8000 secure VPN servers, physically located in the country you select.
+            Browse all over the globe in our ever-expanding network of over 8000 secure VPN servers, physically located in the country you select.
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm text-gray-100">
@@ -80,11 +80,11 @@ const BrowseCountries = () => {
               </div>
             ))}
           </div>
-
         </div>
-        <div className="flex justify-center">
+
+        {/* Globe Image */}
+        <div className="flex justify-center" data-aos="fade-left">
           <div className="relative w-64 h-64 md:w-96 md:h-96">
-            {/* Replace with actual image */}
             <Image
               src="/vpnfeatureImg/worldWide.png"
               alt="Vector Globe"
@@ -94,11 +94,11 @@ const BrowseCountries = () => {
           </div>
         </div>
       </div>
-      <div className='flex justify-center'>
 
-      <button className="bg-teal-400 mt-5 hover:bg-teal-500 text-white px-6 py-2 rounded-full text-sm">
-                        Get SeeVpn now
-                    </button>
+      <div className="flex justify-center" data-aos="zoom-in-up">
+        <button className="bg-teal-400 mt-5 hover:bg-teal-500 text-white px-6 py-2 rounded-full text-sm">
+          Get SeeVpn now
+        </button>
       </div>
     </div>
   );
