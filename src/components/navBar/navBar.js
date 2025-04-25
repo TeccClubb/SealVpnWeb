@@ -42,7 +42,7 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="Download" className="hover:text-black">Download</Link>
+          <Link href="download" className="hover:text-black">Download</Link>
           <Link href="#" className="hover:text-black">Help</Link>
           <Link href="/login" className="hover:text-black">Log In</Link>
         </div>
