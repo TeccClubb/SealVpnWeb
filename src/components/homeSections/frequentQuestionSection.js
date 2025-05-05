@@ -2,9 +2,8 @@
 import { useEffect, useState } from 'react';
 import { Plus, Minus } from 'lucide-react'; // You can replace with your own icons
   
-import 'aos/dist/aos.css'; // Import AOS styles
-import AOS from 'aos'; // Import AOS library for animations
-import Image from 'next/image'; // Import Image component from Next.js
+
+
 const faqData = [
   'What is SeelVpn and how does it work?',
   'Is my online privacy worth the cost?',
@@ -20,10 +19,7 @@ export default function FAQSection() {
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-  useEffect(() => { 
-    const AOS = require('aos');
-    AOS.init({ duration: 1200, once: true });
-  } , []);
+  
 
   return (
     <section className="bg-[#F7F7F7] py-16 px-4">
@@ -39,10 +35,10 @@ export default function FAQSection() {
               className="flex justify-between items-center px-6 py-4 cursor-pointer hover:bg-gray-50"
               onClick={() => toggle(index)}
             >
-              <span data-aos="zoom-in-left" className="text-sm text-[#6E6E6E]  font-medium leading-6 tracking-tight">
+              <span  className="text-sm text-[#6E6E6E]  font-medium leading-6 tracking-tight">
                 {question}
               </span>
-              <span data-aos="zoom-in-up" className="text-green-600">
+              <span  className="text-green-600">
                 {openIndex === index ? <Minus size={18} /> : <Plus size={18} />}
               </span>
             </div>

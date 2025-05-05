@@ -1,11 +1,8 @@
 import Image from 'next/image';
 import { useEffect } from 'react';
-import AOS from 'aos'; // Import AOS library for animations
-import 'aos/dist/aos.css'; // Import AOS styles
+
 export default function FeaturesSection() {
-  useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-  }, []);
+ 
   const features = [
     {
       img: '/stopPasswordandData.svg',
@@ -41,11 +38,11 @@ export default function FeaturesSection() {
   return (
     <section className="py-16 px-6 md:px-20 bg-white text-center" style={{color:"black"}}>
       <h2 className="text-3xl font-bold mb-12 text-neutral-600">Why millions of people are using SeeIVpn</h2>
-      <div  data-aos="fade-up" className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left max-w-5xl mx-auto">
+      <div   className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left max-w-5xl mx-auto">
         {features.map((feature, i) => (
           <div key={i} className="flex items-start gap-5">
             <Image src={feature.img} alt={feature.title} width={60} height={60} className="flex-shrink-0" />
-            <div data-aos="fade-down">
+            <div >
               <h3 className="text-lg font-semibold text-neutral-600 mb-1">{feature.title}</h3>
               <p className=" text-neutral-500 text-sm">{feature.desc}</p>
             </div>

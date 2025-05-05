@@ -1,13 +1,10 @@
 "use client"
 import { useEffect } from 'react';
 import Image from 'next/image';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 
 export default function DownloadPage() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
+  
 
   return (
     <>
@@ -17,7 +14,7 @@ export default function DownloadPage() {
           {/* Text Column */}
           <div
             className="w-full md:w-1/2 text-center md:text-left"
-            data-aos="fade-right"
+            
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-bold text-[#3D3D3D]">
               Downloading SeelVpn for Windows
@@ -33,7 +30,7 @@ export default function DownloadPage() {
           </div>
 
           {/* Image Column */}
-          <div className="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
+          <div className="w-full md:w-1/2 flex justify-center" >
             <Image
               src="/downloadImg/Rectangle.png"
               alt="Bear in pipe"
@@ -49,7 +46,7 @@ export default function DownloadPage() {
       <section className="py-16 px-6 sm:px-10 lg:px-20">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-12">
           {/* Step 1 */}
-          <div className="w-60 text-center" data-aos="zoom-in">
+          <div className="w-60 text-center" >
             <Image
               src="/downloadImg/install.png"
               alt="Install the app"
@@ -69,7 +66,7 @@ export default function DownloadPage() {
           </div>
 
           {/* Step 2 */}
-          <div className="w-60 text-center" data-aos="zoom-in" data-aos-delay="200">
+          <div className="w-60 text-center"  >
             <Image
               src="/downloadImg/login.png"
               alt="Sign up or log in"
@@ -89,7 +86,7 @@ export default function DownloadPage() {
           </div>
 
           {/* Step 3 */}
-          <div className="w-60 text-center" data-aos="zoom-in" data-aos-delay="400">
+          <div className="w-60 text-center"  >
             <Image
               src="/downloadImg/startTunnel.png"
               alt="Start tunneling"
@@ -113,8 +110,8 @@ export default function DownloadPage() {
       {/* Footer Links Section */}
       <footer className="py-8 text-xs text-center text-neutral-500">
         <div className="max-w-2xl mx-auto flex justify-between mb-2">
-          <a href="#"   data-aos="fade-right" className="ml-[127px]">Notice and Attribution</a>
-          <a href="#"   data-aos="fade-left" className="mr-[127px]">Uninstall SeelVpn</a>
+          <a href="#"    className="ml-[127px]">Notice and Attribution</a>
+          <a href="#"    className="mr-[127px]">Uninstall SeelVpn</a>
         </div>
         <div className="max-w-6xl mx-auto text-center mt-[20px]">
           By downloading SeelVpn, you agree to the <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.

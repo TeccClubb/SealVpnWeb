@@ -1,13 +1,10 @@
 "use client"
-import AOS from 'aos';
+
 import React, { useEffect } from 'react';
-import 'aos/dist/aos.css';
+
 
 export default function WhatIsVpnFirstSection() {
-  useEffect(()=>{
-    AOS.init({ duration: 1200, once: true });
-   
-  },[])
+ 
   const topics = [
     'What is a VPN?',
     'Why do I need a VPN?',
@@ -26,11 +23,11 @@ export default function WhatIsVpnFirstSection() {
         src="/whatIsVpnImg/whatsVpn-full-image.png"
         alt="Globe"
         className="w-full h-auto object-cover object-left mb-10 "
-        data-aos="fade-down"
+        
       />
 
       {/* Description Section */}
-      <div className="max-w-2xl text-neutral-500  mb-12" data-aos="fade-up">
+      <div className="max-w-2xl text-neutral-500  mb-12" >
         <p className="mb-4" >
           If your device is connected to the internet, your internet service provider can see
           everything you do. Every search. Every file you download. Everything. To protect their
@@ -55,9 +52,9 @@ export default function WhatIsVpnFirstSection() {
 
       <ul className="text-gray-700 space-y-4 text-base max-w-2xl ">
   {topics.map((item, index) => (
-    <li key={index} className="flex items-start gap-3" data-aos="zoom-in">
+    <li key={index} className="flex items-start gap-3" >
       <img src="/whatIsVpnImg/checkSvg.svg" alt="Check" className="w-6 h-6 mt-1" />
-      <span data-aos="fade-up">{item}</span>
+      <span >{item}</span>
     </li>
   ))}
 </ul>

@@ -1,18 +1,15 @@
 "use client";
 import Image from "next/image";
 import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+
 
 export default function FeatureSection() {
-    useEffect(() => {
-        AOS.init({ duration: 800, once: true });
-    }, []);
+  
 
     return (
         <div className="bg-gray-700 text-white px-6 py-12 md:py-20">
             <div className="flex justify-center text-center">
-                <div className="w-full md:w-2/3" data-aos="fade-up">
+                <div className="w-full md:w-2/3" >
                     <h1 className="text-3xl md:text-4xl font-bold">
                         Features for all your privacy needs
                     </h1>
@@ -31,8 +28,8 @@ export default function FeatureSection() {
                             <div
                                 key={index}
                                 className="flex justify-center transition-transform duration-300 hover:scale-110"
-                                data-aos="fade-up"
-                                data-aos-delay={index * 100}
+                                
+                              
                             >
                                 <Image
                                     src={item.src}
