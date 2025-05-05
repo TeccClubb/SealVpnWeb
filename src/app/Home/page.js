@@ -12,6 +12,7 @@ import FaqTestimonialSection from '@/components/pricingSection/frequnetQuestion'
 import FAQSection from '@/components/homeSections/frequentQuestionSection';
 // import BearImg from '/public/bear.png'; // Make sure this image exists
 import { useEffect } from 'react';
+import { Sidebar } from 'lucide-react';
 
 export default function HomePage() {
 
@@ -73,6 +74,7 @@ export default function HomePage() {
      <div >
       <DawnloadSection></DawnloadSection>
      </div>
+     
     </div>
   );
 }
