@@ -2,8 +2,6 @@
 import Image from 'next/image';
 import { use } from 'react';
 import { useEffect } from 'react';
-import AOS from 'aos';  // Import AOS library for animations
-import 'aos/dist/aos.css'; // Import AOS styles
 
 const faqItems = [
   {
@@ -36,9 +34,7 @@ const faqItems = [
 
 export default function FaqTestimonialSection() {
 
-  useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-  }, []);
+ 
 
   return (
     <section className="bg-gray-50 py-16 px-4">
@@ -57,7 +53,7 @@ export default function FaqTestimonialSection() {
             </div>
 
             {/* Text + Quotes */}
-            <div data-oas="zoom-in" className="relative flex-1">
+            <div  className="relative flex-1">
               {/* Opening quote */}
               <div className="absolute -left-4 -top-2">
                 <img src="/pricingImg/downComa.svg" alt="“" className="w-4 h-4" />
@@ -86,17 +82,17 @@ export default function FaqTestimonialSection() {
 
 
         {/* FAQ Heading */}
-        <h2 data-aos="zoom-in" className="text-center text-xl sm:text-2xl font-bold text-[#3D3D3D] mb-8">
+        <h2  className="text-center text-xl sm:text-2xl font-bold text-[#3D3D3D] mb-8">
   Frequently Asked Questions
 </h2>
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
   {faqItems.map((item, idx) => (
-    <div data-aos="zoom-out" key={idx}>
+    <div  key={idx}>
       <h3 className="text-[#3D3D3D] font-medium text-base sm:text-lg mb-2">
         {item.question}
       </h3>
-      <p data-aos="zoom-in" className="text-[#6E6E6E] text-[15px] sm:text-[16px] font-normal leading-[22px] tracking-[-0.2px]">
+      <p  className="text-[#6E6E6E] text-[15px] sm:text-[16px] font-normal leading-[22px] tracking-[-0.2px]">
         {item.answer}
       </p>
     </div>

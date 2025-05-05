@@ -3,17 +3,12 @@
 import Image from "next/image";
 import { use } from "react";
 import { useEffect } from "react";
-import AOS from "aos"; // Import AOS library for animations
-import 'aos/dist/aos.css'; // Import AOS styles
+
 import { useRouter } from "next/navigation";
 
 
 export default function PricingPlans() {
-  useEffect(() => {
-    const AOS = require('aos');
-    AOS.init({ duration: 1200, once: true });
-  }
-    , []);
+  
   const router = useRouter()
   const handleClick = () => {
     // Perform any action you want when the button is clicked
@@ -33,7 +28,7 @@ export default function PricingPlans() {
 
           {/* Free Plan */}
           <div
-            data-aos="zoom-in-up"
+            
             className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
             style={{
               boxShadow: "5px 8px 15px rgba(0, 0, 0, 0.1)" // left + bottom
@@ -53,7 +48,7 @@ export default function PricingPlans() {
 
           {/* Unlimited Plan */}
           <div
-            data-aos="zoom-in-down"
+            
             style={{
               boxShadow: "5px 8px 15px rgba(0, 0, 0, 0.1)" // left + bottom
             }}
@@ -100,7 +95,7 @@ export default function PricingPlans() {
 
 
           {/* Teams Plan (already looked good) */}
-          <div data-aos="zoom-in-up" className="flex lg:ml-4 flex-col items-center text-center p-6 relative rounded-2xl shadow-2xl bg-white h-full">
+          <div  className="flex lg:ml-4 flex-col items-center text-center p-6 relative rounded-2xl shadow-2xl bg-white h-full">
             <Image
               src="/pricing/teamImage.svg"
               alt="Teams Plan"
