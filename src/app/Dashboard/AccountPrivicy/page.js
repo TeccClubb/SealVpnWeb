@@ -10,6 +10,8 @@ export default function PersonalDataPage() {
                     See and manage all the personal data in your account
                 </h2>
 
+                
+
 
 
                 <p className="text-sm text-neutral-500 mb-6">
