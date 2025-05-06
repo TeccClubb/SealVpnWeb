@@ -1,8 +1,12 @@
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+.montserrat-page {
+  font-family: 'Montserrat', sans-serif;
 }
 
 @theme inline {
