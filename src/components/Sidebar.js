@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import LogOutModal from './logoutModal';
+ 
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -19,6 +20,10 @@ const Sidebar = () => {
   const handleLogout = () => {
     // Handle logout logic here
     console.log('User logged out');
+    localStorage.removeItem('access_token'); // Remove token from local storage
+    window.location.href = '/login'; // Redirect to login page
+    
+    
     setIsLogoutModalOpen(false); // Close the logout modal after logging out
   }
 
@@ -29,7 +34,7 @@ const Sidebar = () => {
     {link.name === 'Log Out' ? (
       <button
         onClick={() => setIsLogoutModalOpen(true)}
-        className={`w-full text-left rounded-full px-4 py-2 text-base md:text-lg transition-all duration-200 text-gray-600 hover:bg-gray-200 hover:text-slate-600 hover:font-bold`}
+        className={`w-full md:text-left  rounded-full px-4 py-2 text-base md:text-lg transition-all duration-200 text-gray-600 hover:bg-gray-200 hover:text-slate-600 hover:font-bold`}
       >
         {link.name}
       </button>
