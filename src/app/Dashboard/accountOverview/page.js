@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function AccountOverview() {
   return (
     <div className="flex montserrat-page flex-col md:flex-row min-h-screen items-center justify-center p-4 bg-white">
-      <div className="w-full md:w-1/2 max-w-md space-y-6">
+      <div className="w-full md:w-1/2 max-w-md space-y-8">
         <h1 className="text-2xl font-bold text-neutral-600 text-4xl font-bold font-['Montserrat'] leading-10 ">Free SealVPN</h1>
 
         <div className="border border-red-300 bg-neutral-50 text-red-700 px-4 py-3 rounded">
