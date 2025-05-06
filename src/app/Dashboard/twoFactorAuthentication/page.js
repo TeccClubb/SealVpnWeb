@@ -3,16 +3,12 @@ import Link from "next/link";
 import { useState } from "react";
 import Enable2FAModal from "@/components/TwoFAModal";
  
-import LogOutModal from "@/components/logoutModal";
+ 
 export default function TwoFactorAuth() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // Logout modal
+ 
 
-  const handleLogout = () => {
-    // Handle logout logic here
-    console.log("User logged out");
-    setIsLogoutModalOpen(false); // Close the logout modal after logging out
-  }
+ 
   return (
     <div className="max-w-xl  montserrat-page p-6 bg-white mt-2   rounded-md">
       <h2 className="text-neutral-600 text-4xl font-bold">Two-Factor Authentication</h2>
@@ -33,18 +29,9 @@ export default function TwoFactorAuth() {
         </Link>
         
       </div>
-      <button
-          onClick={() => setIsLogoutModalOpen(true)}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-        >
-          Log Out
-        </button>
+      
       <Enable2FAModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <LogOutModal
-        isOpen={isLogoutModalOpen}
-        onClose={() => setIsLogoutModalOpen(false)}
-        onConfirm={handleLogout}
-      />
+      
     </div>
   );
 }
