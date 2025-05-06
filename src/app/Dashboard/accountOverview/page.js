@@ -2,11 +2,13 @@ import Image from 'next/image';
 
 export default function AccountOverview() {
   return (
-    <div className="flex montserrat-page flex-col md:flex-row min-h-screen items-center justify-center p-4 bg-white">
-      <div className="w-full md:w-1/2 max-w-md space-y-8">
-        <h1 className="text-2xl font-bold text-neutral-600 text-4xl font-bold font-['Montserrat'] leading-10 ">Free SealVPN</h1>
+    <div className=" montserrat-page  bg-white">
+      <div className='flex justify-center items-center'>
 
-        <div className="border border-red-300 bg-neutral-50 text-red-700 px-4 py-3 rounded">
+      <div className="w-full md:w-1/2 max-w-md ">
+        <h1 className=" text-neutral-600 text-4xl font-bold font-['Montserrat'] leading-10 ">Free SealVPN</h1>
+
+        <div className="border border-red-300 bg-red-50 text-red-700 px-4 py-3 mt-4 rounded">
           <p>
             <span className='text-neutral-600 text-base  leading-snug font-bold'>
             Yikes! You're out of free data!  
@@ -19,7 +21,7 @@ export default function AccountOverview() {
           </p>
         </div>
 
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 mt-4">
           <span className="text-neutral-600 text-base font-normal">
              <span className='text-red-500'>
 
@@ -32,7 +34,7 @@ export default function AccountOverview() {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 mt-6">
           <div className="flex justify-between items-center border-b pb-2">
             <div>
               <p className="text-sm text-gray-500">Email</p>
@@ -50,7 +52,7 @@ export default function AccountOverview() {
           </div>
         </div>
 
-        <button className="w-full bg-teal-400 hover:bg-teal-500 text-white py-3 rounded-full font-semibold transition">
+        <button className="w-full bg-teal-400 mt-4 hover:bg-teal-500 text-white py-3 rounded-full font-semibold transition">
           Upgrade to unlimited data
         </button>
       </div>
@@ -59,6 +61,7 @@ export default function AccountOverview() {
         <div className="relative w-64 h-64">
           <Image src="/dogzzz.png" alt="Sleeping bear" layout="fill" objectFit="contain" />
         </div>
+      </div>
       </div>
     </div>
   );
