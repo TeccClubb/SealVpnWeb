@@ -60,7 +60,7 @@ export default function LoginForm() {
 
   {/* Sign Up */}
   <div className="text-center mt-2 text-sm">
-    Don’t have a SeelVpn account? <a href="#" className="text-teal-600 underline">Sign up</a>
+    Don’t have a SeelVpn account? <a href="/Home/signup" className="text-teal-600 underline">Sign up</a>
   </div>
 </form>
 
