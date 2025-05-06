@@ -6,7 +6,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const links = [
-    { name: 'Overview', href: '/' },
+    { name: 'Overview', href: '/Dashboard/accountOverview' },
     { name: 'Billing History', href: '/Dashboard/Acount-biling-history' },
     { name: 'Security', href: '/security' },
     { name: 'Privacy', href: '/privacy' },
@@ -14,7 +14,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="ml-12  p-4 flex flex-col gap-2">
+    <div className="ml-12  p-4 mt-12 flex flex-col gap-2">
       {links.map((link) => (
         <div key={link.name} className="flex justify-start">
           <Link
