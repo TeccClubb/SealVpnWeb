@@ -21,7 +21,7 @@ const Sidebar = () => {
             href={link.href}
             className={`rounded-full px-4 py-2  transition-all  text-lg duration-200 ${
               pathname === link.href
-                ? 'bg-gray-300 text-slate-600 text-lg font-bold'
+                ? 'bg-gray-200 text-slate-600 text-lg font-bold'
                 : 'text-gray-600 hover:bg-gray-200 hover:text-slate-600  hover:leading-snug hover:font-bold'
             }`}
           >
