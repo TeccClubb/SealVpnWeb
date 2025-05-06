@@ -5,8 +5,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head />
       <body className="antialiased">
-        <div className="flex min-h-screen">
+        {/* Responsive container */}
+        <div className="flex flex-col md:flex-row  min-h-screen">
+          {/* Sidebar will be full width on small screens, fixed width on desktop */}
           <Sidebar />
+          
+          {/* Main content adapts to remaining space */}
           <main className="flex-1 p-6">
             {children}
           </main>
