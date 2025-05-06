@@ -6,7 +6,7 @@ export default function AccountOverview() {
       <div className='flex justify-center items-center'>
 
       <div className="w-full md:w-1/2 max-w-md ">
-        <h1 className=" text-neutral-600 text-4xl font-bold font-['Montserrat'] leading-10 ">Free SealVPN</h1>
+        <h1 className=" text-neutral-600 text-2xl font-bold font-['Montserrat'] leading-10 ">Free SealVPN</h1>
 
         <div className="border border-red-300 bg-red-50 text-red-700 px-4 py-3 mt-4 rounded">
           <p>

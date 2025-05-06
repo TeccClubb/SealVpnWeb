@@ -12,7 +12,7 @@ const Sidebar = () => {
   const links = [
     { name: 'Overview', href: '/Dashboard/accountOverview' },
     { name: 'Billing History', href: '/Dashboard/Account-biling-history' },
-    { name: 'Security', href: '/security' },
+    { name: 'Security', href: '/Dashboard/twoFactorAuthentication' },
     { name: 'Privacy', href: '/Dashboard/AccountPrivicy' },
     { name: 'Log Out', href: '/logout' },
   ];

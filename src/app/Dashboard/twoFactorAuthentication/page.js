@@ -11,7 +11,7 @@ export default function TwoFactorAuth() {
  
   return (
     <div className="max-w-xl  montserrat-page p-6 bg-white mt-2   rounded-md">
-      <h2 className="text-neutral-600 text-4xl font-bold">Two-Factor Authentication</h2>
+      <h2 className="text-neutral-600 text-3xl font-bold">Two-Factor Authentication</h2>
       <p className="text-neutral-500 text-base font-normal mt-6 mb-4">
         Use an additional code to protect your account when logging in.{" "}
         <Link href="#" className="text-blue-600 text-base font-normal hover:underline">
