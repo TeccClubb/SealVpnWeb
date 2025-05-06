@@ -1,6 +1,6 @@
 
 import Sidebar from "@/components/Sidebar";
-import BillingHistory from "./Acount-biling-history/page";
+import BillingHistory from "./Account-biling-history/page";
 
 
 export default function Dashboard() {
