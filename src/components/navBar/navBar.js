@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathname = usePathname(); // Get current route
 
   return (
-    <nav className={`w-full shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
+    <nav className={`w-full sticky top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[90%] mx-auto px-4 py-3 flex cursor-pointer items-center justify-between">
         {/* Logo */}
         <div onClick={() => router.push("/Home")} className="text-3xl font-bold text-gray-800">
