@@ -5,26 +5,40 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const BillingHistory = () => {
-  const [billingData, setBillingData] = useState(null);
+  const [billingAddress, setbillingAddress] = useState(null);
+  const [billingData, setBillingData] = useState([]);
+
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    // if (!token) {
-    //   router.push("/login");
-    //   return;
-    // }
 
-    axios
-      .get("https://rockyvpn.tecclubb.com/api/billing-address", {
+    if (!token) {
+      router.push("/login");
+      return;
+    } 
+    //fatch billing address
+    axios.get("https://rockyvpn.tecclubb.com/api/billing-address", {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log("Billing history:", response.data);
-        setBillingData(response.data.user.billing_address); // adjust if your actual response shape is different
+        setbillingAddress(response.data.user.billing_address);
+      })
+      .catch((error) => {
+        console.error("Error fetching billing address:", error.response?.data || error.message);
+      });
+            // Fetch billing history
+    axios.get("https://rockyvpn.tecclubb.com/api/purchase/history", {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setBillingData(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching billing history:", error.response?.data || error.message);
@@ -34,34 +48,51 @@ const BillingHistory = () => {
   return (
     <div className="flex min-h-screen bg-white">
       <main className="md:p-6 w-full">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">Billing History</h1>
+        <h1 className="text-neutral-600 text-2xl font-bold font-['Montserrat'] mb-2 leading-10">Billing History</h1>
 
-        {!billingData ? (
-          <p className="text-sm text-gray-600">You don’t have any billing history yet.</p>
+        {/* Billing History Table */}
+        {billingData.length === 0 ? (
+          <p className="text-sm text-gray-600 mb-6">You don’t have any billing history yet.</p>
         ) : (
-          <div className="w-full overflow-x-auto">
-          <table className="min-w-full border border-gray-200 text-left text-sm text-gray-700">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border-b">Address</th>
-                <th className="p-3 border-b">City</th>
-                <th className="p-3 border-b">State</th>
-                <th className="p-3 border-b">Postal Code</th>
-                <th className="p-3 border-b">Created At</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="hover:bg-gray-50">
-                <td className="p-3 border-b">{billingData.address}</td>
-                <td className="p-3 border-b">{billingData.city}</td>
-                <td className="p-3 border-b">{billingData.state}</td>
-                <td className="p-3 border-b">{billingData.postal_code}</td>
-                <td className="p-3 border-b">{new Date(billingData.created_at).toLocaleDateString()}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
+          <div className="w-full border border-gray-200  rounded-lg overflow-x-auto mb-8">
+            <table className="min-w-full border border-gray-100 text-left text-sm text-gray-700">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-3 border-b border-gray-200">Plan</th>
+                  <th className="p-3 border-b border-gray-200">Amount Paid</th>
+                  <th className="p-3 border-b border-gray-200">Start Date</th>
+                  <th className="p-3 border-b border-gray-200">End Date</th>
+                  <th className="p-3 border-b border-gray-200">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {billingData.map((item) => (
+                  <tr key={item.id} className="hover:bg-gray-50 border-b border-gray-50">
+                    <td className="p-3 border-b border-gray-200 ">{item.plan?.name || "-"}</td>
+                    <td className="p-3 border-b border-gray-200">${item.amount_paid}</td>
+                    <td className="p-3 border-b border-gray-200">{new Date(item.start_date).toLocaleDateString()}</td>
+                    <td className="p-3 border-b border-gray-200">{new Date(item.end_date).toLocaleDateString()}</td>
+                    <td className="p-3 border-b border-gray-200 capitalize">{item.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+            <h2 className="text-neutral-600 text-2xl font-bold font-['Montserrat'] leading-10 mb-2">Billing Address</h2>
+
+        {/* Billing Address Card */}
+        {billingAddress && (
+          <div className="bg-gray-50 border border-gray-200 p-6 rounded-lg shadow-sm">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+              <div><strong>Name:</strong> {billingAddress.name}</div>
+              <div><strong>Address:</strong> {billingAddress.address}</div>
+              <div><strong>City:</strong> {billingAddress.city}</div>
+              <div><strong>State:</strong> {billingAddress.state}</div>
+              <div><strong>Postal Code:</strong> {billingAddress.postal_code}</div>
+              <div><strong>Created At:</strong> {new Date(billingAddress.created_at).toLocaleDateString()}</div>
+            </div>
+          </div>
         )}
       </main>
     </div>
