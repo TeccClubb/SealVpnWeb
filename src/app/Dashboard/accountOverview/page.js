@@ -8,13 +8,9 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    // if (!token) {
-    //   router.push("/login");
-    //   return;
-    // }
-  
+
     axios
-      .get("https://rockyvpn.tecclubb.com/api/purchase/active", {
+      .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/purchase/active`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
@@ -28,13 +24,14 @@ const DashboardPage = () => {
         console.error("Error fetching active plan:", error.response?.data || error.message);
       });
   }, []);
-  
+
+
 
   return (
     <DashboardSection title="Dashboard" heading="Welcome back, John Doe">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
-        <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-300 rounded-xl">
+        <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
           <button className="w-full max-w-64 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
             Connect
           </button>
@@ -44,12 +41,50 @@ const DashboardPage = () => {
         </div>
 
         {/* Subscription Box */}
-        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-300 rounded-xl">
+        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
+          <h3 className="text-2xl text-center font-bold text-neutral-600">Download SeelVpn</h3>
+          {activePlan ? (
+            <>
+
+
+
+              {/* OS Icon Buttons Section */}
+              <div className="flex justify-around items-center mt-4">
+                {[
+                  { label: "Windows", src: "/buttonImg/windows.svg" },
+                  { label: "Mac", src: "/buttonImg/apple.svg" },
+                  { label: "Android", src: "/buttonImg/android.svg" },
+                  { label: "iPhone", src: "/buttonImg/ios.svg" },
+                ].map((item) => (
+                  <div key={item.label} className="flex flex-col items-center gap-2">
+                    <div className="w-16 h-16 rounded-full  bg-neutral-100 flex items-center justify-center hover:bg-gray-300 transition duration-200">
+                      <img src={item.src} alt={item.label} className="w-8 h-8 object-contain" />
+                    </div>
+                    <span className="text-sm font-bold text-neutral-700">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+
+
+            </>
+          ) : (
+            <p className="text-default-500 text-base font-normal">
+              Loading or no active plan found.
+            </p>
+          )}
+        </div>
+
+
+
+        {/* Recent Activity Box */}
+
+        {/* Subscription Box */}
+        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
           <h3 className="text-2xl font-bold text-neutral-600">Subscription</h3>
           {activePlan ? (
             <>
               <div className="flex items-center justify-between text-xl text-default-500 font-normal">
-                <p>Plan: {activePlan.plan?.name || "N/A"}</p>
+                <p> {activePlan.plan?.name || "N/A"}</p>
                 <p className="text-base">
                   {activePlan.plan?.duration || "N/A"}{" "}
                   {activePlan.plan?.duration_unit || ""}
@@ -57,7 +92,7 @@ const DashboardPage = () => {
               </div>
               <div className="flex items-center justify-between gap-4 text-xl text-default-500 font-normal">
                 <p>
-                  Renewal Date:{" "}
+                  {" "}
                   {new Date(activePlan.end_date).toLocaleDateString()}
                 </p>
                 <p className="text-base">
@@ -73,30 +108,9 @@ const DashboardPage = () => {
           )}
         </div>
 
-        {/* Recent Activity Box */}
-
-        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-300 rounded-xl">
-          <h3 className="text-2xl font-bold text-neutral-600">Recent Activity</h3>
-          {activePlan ? (
-            <>
-              <p className="text-default-500 text-xl font-normal">
-                Plan Name: <span className="font-semibold text-neutral-700">{activePlan.plan.name}</span>
-              </p>
-              <p className="text-default-500 text-xl font-normal">
-                Price: <span className="font-semibold text-neutral-700">${activePlan.amount_paid}</span>
-              </p>
-              <p className="text-default-500 text-xl font-normal">
-                Slug: <span className="font-semibold text-neutral-700">{activePlan.plan?.slug}</span>
-              </p>
-            </>
-          ) : (
-            <p className="text-default-500 text-xl font-normal">Loading recent activity...</p>
-          )}
-        </div>
-
 
         {/* Support Box */}
-        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-300 rounded-xl">
+        <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
           <h3 className="flex items-center gap-2 text-2xl font-bold text-neutral-600">
             <img
               src="/headphone.png"
