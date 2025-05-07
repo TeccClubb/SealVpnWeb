@@ -17,8 +17,9 @@ const BillingHistory = () => {
       router.push("/login");
       return;
     } 
+    let Api_Url=process.env.NEXT_PUBLIC_REST_API_BASE_URL;
     //fatch billing address
-    axios.get("https://rockyvpn.tecclubb.com/api/billing-address", {
+    axios.get( `${Api_Url}/billing-address`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
@@ -31,7 +32,7 @@ const BillingHistory = () => {
         console.error("Error fetching billing address:", error.response?.data || error.message);
       });
             // Fetch billing history
-    axios.get("https://rockyvpn.tecclubb.com/api/purchase/history", {
+    axios.get(`${Api_Url}/purchase/history`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,

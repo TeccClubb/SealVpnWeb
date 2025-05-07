@@ -16,13 +16,15 @@ export default function LoginForm() {
 
 
   const onSubmit = (data) => {
+    let Api_Url=process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+
     const payload = {
       name: data.email, // Map email field to "name"
       password: data.password,
     };
   
     axios
-      .post("https://rockyvpn.tecclubb.com/api/login", payload, {
+      .post(`${Api_Url}/login`, payload, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

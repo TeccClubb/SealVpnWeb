@@ -12,7 +12,7 @@ export default function Navbar() {
   const pathname = usePathname(); // Get current route
 
   return (
-    <nav className={`w-full sticky top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
+    <nav className={`w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[90%] mx-auto px-4 py-3 flex cursor-pointer items-center justify-between">
         {/* Logo */}
         <div onClick={() => router.push("/Home")} className="text-3xl font-bold text-gray-800">
@@ -34,15 +34,15 @@ export default function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="absolute top-6 left-0 mt-2 w-44 bg-white border rounded shadow-md text-sm z-10">
-                <Link href="/what-is-vpn" className="block px-4 py-2 hover:bg-gray-100">Why VPN?</Link>
-                <Link href="/vpnFeature" className="block px-4 py-2 hover:bg-gray-100">Feature</Link>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100">Online Privacy</Link>
-                <Link href="#" className="block px-4 py-2 hover:bg-gray-100">VPN for WFH</Link>
+                <Link href="/what-is-vpn" onClick={()=>setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-gray-100">Why VPN?</Link>
+                <Link href="/vpnFeature" onClick={()=>setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-gray-100">Feature</Link>
+                <Link href="#" onClick={()=>setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-gray-100">Online Privacy</Link>
+                <Link href="#" onClick={()=>setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-gray-100">VPN for WFH</Link>
               </div>
             )}
           </div>
 
-          <Link href="download" className="hover:text-black">Download</Link>
+          <Link href="Download" className="hover:text-black">Download</Link>
           <Link href="#" className="hover:text-black">Help</Link>
           <Link href="/login" className="hover:text-black">Log In</Link>
         </div>
@@ -68,21 +68,26 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden px-6 pb-4 space-y-3 text-gray-700 text-sm">
-          <Link href="#" className="block hover:text-black">Plans</Link>
+          <Link href="/pricing" className="block hover:text-black">Plans</Link>
           <details className="group">
-            <summary className="flex items-center justify-between cursor-pointer hover:text-black">
+            <summary onClick={()=>setIsDropdownOpen(true)} className="flex items-center justify-between cursor-pointer hover:text-black">
               What is a VPN?
             </summary>
-            <div className="ml-4 mt-2 space-y-2">
-              <Link href="#" className="block hover:text-black">Why VPN?</Link>
-              <Link href="#" className="block hover:text-black">Feature</Link>
-              <Link href="#" className="block hover:text-black">Online Privacy</Link>
-              <Link href="#" className="block hover:text-black">VPN for WFH</Link>
+            {
+              isDropdownOpen && (
+                <div className="ml-4 mt-2 space-y-2">
+              <Link href="/what-is-vpn" onClick={()=>setIsDropdownOpen(false)} className="block hover:text-black">Why VPN?</Link>
+              <Link href="/vpnFeature" onClick={()=>setIsDropdownOpen(false)} className="block hover:text-black">Feature</Link>
+              <Link href="#" onClick={()=>setIsDropdownOpen(false)} className="block hover:text-black">Online Privacy</Link>
+              <Link href="#" onClick={()=>setIsDropdownOpen(false)} className="block hover:text-black">VPN for WFH</Link>
             </div>
+              )
+            }
+            
           </details>
-          <Link href="#" className="block hover:text-black">Download</Link>
+          <Link href="/Download" className="block hover:text-black">Download</Link>
           <Link href="#" className="block hover:text-black">Help</Link>
-          <Link href="#" className="block hover:text-black">Log In</Link>
+          <Link href="/login" className="block hover:text-black">Log In</Link>
           <Link
             href="#"
             className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
