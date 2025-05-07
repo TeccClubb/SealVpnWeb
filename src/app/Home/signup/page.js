@@ -17,7 +17,7 @@ export default function SignUpForm() {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "https://fabvpn.tecclubb.com/api/signup",
+        "https://rockyvpn.tecclubb.com/api/signup",
         {
           name: data.username,
           email: data.email,
@@ -91,7 +91,7 @@ export default function SignUpForm() {
               placeholder="Password"
               {...register("password", {
                 required: "Password is required",
-                minLength: { value: 6, message: "Minimum 6 characters" },
+                minLength: { value: 8, message: "Minimum 8 characters" },
               })}
               className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
             />
