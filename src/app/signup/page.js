@@ -18,7 +18,7 @@ export default function SignUpForm() {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "https://rockyvpn.tecclubb.com/api/signup",
+        "https://seelvpn.tecclubb.com/api/signup",
         {
           name: data.username,
           email: data.email,
