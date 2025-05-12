@@ -17,7 +17,7 @@ export default function PricingPlans() {
         },
       })
       .then((response) => {
-        console.log("Active plan response:", response.data);
+        console.log("Get plans response:", response.data);
         setPlans(response.data.plans);
       });
   }, []);

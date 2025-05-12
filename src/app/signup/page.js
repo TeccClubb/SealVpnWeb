@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignUpForm() {
   const {
@@ -32,9 +33,11 @@ export default function SignUpForm() {
       console.log("Response:", response.data); 
 
       if (response.status === 200 || response.status === 201) {
+        toast.success("✅ Sign up successful!");
         setServerMessage("✅ Sign up successful!");
         reset(); // Clear form fields
       } else {
+        toast.error("❌ Signup failed.");
         setServerMessage("❌ Signup failed.");
       }
     } catch (error) {
