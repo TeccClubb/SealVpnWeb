@@ -35,6 +35,10 @@ export default function LoginForm() {
          if (response.data.status) {
           console.log("Login successful:", response.data.access_token);
           localStorage.setItem("access_token", response.data.access_token);
+          console.log("ddddddddddddddddddddddccccccccc")
+          console.log(response.data.user)
+         localStorage.setItem("user", JSON.stringify(response.data.user));
+
           router.push("/Dashboard");
           toast.success("Login successful!")
 
