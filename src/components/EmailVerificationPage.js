@@ -1,17 +1,12 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from "react";
 import { notFound, useSearchParams } from "next/navigation";
 import axios from "axios";
-import { EMAIL_VERIFICATION_ROUTE } from "@/lib/constants";
+
 import { addToast, Spinner } from "@heroui/react";
-import { Section } from "../sections";
-import {
-  ErrorIcon,
-  CircleExclamation,
-  ThumbsUpIcon,
-  VerifiedIcon,
-} from "@/icons";
+
+// Import from lucide-react or any other single source
+import { AlertCircle as ErrorIcon, CircleAlert as CircleExclamation, ThumbsUp, ShieldCheck as VerifiedIcon } from "lucide-react";
 
 const EmailVerificationPage = () => {
   const searchParams = useSearchParams();
@@ -75,42 +70,40 @@ const EmailVerificationPage = () => {
   }, []);
 
   return (
-    <Section isHeroSection isCenterGradient>
-      <div className="flex flex-col items-center justify-center gap-4">
-        {isLoading && (
-          <Spinner
-            size="lg"
-            color="current"
-            variant="spinner"
-            label="Verifying..."
-            className="space-y-8"
-            classNames={{ wrapper: "size-32", label: "text-xl font-bold" }}
-          />
-        )}
+    <div className="flex flex-col items-center justify-center gap-4">
+      {isLoading && (
+        <Spinner
+          size="lg"
+          color="current"
+          variant="spinner"
+          label="Verifying..."
+          className="space-y-8"
+          classNames={{ wrapper: "size-32", label: "text-xl font-bold" }}
+        />
+      )}
 
-        {errorMessage && (
-          <>
-            <ErrorIcon className="size-48 text-danger-500" />
-            <h3 className="text-2xl font-bold text-danger-500">An Error</h3>
-            <div className="flex items-center gap-2 text-danger-600 bg-danger-50 border-2 border-solid border-danger-100 p-3 rounded-xl">
-              <CircleExclamation className="text-danger-600" />
-              <span>{errorMessage}</span>
-            </div>
-          </>
-        )}
+      {errorMessage && (
+        <>
+          <ErrorIcon className="size-48 text-danger-500" />
+          <h3 className="text-2xl font-bold text-danger-500">An Error</h3>
+          <div className="flex items-center gap-2 text-danger-600 bg-danger-50 border-2 border-solid border-danger-100 p-3 rounded-xl">
+            <CircleExclamation className="text-danger-600" />
+            <span>{errorMessage}</span>
+          </div>
+        </>
+      )}
 
-        {successMessage && (
-          <>
-            <VerifiedIcon className="size-48 text-success-500" />
-            <h3 className="text-2xl font-bold text-success-500">Verified</h3>
-            <div className="flex items-center gap-2 text-success-600 bg-success-50 border-2 border-solid border-success-100 p-3 rounded-xl">
-              <ThumbsUpIcon name="check_circle" className="text-success-600" />
-              <span>{successMessage}</span>
-            </div>
-          </>
-        )}
-      </div>
-    </Section>
+      {successMessage && (
+        <>
+          <VerifiedIcon className="size-48 text-success-500" />
+          <h3 className="text-2xl font-bold text-success-500">Verified</h3>
+          <div className="flex items-center gap-2 text-success-600 bg-success-50 border-2 border-solid border-success-100 p-3 rounded-xl">
+            <ThumbsUp className="text-success-600" />
+            <span>{successMessage}</span>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

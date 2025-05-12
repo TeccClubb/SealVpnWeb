@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DashboardSec from "@/components/dashboardSection/dashboard";
-
+import DashboardSection from "@/components/dashboardSection/dashboard";
 
 
 const DashboardPage = () => {
@@ -30,7 +29,7 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSec title="Dashboard" heading="Welcome back, John Doe">
+    <DashboardSection title="Dashboard" heading="Welcome back, John Doe">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
@@ -127,7 +126,7 @@ const DashboardPage = () => {
           </p>
         </div>
       </div>
-    </DashboardSec>
+    </DashboardSection>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
+import Footer from "@/components/footer/footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
