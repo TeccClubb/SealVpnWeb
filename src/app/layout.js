@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navBar/navBar";
+// import Navbar from "@/components/navBar/navBar";
 import Footer from "@/components/footer/footer";
 import 'react-toastify/dist/ReactToastify.css';
 import LayoutWrapper from "@/components/layoutWrapper";
@@ -38,7 +38,9 @@ export default function RootLayout({ children }) {
       //   className={`${geistSans.variable} ${geistMono.variable} antialiased`
       // }
       >
+       
         <LayoutWrapper>{children}</LayoutWrapper>
+        {/* <Footer></Footer> */}
         <ToastContainer></ToastContainer>
       </body>
     </html>

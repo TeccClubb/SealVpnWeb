@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/footer";
 import Sidebar from "@/components/Sidebar";
 
 export default function RootLayout({ children }) {
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
           {/* Main content adapts to remaining space */}
           <main className="flex-1 p-6">
             {children}
+            <Footer></Footer>
           </main>
         </div>
       </body>

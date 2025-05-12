@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DashboardSection from "@/components/DashboardSection";
+import DashboardSec from "@/components/dashboardSection/dashboard";
+
+
 
 const DashboardPage = () => {
   const [activePlan, setActivePlan] = useState(null);
 
   useEffect(() => {
-    
     const token = localStorage.getItem("access_token");
 
     axios
@@ -29,7 +30,7 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading="Welcome back, John Doe">
+    <DashboardSec title="Dashboard" heading="Welcome back, John Doe">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
@@ -126,7 +127,7 @@ const DashboardPage = () => {
           </p>
         </div>
       </div>
-    </DashboardSection>
+    </DashboardSec>
   );
 };
 
