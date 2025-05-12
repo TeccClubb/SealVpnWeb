@@ -3,6 +3,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
+import handleDownloadInvoice from "@/components/handleDawnloadInvoice";
+// import DownloadInvoiceButton from "@/components/handleDawnloadInvoice";
+import DownloadInvoiceButton from "@/components/downloadInvoiceButton";
+
 
 const BillingHistory = () => {
   const [billingAddress, setbillingAddress] = useState(null);
@@ -16,28 +21,31 @@ const BillingHistory = () => {
     if (!token) {
       router.push("/login");
       return;
-    } 
-    let Api_Url=process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+    }
+    ////
+    let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
     //fatch billing address
-    axios.get( `${Api_Url}/billing-address`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axios.get(`${Api_Url}/billing-address`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
+        console.log(response.data)
+        console.log(response.data.user.billing_address);
         setbillingAddress(response.data.user.billing_address);
       })
       .catch((error) => {
         console.error("Error fetching billing address:", error.response?.data || error.message);
       });
-            // Fetch billing history
+    // Fetch billing history
     axios.get(`${Api_Url}/purchase/history`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
         setBillingData(response.data.data);
       })
@@ -45,6 +53,9 @@ const BillingHistory = () => {
         console.error("Error fetching billing history:", error.response?.data || error.message);
       });
   }, []);
+  const handleInvoice =()=>{
+    axox
+  }
 
   return (
     <div className="flex min-h-screen bg-white">
@@ -64,6 +75,8 @@ const BillingHistory = () => {
                   <th className="p-3 border-b border-gray-200">Start Date</th>
                   <th className="p-3 border-b border-gray-200">End Date</th>
                   <th className="p-3 border-b border-gray-200">Status</th>
+                  <td className="p-3 border-b border-gray-200 capitalize">Invoice</td>
+
                 </tr>
               </thead>
               <tbody>
@@ -74,13 +87,20 @@ const BillingHistory = () => {
                     <td className="p-3 border-b border-gray-200">{new Date(item.start_date).toLocaleDateString()}</td>
                     <td className="p-3 border-b border-gray-200">{new Date(item.end_date).toLocaleDateString()}</td>
                     <td className="p-3 border-b border-gray-200 capitalize">{item.status}</td>
+                    <td>
+
+                     <DownloadInvoiceButton
+                      purchaseId={item.id}
+                      token={localStorage.getItem("access_token")}
+                    />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
-            <h2 className="text-neutral-600 text-2xl font-bold font-['Montserrat'] leading-10 mb-2">Billing Address</h2>
+        <h2 className="text-neutral-600 text-2xl font-bold font-['Montserrat'] leading-10 mb-2">Billing Address</h2>
 
         {/* Billing Address Card */}
         {billingAddress && (
