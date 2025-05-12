@@ -7,6 +7,7 @@ const DashboardPage = () => {
   const [activePlan, setActivePlan] = useState(null);
 
   useEffect(() => {
+    
     const token = localStorage.getItem("access_token");
 
     axios
