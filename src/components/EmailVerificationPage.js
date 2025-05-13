@@ -1,12 +1,16 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { notFound, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 import { addToast, Spinner } from "@heroui/react";
 
-// Import from lucide-react or any other single source
-import { AlertCircle as ErrorIcon, CircleAlert as CircleExclamation, ThumbsUp, ShieldCheck as VerifiedIcon } from "lucide-react";
+import {
+  AlertCircle as ErrorIcon,
+  CircleAlert as CircleExclamation,
+  ThumbsUp,
+  ShieldCheck as VerifiedIcon,
+} from "lucide-react";
 
 const EmailVerificationPage = () => {
   const searchParams = useSearchParams();
@@ -28,11 +32,8 @@ const EmailVerificationPage = () => {
       try {
         setLoading(true);
         const res = await axios
-          .get(`/api/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`, {
-            params: {
-              expires,
-              signature,
-            },
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`, {
+            
             headers: {
               Accept: "application/json",
             },
@@ -70,39 +71,46 @@ const EmailVerificationPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      {isLoading && (
-        <Spinner
-          size="lg"
-          color="current"
-          variant="spinner"
-          label="Verifying..."
-          className="space-y-8"
-          classNames={{ wrapper: "size-32", label: "text-xl font-bold" }}
-        />
-      )}
-
-      {errorMessage && (
-        <>
-          <ErrorIcon className="size-48 text-danger-500" />
-          <h3 className="text-2xl font-bold text-danger-500">An Error</h3>
-          <div className="flex items-center gap-2 text-danger-600 bg-danger-50 border-2 border-solid border-danger-100 p-3 rounded-xl">
-            <CircleExclamation className="text-danger-600" />
-            <span>{errorMessage}</span>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
+      <div className="w-full max-w-md text-center space-y-6 bg-white shadow-lg rounded-2xl p-8 border border-gray-200">
+        {isLoading && (
+          <div className="flex flex-col items-center gap-6">
+            <Spinner
+              size="lg"
+              color="current"
+              variant="spinner"
+              label="Verifying your email..."
+              classNames={{
+                wrapper: "size-24",
+                label: "text-lg font-semibold text-gray-700",
+              }}
+            />
+            <p className="text-gray-500">Please wait while we verify your request.</p>
           </div>
-        </>
-      )}
+        )}
 
-      {successMessage && (
-        <>
-          <VerifiedIcon className="size-48 text-success-500" />
-          <h3 className="text-2xl font-bold text-success-500">Verified</h3>
-          <div className="flex items-center gap-2 text-success-600 bg-success-50 border-2 border-solid border-success-100 p-3 rounded-xl">
-            <ThumbsUp className="text-success-600" />
-            <span>{successMessage}</span>
+        {errorMessage && (
+          <div className="space-y-4">
+            <ErrorIcon className="size-16 mx-auto text-red-500" />
+            <h3 className="text-2xl font-semibold text-red-600">Verification Failed</h3>
+            <div className="flex items-center gap-3 text-red-600 bg-red-50 border border-red-200 p-4 rounded-lg">
+              <CircleExclamation className="text-red-500" />
+              <span className="text-sm text-left">{errorMessage}</span>
+            </div>
           </div>
-        </>
-      )}
+        )}
+
+        {successMessage && (
+          <div className="space-y-4">
+            <VerifiedIcon className="size-16 mx-auto text-green-500" />
+            <h3 className="text-2xl font-semibold text-green-600">Email Verified</h3>
+            <div className="flex items-center gap-3 text-green-600 bg-green-50 border border-green-200 p-4 rounded-lg">
+              <ThumbsUp className="text-green-500" />
+              <span className="text-sm text-left">{successMessage}</span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
