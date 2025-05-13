@@ -93,7 +93,7 @@ export default function LoginForm() {
 
           {/* Forgot Password */}
           <div className="text-center mt-2 text-sm">
-            <a href="#" className="text-gray-500 underline">I forgot my password</a>
+            <a href="/forgotPassword" className="text-gray-500 underline">I forgot my password</a>
           </div>
 
           {/* Sign Up */}
