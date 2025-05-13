@@ -1,4 +1,4 @@
- 
+
 
 "use client"
 import FaqTestimonialSection from "@/components/pricingSection/frequnetQuestion"
@@ -6,23 +6,23 @@ import PricingPlans from "@/components/pricingSection/pricingPlans"
 import { useEffect } from "react"
 
 import VisaSection from "@/components/pricingSection/visaSection";
-export default function pricing(){
+export default function pricing() {
 
 
-  
 
-    return(
+
+    return (
         <div>
             <div  >
 
-            <PricingPlans></PricingPlans>
+                <PricingPlans></PricingPlans>
             </div>
             <div  >
                 <VisaSection></VisaSection>
             </div>
-            <div > 
+            <div >
 
-            <FaqTestimonialSection></FaqTestimonialSection>
+                <FaqTestimonialSection></FaqTestimonialSection>
             </div>
         </div>
     )

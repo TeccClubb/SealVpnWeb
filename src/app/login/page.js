@@ -19,7 +19,7 @@ export default function LoginForm() {
     let Api_Url=process.env.NEXT_PUBLIC_REST_API_BASE_URL;
 
     const payload = {
-      name: data.email, // Map email field to "name"
+      email: data.email, // Map email field to "name"
       password: data.password,
     };
   

@@ -22,8 +22,8 @@ export default function PricingPlans() {
       });
   }, []);
 
-  const handleClick = () => {
-    router.push("/account/checkout");
+  const handleClick = (planId) => {
+    router.push(`/account/checkout?planId=${planId}`);
   };
 
   return (
@@ -48,9 +48,10 @@ export default function PricingPlans() {
               <Image src="/pricing/tickImg.svg" alt="Tick" width={20} height={20} />
               <span className="ps-2">2GB of secure browsing</span>
             </div>
-            <button onClick={handleClick} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
+            <button onClick={() => handleClick("free")} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
               Try for free
             </button>
+
           </div>
 
           {/* API Plan 1 (Assuming it's Unlimited) */}
@@ -79,7 +80,7 @@ export default function PricingPlans() {
               </ul>
               <p className="text-xl font-normal mb-3">from ${plans[0].price}/month</p>
               <div className="flex-grow"></div>
-              <button onClick={handleClick} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
+              <button onClick={() => handleClick(plans[0].id)} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
                 Get Started
               </button>
             </div>
@@ -100,7 +101,7 @@ export default function PricingPlans() {
                 ))}
               </ul>
               <p className="text-lg font-bold mb-4">${plans[1].price}/mo per user</p>
-              <button onClick={handleClick} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
+              <button onClick={() => handleClick(plans[1].id)} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
                 Get Started
               </button>
             </div>
