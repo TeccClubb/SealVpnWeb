@@ -134,7 +134,7 @@ const Invoice = () => {
                     <th>Date</th>
                   </tr>
                 </thead>
-                <tbody className="prose-tr:border-b-1 last:prose-tr:border-b-0 prose-tr:border-gray-300">
+                <tbody className="prose-tr:border-b-1 text-center last:prose-tr:border-b-0 prose-tr:border-gray-300">
                   {isPurchasedPlanLoading && (
                     <tr>
                       <td align="center" colSpan={2}>
@@ -144,7 +144,7 @@ const Invoice = () => {
                   )}
 
                   {!isPurchasedPlanLoading && purchasedPlan && (
-                    <tr>
+                    <tr className="text-center">
                       <td>{purchasedPlan.id}</td>
                       <td>
                         {new Date(
