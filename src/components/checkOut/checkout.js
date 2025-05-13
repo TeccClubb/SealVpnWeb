@@ -15,13 +15,14 @@ export default function CheckoutPage() {
     const [plans, setPlans] = useState();
     const [billingAddress, setbillingAddress] = useState();
 
+  if (!planId) {
+            notFound();
+            
+        }
     useEffect(() => {
         const token = localStorage.getItem("access_token");
 
-        if (!planId) {
-            notFound();
-            return;
-        }
+      
 
         // Fetch plans
         axios.get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/plans`, {
@@ -169,6 +170,7 @@ export default function CheckoutPage() {
                         <CheckOutForm
                             billingAddress={billingAddress}
                             amount={Math.round(Number(selectedPlan.price) * 100)}
+                            planId={planId}
                         />
                     )}
 

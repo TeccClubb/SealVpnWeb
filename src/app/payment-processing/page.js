@@ -70,7 +70,8 @@ const [user,setUser]=useState();
             console.log(response)
 
           if (response.status) {
-            setSuccessMessage(res.message);
+            setSuccessMessage(response.message);
+            toast.success(response.message)
             // dispatch(setActivePlan(res.purchase));
           }
         } else {

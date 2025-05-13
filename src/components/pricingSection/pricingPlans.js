@@ -23,7 +23,14 @@ export default function PricingPlans() {
   }, []);
 
   const handleClick = (planId) => {
-    router.push(`/account/checkout?planId=${planId}`);
+    const token = localStorage.getItem("access_token")
+
+    if (!token) {
+      router.push("/login")
+    } else {
+
+      router.push(`/account/checkout?planId=${planId}`);
+    }
   };
 
   return (

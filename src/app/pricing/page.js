@@ -8,9 +8,6 @@ import { useEffect } from "react"
 import VisaSection from "@/components/pricingSection/visaSection";
 export default function pricing() {
 
-
-
-
     return (
         <div>
             <div  >
