@@ -1,11 +1,9 @@
 "use client";
 
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { addToast } from "@heroui/react"; // ✅ Use your toast system
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 const ForgotPasswordPage = () => {
   const {
@@ -14,9 +12,11 @@ const ForgotPasswordPage = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/forgot-password`,
@@ -31,8 +31,7 @@ const ForgotPasswordPage = () => {
       );
 
       if (response.status === 200 || response.status === 201) {
-       toast.success("✅ Reset link sent successfully!");
-       router.push('/reset-password')
+        toast.success("✅ Reset link sent successfully!");
         reset(); // Clear form
       } else {
         toast.error("❌ Failed to send reset link.");
@@ -41,9 +40,11 @@ const ForgotPasswordPage = () => {
     } catch (error) {
       const message =
         error?.response?.data?.message || "Something went wrong.";
-     toast.error(`❌ ${message}`);
+      toast.error(`❌ ${message}`);
       toast.error("❌ Failed to send reset link.");
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,9 +79,10 @@ const ForgotPasswordPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-[50%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
           >
-            Send Reset Link
+            {loading ? "Loading..." : "Send Reset Link"}
           </button>
 
           {/* Back to Login */}

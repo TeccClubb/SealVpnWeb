@@ -14,8 +14,12 @@ export default function SignUpForm() {
   } = useForm();
 
   const [serverMessage, setServerMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setLoading(true);
+    setServerMessage("");
+
     try {
       const response = await axios.post(
         "https://seelvpn.tecclubb.com/api/signup",
@@ -30,14 +34,13 @@ export default function SignUpForm() {
           },
         }
       );
-      console.log("Response:", response.data); 
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("✅ Sign up successful!");
+        toast.success("Sign up successful!");
         setServerMessage("✅ Sign up successful!");
-        reset(); // Clear form fields
+        reset();
       } else {
-        toast.error("❌ Signup failed.");
+        toast.error("Signup failed.");
         setServerMessage("❌ Signup failed.");
       }
     } catch (error) {
@@ -45,6 +48,8 @@ export default function SignUpForm() {
         error?.response?.data?.message || "Something went wrong.";
       setServerMessage(`❌ ${message}`);
       console.error("Signup error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,23 +108,30 @@ export default function SignUpForm() {
             )}
           </div>
 
-          {/* Server message */}
-          {serverMessage && (
-            <p className="text-center text-sm mt-2 text-green-500">{serverMessage}</p>
-          )}
-
           {/* Sign Up Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-[70%] mx-auto block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full mt-2"
           >
-            Sign Up
+            {loading ? "Loading..." : "Sign Up"}
           </button>
+
+          {/* Server message below button */}
+          {serverMessage && (
+            <p
+              className={`text-center text-sm mt-2 ${
+                serverMessage.includes("❌") ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              {serverMessage}
+            </p>
+          )}
 
           {/* Already have an account */}
           <div className="text-center mt-2 text-sm">
             Already have a SeelVpn account?{" "}
-            <a href="#" className="text-teal-600 underline">
+            <a href="/login" className="text-teal-600 underline">
               Log in
             </a>
           </div>
