@@ -45,7 +45,9 @@ const BillingHistory = () => {
       },
     })
       .then((response) => {
-        setBillingData(response.data.data);
+        console.log("////////////////")
+        console.log(response.data.purchases)
+        setBillingData(response.data.purchases);
       })
       .catch((error) => {
         console.error("Error fetching billing history:", error.response?.data || error.message);

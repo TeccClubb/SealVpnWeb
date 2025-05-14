@@ -201,7 +201,7 @@ const Invoice = () => {
                   className="w-10 h-auto"
                 />
                 <span className="text-[#1a1a78] text-2xl font-semibold">
-                  GShieldVPN
+                  SeelVpn
                 </span>
               </div>
               <p className="text-sm text-black font-normal">
@@ -253,7 +253,7 @@ const Invoice = () => {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <h6 className="text-[#1a1a78] text-sm font-semibold">Sale by:</h6>
-                <span>GShieldVPN</span>
+                <span>SeelVpn</span>
               </div>
               <span>Thanks for your business</span>
             </div>
