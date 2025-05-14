@@ -67,6 +67,12 @@ const CheckoutPage = () => {
 
 
 
+const getDiscountAmountInSubunits = (originalPrice, discountPrice) => {
+  if (!originalPrice || !discountPrice) return 0;
+  const discount = originalPrice - discountPrice;
+  return Math.round(discount * 100); // Convert to subunit
+};
+
 
 
 
@@ -169,8 +175,9 @@ const CheckoutPage = () => {
                     {selectedPlan && (
                         <CheckOutForm
                             billingAddress={billingAddress}
-                            amount={Math.round(Number(selectedPlan.price) * 100)}
+                            amount={getDiscountAmountInSubunits(selectedPlan.original_price, selectedPlan.discount_price)}
                             planId={planId}
+                            seletedPlane={selectedPlan}
                         />
                     )}
 

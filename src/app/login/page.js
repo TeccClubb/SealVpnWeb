@@ -5,6 +5,7 @@ import Footer from "@/components/footer/footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 export default function LoginForm() {
   const {
@@ -13,49 +14,46 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
 
-
-  const onSubmit = (data) => {
-    let Api_Url=process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+  const onSubmit = async (data) => {
+    const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+    setIsLoading(true);
+    setResponseMessage("");
 
     const payload = {
-      name: data.email, // Map email field to "name"
+      email: data.email,
       password: data.password,
     };
-  
-    axios
-      .post(`${Api_Url}/login`, payload, {
+
+    try {
+      const response = await axios.post(`${Api_Url}/login`, payload, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-      })
-      .then((response) => {
-        console.log("Login successful:", response.data);
-         if (response.data.status) {
-          console.log("Login successful:", response.data.access_token);
-          localStorage.setItem("access_token", response.data.access_token);
-          console.log("ddddddddddddddddddddddccccccccc")
-          console.log(response.data.user)
-         localStorage.setItem("user", JSON.stringify(response.data.user));
-
-          router.push("/Dashboard");
-          toast.success("Login successful!")
-
-          
-        // Handle success (e.g., store token, redirect)
-        }
-      })
-      .catch((error) => {
-        console.error("Login failed:", error.response?.data || error.message);
-        // Handle login error (e.g., show error message)
       });
+
+      if (response.data.status) {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setIsLoading(false);
+        toast.success("Login successful!");
+        router.push("/Dashboard");
+      } else {
+        setIsLoading(false);
+        setResponseMessage("Login failed. Please try again.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setResponseMessage(error.response?.data?.message || "Login failed.");
+      console.error("Login error:", error);
+    }
   };
-  
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-white text-gray-800">
-      {/* Main Content */}
       <main className="flex flex-col items-center justify-center flex-grow py-10">
         <img src="/loginicon.png" alt="Logo" className="w-16 h-16 mb-4" />
         <h1 className="text-xl font-bold mb-6">Log in to SeelVpn</h1>
@@ -86,10 +84,16 @@ export default function LoginForm() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-[70%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
+            disabled={isLoading}
+            className="w-[70%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full transition duration-200 disabled:opacity-60"
           >
-            Log In
+            {isLoading ? "Logging in..." : "Log In"}
           </button>
+
+          {/* Message below button */}
+          {responseMessage && (
+            <p className="text-center mt-3 text-sm text-red-500">{responseMessage}</p>
+          )}
 
           {/* Forgot Password */}
           <div className="text-center mt-2 text-sm">
@@ -109,4 +113,3 @@ export default function LoginForm() {
     </div>
   );
 }
-	
