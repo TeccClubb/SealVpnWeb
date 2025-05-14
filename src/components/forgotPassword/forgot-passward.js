@@ -5,6 +5,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { addToast } from "@heroui/react"; // ✅ Use your toast system
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const ForgotPasswordPage = () => {
   const {
@@ -13,6 +14,7 @@ const ForgotPasswordPage = () => {
     formState: { errors },
     reset,
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (data) => {
     try {
@@ -30,6 +32,7 @@ const ForgotPasswordPage = () => {
 
       if (response.status === 200 || response.status === 201) {
        toast.success("✅ Reset link sent successfully!");
+       router.push('/reset-password')
         reset(); // Clear form
       } else {
         toast.error("❌ Failed to send reset link.");
