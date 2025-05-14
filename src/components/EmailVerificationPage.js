@@ -32,11 +32,8 @@ const EmailVerificationPage = () => {
       try {
         setLoading(true);
         const res = await axios
-          .get(`/api/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`, {
-            params: {
-              expires,
-              signature,
-            },
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`, {
+           
             headers: {
               Accept: "application/json",
             },
