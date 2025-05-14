@@ -3,8 +3,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid';
-import handleDownloadInvoice from "@/components/handleDawnloadInvoice";
 // import DownloadInvoiceButton from "@/components/handleDawnloadInvoice";
 import DownloadInvoiceButton from "@/components/downloadInvoiceButton";
 

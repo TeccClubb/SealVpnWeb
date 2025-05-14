@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { CircularProgress, IconButton } from "@mui/material";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { toast } from "react-toastify";
+import DownloadIcon from "./DownloadIcon";
 
 const DownloadInvoiceButton = ({ purchaseId, token }) => {
   const [open, setOpen] = useState(false);
@@ -64,7 +64,7 @@ const DownloadInvoiceButton = ({ purchaseId, token }) => {
         {isInvoiceDownloading ? (
           <CircularProgress size={20} />
         ) : (
-          <ArrowDownTrayIcon className="h-5 w-5 text-gray-600 hover:text-blue-600" />
+          <DownloadIcon className="h-5 w-5 text-gray-600 hover:text-blue-600" />
         )}
       </IconButton>
     </>
