@@ -21,6 +21,7 @@ const Sidebar = () => {
     // Handle logout logic here
     console.log('User logged out');
     localStorage.removeItem('access_token'); // Remove token from local storage
+    localStorage.removeItem("user")
     window.location.href = '/login'; // Redirect to login page
     
     
