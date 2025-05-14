@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 // import { useEffect } from 'react';
 import axios from 'axios';
 
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import CheckOutForm from '../checkoutForm';
-export default function CheckoutPage() {
+const CheckoutPage = () => {
 
     const searchParams = useSearchParams();
     const planId = searchParams.get("planId");
@@ -324,3 +324,11 @@ export default function CheckoutPage() {
         </section>
     );
 }
+
+const Page = () => (
+        <Suspense>
+            <CheckoutPage />
+        </Suspense>
+    );
+
+export default Page
