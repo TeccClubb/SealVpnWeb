@@ -1,17 +1,47 @@
 "use client";
+
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { addToast } from "@heroui/react"; // ✅ Use your toast system
+import { toast } from "react-toastify";
 
 const ForgotPasswordPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    // handle email submission for password reset
-    console.log("Reset link will be sent to:", data.email);
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/forgot-password`,
+        {
+          email: data.email,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+       toast.success("✅ Reset link sent successfully!");
+        reset(); // Clear form
+      } else {
+        toast.error("❌ Failed to send reset link.");
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || "Something went wrong.";
+     toast.error(`❌ ${message}`);
+      toast.error("❌ Failed to send reset link.");
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -21,7 +51,8 @@ const ForgotPasswordPage = () => {
         <img src="/loginicon.png" alt="Logo" className="w-16 h-16 mb-4" />
         <h1 className="text-xl font-bold mb-4">Forgot Your Password?</h1>
         <p className="text-sm text-gray-500 mb-6 text-center max-w-xs">
-          Enter the email address associated with your account and we’ll send you a link to reset your password.
+          Enter the email address associated with your account and we’ll send
+          you a link to reset your password.
         </p>
 
         <form
