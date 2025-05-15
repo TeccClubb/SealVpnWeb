@@ -37,16 +37,16 @@ export default function SignUpForm() {
 
       if (response.status === 200 || response.status === 201) {
         toast.success("Sign up successful!");
-        setServerMessage("✅ Sign up successful!");
+        setServerMessage(" Sign up successful!");
         reset();
       } else {
         toast.error("Signup failed.");
-        setServerMessage("❌ Signup failed.");
+        setServerMessage(" Signup failed.");
       }
     } catch (error) {
       const message =
         error?.response?.data?.message || "Something went wrong.";
-      setServerMessage(`❌ ${message}`);
+      setServerMessage(` ${message}`);
       console.error("Signup error:", error);
     } finally {
       setLoading(false);
@@ -61,20 +61,20 @@ export default function SignUpForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mx-auto space-y-2">
           {/* Username */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="text"
               placeholder="Username"
               {...register("username", { required: "Username is required" })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.username && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.username.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.username.message}</p>
             )}
           </div>
 
           {/* Email */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="email"
               placeholder="Email"
@@ -85,15 +85,15 @@ export default function SignUpForm() {
                   message: "Enter a valid email",
                 },
               })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.email.message}</p>
             )}
           </div>
 
           {/* Password */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="password"
               placeholder="Password"
@@ -101,10 +101,10 @@ export default function SignUpForm() {
                 required: "Password is required",
                 minLength: { value: 8, message: "Minimum 8 characters" },
               })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.password.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.password.message}</p>
             )}
           </div>
 
@@ -120,13 +120,15 @@ export default function SignUpForm() {
           {/* Server message below button */}
           {serverMessage && (
             <p
-              className={`text-center text-sm mt-2 ${
-                serverMessage.includes("❌") ? "text-red-500" : "text-green-500"
-              }`}
+              className={`text-center text-sm mt-2 ${/❌|failed|error/i.test(serverMessage)
+                  ? "text-red-500"
+                  : "text-green-500"
+                }`}
             >
               {serverMessage}
             </p>
           )}
+
 
           {/* Already have an account */}
           <div className="text-center mt-2 text-sm">

@@ -60,26 +60,35 @@ export default function LoginForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mx-auto">
           {/* Email */}
+
+
+          <div className="w-[70%] mx-auto">
+
           <input
             type="email"
             placeholder="Email"
             {...register("email", { required: "Email is required" })}
-            className="w-[70%] mx-auto block px-4 mt-2 py-2 mb-1 border border-gray-300 rounded-md"
+            className="w-full block px-4 mt-2 py-2 mb-1 border border-gray-300 rounded-md"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm text-center mb-2">{errors.email.message}</p>
+            <p className="text-red-500 text-sm  mb-2">{errors.email.message}</p>
           )}
+          </div>
 
           {/* Password */}
+
+          <div className="w-[70%] mx-auto">
+
           <input
             type="password"
             placeholder="Password"
             {...register("password", { required: "Password is required" })}
-            className="w-[70%] mx-auto block mt-4 px-4 py-2 mb-1 border border-gray-300 rounded-md"
+            className="w-full block mt-4 px-4 py-2 mb-1 border border-gray-300 rounded-md"
           />
           {errors.password && (
-            <p className="text-red-500 text-sm text-center mb-3">{errors.password.message}</p>
+            <p className="text-red-500 text-sm  mb-3">{errors.password.message}</p>
           )}
+          </div>
 
           {/* Login Button */}
           <button

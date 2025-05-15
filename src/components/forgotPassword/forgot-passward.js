@@ -31,17 +31,17 @@ const ForgotPasswordPage = () => {
       );
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("✅ Reset link sent successfully!");
+        toast.success(" Reset link sent successfully!");
         reset(); // Clear form
       } else {
-        toast.error("❌ Failed to send reset link.");
+        toast.error(" Failed to send reset link.");
         toast.error(response.data.message);
       }
     } catch (error) {
       const message =
         error?.response?.data?.message || "Something went wrong.";
-      toast.error(`❌ ${message}`);
-      toast.error("❌ Failed to send reset link.");
+      toast.error(` ${message}`);
+      toast.error(" Failed to send reset link.");
       console.error("Error:", error);
     } finally {
       setLoading(false);
