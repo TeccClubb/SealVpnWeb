@@ -14,8 +14,12 @@ export default function SignUpForm() {
   } = useForm();
 
   const [serverMessage, setServerMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
+    setLoading(true);
+    setServerMessage("");
+
     try {
       const response = await axios.post(
         "https://seelvpn.tecclubb.com/api/signup",
@@ -30,21 +34,22 @@ export default function SignUpForm() {
           },
         }
       );
-      console.log("Response:", response.data); 
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("✅ Sign up successful!");
-        setServerMessage("✅ Sign up successful!");
-        reset(); // Clear form fields
+        toast.success("Sign up successful!");
+        setServerMessage(" Sign up successful!");
+        reset();
       } else {
-        toast.error("❌ Signup failed.");
-        setServerMessage("❌ Signup failed.");
+        toast.error("Signup failed.");
+        setServerMessage(" Signup failed.");
       }
     } catch (error) {
       const message =
         error?.response?.data?.message || "Something went wrong.";
-      setServerMessage(`❌ ${message}`);
+      setServerMessage(` ${message}`);
       console.error("Signup error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,20 +61,20 @@ export default function SignUpForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mx-auto space-y-2">
           {/* Username */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="text"
               placeholder="Username"
               {...register("username", { required: "Username is required" })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.username && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.username.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.username.message}</p>
             )}
           </div>
 
           {/* Email */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="email"
               placeholder="Email"
@@ -80,15 +85,15 @@ export default function SignUpForm() {
                   message: "Enter a valid email",
                 },
               })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.email.message}</p>
             )}
           </div>
 
           {/* Password */}
-          <div>
+          <div className="w-[70%] mx-auto">
             <input
               type="password"
               placeholder="Password"
@@ -96,30 +101,39 @@ export default function SignUpForm() {
                 required: "Password is required",
                 minLength: { value: 8, message: "Minimum 8 characters" },
               })}
-              className="w-[70%] mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1 text-center">{errors.password.message}</p>
+              <p className="text-red-500 text-sm mt-1 ">{errors.password.message}</p>
             )}
           </div>
-
-          {/* Server message */}
-          {serverMessage && (
-            <p className="text-center text-sm mt-2 text-green-500">{serverMessage}</p>
-          )}
 
           {/* Sign Up Button */}
           <button
             type="submit"
+            disabled={loading}
             className="w-[70%] mx-auto block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full mt-2"
           >
-            Sign Up
+            {loading ? "Loading..." : "Sign Up"}
           </button>
+
+          {/* Server message below button */}
+          {serverMessage && (
+            <p
+              className={`text-center text-sm mt-2 ${/❌|failed|error/i.test(serverMessage)
+                  ? "text-red-500"
+                  : "text-green-500"
+                }`}
+            >
+              {serverMessage}
+            </p>
+          )}
+
 
           {/* Already have an account */}
           <div className="text-center mt-2 text-sm">
             Already have a SeelVpn account?{" "}
-            <a href="#" className="text-teal-600 underline">
+            <a href="/login" className="text-teal-600 underline">
               Log in
             </a>
           </div>
