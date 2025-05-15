@@ -112,10 +112,10 @@ useEffect(() => {
                   Log Out
                 </span>
                   <Link
-              href="/pricing"
+              href="/Dashboard"
               className="ml-4 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
             >
-              client Area
+              Client Area
             </Link>
                 </>
                 
@@ -173,17 +173,29 @@ useEffect(() => {
           <Link href="#" className="block hover:text-black">Help</Link>
           {
             user ? (
+              <>
               <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black">Log Out</span>
+               <Link
+              href="/Dashboard"
+              className=" px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
+            >
+              Client Area
+            </Link>
+              </>
             ) : (
+              <>
+
               <Link href="/login" className="block hover:text-black">Log In</Link>
-            )
-          }
-          <Link
+                <Link
             href="/pricing"
             className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
           >
             Get SeeVpn
           </Link>
+              </>
+            )
+          }
+        
         </div>
 
       )}
