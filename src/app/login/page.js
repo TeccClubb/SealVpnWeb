@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
+  import Cookies from "js-cookie"; // Install this with: npm install js-cookie
 
 export default function LoginForm() {
   const {
@@ -17,40 +18,52 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
-  const onSubmit = async (data) => {
-    const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-    setIsLoading(true);
-    setResponseMessage("");
 
-    const payload = {
-      email: data.email,
-      password: data.password,
-    };
+const onSubmit = async (data) => {
+  const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+  setIsLoading(true);
+  setResponseMessage("");
 
-    try {
-      const response = await axios.post(`${Api_Url}/login`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+  const payload = {
+    email: data.email,
+    password: data.password,
+  };
+
+  try {
+    const response = await axios.post(`${Api_Url}/login`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    if (response.data.status) {
+      // Store in localStorage (optional)
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      // ✅ Store in cookies
+      Cookies.set("access_token", response.data.access_token, {
+        expires: 1, // 1 day
+        secure: true,
+        sameSite: "Strict",
+        path: "/",
       });
 
-      if (response.data.status) {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        setIsLoading(false);
-        toast.success("Login successful!");
-        router.push("/Dashboard");
-      } else {
-        setIsLoading(false);
-        setResponseMessage("Login failed. Please try again.");
-      }
-    } catch (error) {
       setIsLoading(false);
-      setResponseMessage(error.response?.data?.message || "Login failed.");
-      console.error("Login error:", error);
+      toast.success("Login successful!");
+      router.push("/Dashboard");
+    } else {
+      setIsLoading(false);
+      setResponseMessage("Login failed. Please try again.");
     }
-  };
+  } catch (error) {
+    setIsLoading(false);
+    setResponseMessage(error.response?.data?.message || "Login failed.");
+    console.error("Login error:", error);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-white text-gray-800">
