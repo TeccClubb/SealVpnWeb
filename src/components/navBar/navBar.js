@@ -169,7 +169,7 @@ useEffect(() => {
             }
 
           </details>
-          <Link href="/Download" className="block hover:text-black">Download</Link>
+          <Link href="/download-device" className="block hover:text-black">Download</Link>
           <Link href="#" className="block hover:text-black">Help</Link>
           {
             user ? (
