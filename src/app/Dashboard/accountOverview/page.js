@@ -29,11 +29,11 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading="Welcome back, John Doe">
+    <DashboardSection title="Dashboard" heading="Welcome back, TeccClub">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
-          <button className="w-full max-w-64 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
+          <button className="w-full max-w-64 bg-teal-400 hover:bg-green-700 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
             Connect
           </button>
           <p className="text-default-500 text-2xl font-normal text-center">
