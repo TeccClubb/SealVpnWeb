@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { notFound, useSearchParams } from "next/navigation";
 import axios from "axios";
 
-import { addToast } from "@heroui/react";
+
 
 import {
   AlertCircle as ErrorIcon,
@@ -11,6 +11,7 @@ import {
   ThumbsUp,
   ShieldCheck as VerifiedIcon,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const EmailVerificationPage = () => {
   const searchParams = useSearchParams();
@@ -41,25 +42,17 @@ const EmailVerificationPage = () => {
           .then((res) => res.data);
 
         if (res.status) {
-          addToast({
-            color: "success",
-            description: res.message,
-          });
+          toast.success("Email verified successfully!");
           setSuccessMessage(res.message);
         } else {
-          addToast({
-            color: "danger",
-            description: res.message,
-          });
+         toast.error("Email verification failed.");
           setErrorMessage(res.message);
         }
       } catch (error) {
         const message =
           error?.response?.data?.message || error?.message || "An unknown error occurred";
-        addToast({
-          color: "danger",
-          description: message,
-        });
+       toast.error(message);
+       
         setErrorMessage(message);
       } finally {
         setLoading(false);

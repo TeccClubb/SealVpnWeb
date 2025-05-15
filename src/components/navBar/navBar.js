@@ -9,6 +9,7 @@ import LogOutModal from '../logoutModal';
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null); // State to hold user data
   const router = useRouter();
   const pathname = usePathname(); // Get current route
 
@@ -24,8 +25,12 @@ export default function Navbar() {
 
     setIsLogoutModalOpen(false); // Close the logout modal after logging out
   }
+
+  useEffect(() => {
   
   const user=JSON.parse(localStorage.getItem("user"));
+  setUser(user);
+  }, []);
 
 
 
