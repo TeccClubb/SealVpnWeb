@@ -1,13 +1,12 @@
 
-import Sidebar from "@/components/Sidebar";
-import BillingHistory from "./Account-biling-history/page";
+ 
 
-
+import DashboardPage from "./accountOverview/page";
 export default function Dashboard() {
   return (
     <div>
      
-     <BillingHistory></BillingHistory>
+      <DashboardPage></DashboardPage>
     </div>
   );
 }

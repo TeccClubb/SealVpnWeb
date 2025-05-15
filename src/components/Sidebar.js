@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import LogOutModal from './logoutModal';
+import Cookies from "js-cookie";
  
 
 const Sidebar = () => {
@@ -18,15 +19,21 @@ const Sidebar = () => {
     { name: 'Log Out', href: '/logout' },
   ];
   const handleLogout = () => {
-    // Handle logout logic here
-    console.log('User logged out');
-    localStorage.removeItem('access_token'); // Remove token from local storage
-    localStorage.removeItem("user")
-    window.location.href = '/login'; // Redirect to login page
-    
-    
-    setIsLogoutModalOpen(false); // Close the logout modal after logging out
-  }
+   console.log("User logged out");
+ 
+   // ✅ Remove token from local storage
+   localStorage.removeItem("access_token");
+   localStorage.removeItem("user");
+ 
+   // ✅ Remove token from cookies
+   Cookies.remove("access_token", { path: "/" });
+ 
+   // ✅ Redirect to login page
+   window.location.href = "/login";
+ 
+   // ✅ Close modal (if you're using one)
+   setIsLogoutModalOpen(false);
+ };
 
   return (
     <div className="w-full md:ml-12 md:w-50 p-4 mt-4 md:mt-12 flex flex-col items-center md:items-start gap-2">

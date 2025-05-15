@@ -42,6 +42,24 @@ export default function PricingPlans() {
       <div className="flex justify-center py-10 px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl w-full">
           {/* Free Plan */}
+           {/* Free Plan */}
+          <div
+            className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
+            style={{
+              boxShadow: "5px 8px 15px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <Image src="/pricing/freeOfferImg.svg" alt="Free Plan" width={100} height={100} />
+            <h3 className="text-2xl font-semibold my-4">Free</h3>
+            <p className="mb-6 text-neutral-500">Testing and limited usage</p>
+            <div className="flex items-center justify-center mb-6">
+              <Image src="/pricing/tickImg.svg" alt="Tick" width={20} height={20} />
+              <span className="ps-2">2GB of secure browsing</span>
+            </div>
+            <button onClick={()=>router.push("/signup")} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
+              Try for free
+            </button>
+          </div>
           {plans[0] && (
             <div
               className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
@@ -110,26 +128,7 @@ export default function PricingPlans() {
           )}
 
           {/* API Plan 2 (Assuming it's Teams) */}
-          {plans[2] && (
-            <div className="flex lg:ml-4 flex-col items-center text-center p-6 relative rounded-2xl shadow-2xl bg-white h-full">
-              <Image src="/pricing/teamImage.svg" alt="Plan" width={200} height={200} className="mb-4 lg:-mt-30" />
-              <h3 className="text-2xl font-semibold my-4 text-neutral-800">{plans[2].name}</h3>
-              <p className="mb-6 text-neutral-500">{plans[2].description.split(",")[0]}</p>
-              <ul className="text-left mb-6 space-y-2 w-full text-neutral-500">
-                {plans[2].description.split(",").map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <Image src="/tickIcon.svg" alt="" width={20} height={20} />
-                    <span>{item.trim()}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-lg font-bold mb-4">${plans[2].original_price
-              }/mo per user</p>
-              <button onClick={() => handleClick(plans[2].id)} className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto">
-                Get Started
-              </button>
-            </div>
-          )}
+          
         </div>
       </div>
     </section>
