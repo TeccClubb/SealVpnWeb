@@ -1,266 +1,137 @@
 "use client";
 
-import React, { useState } from "react";
-import { CityIcon, LocationDotIcon, StateIcon, UserIcon } from "@/icons";
-import { NAME_INVALID_ERROR_MESSAGE, NAME_REGEX } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import axios, { AxiosError } from "axios";
-import { UPDATE_BILLING_ADDRESS_ROUTE } from "@/lib/constants";
-import { useUserCookie } from "@/hooks/use-cookies";
-import { useBillingAddress } from "@/hooks/use-billing-address";
-import { useDispatch } from "react-redux";
-import { setBillingAddress } from "@/store/app.slice";
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-import Image from "next/image";
-import { useNotifications } from "@toolpad/core/useNotifications";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const BillingAddressModal = ({ open, setOpen }) => {
-  const dispatch = useDispatch();
-  const notify = useNotifications();
-  const { user } = useUserCookie();
-  const [isLoading, setLoading] = useState(false);
-  const { billingAddress } = useBillingAddress();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-    reset,
-  } = useForm({
-    defaultValues: {
-      name: (billingAddress && billingAddress.name) || "",
-      address: (billingAddress && billingAddress.address) || "",
-      city: (billingAddress && billingAddress.city) || "",
-      state: (billingAddress && billingAddress.state) || "",
-      postal_code: (billingAddress && billingAddress.postal_code) || "",
-    },
+export default function BillingAddressModal({ isOpen, onClose, onAddressAdded }) {
+  const [form, setForm] = useState({
+    name: "",
+    address: "",
+    city: "",
+    country: "",
+    state: "",
+    postal_code: "",
   });
 
-  const submit = async (values) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
     try {
-      clearErrors();
-      setLoading(true);
-      const res = await axios
-        .post(UPDATE_BILLING_ADDRESS_ROUTE, values, {
+      const token = localStorage.getItem("access_token");
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/billing-address/store`,
+        {
+          name: form.name,
+          address: form.address,
+          city: form.city,
+          country: form.country,
+          state: form.state,
+          postal_code: form.postal_code,
+        },
+        {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${token}`,
           },
-        })
-        .then((res) => res.data);
-      if (res.status) {
-        dispatch(setBillingAddress(res.user.billing_address));
-        notify.show(res.message, {
-          severity: "success",
-          autoHideDuration: 3000,
-        });
-        reset();
-        setOpen(false);
-      } else {
-        notify.show(res.message, {
-          severity: "error",
-          autoHideDuration: 3000,
-        });
-        setError("root", { type: "manual", message: res.message });
-      }
-    } catch (error) {
-      const errorMessage =
-        error instanceof AxiosError
-          ? error.response
-            ? error.response.data.message
-            : error.message
-          : "Filed to change email";
-      notify.show(errorMessage, {
-        severity: "error",
-        autoHideDuration: 3000,
-      });
-      setError("root", { type: "manual", message: errorMessage });
+        }
+      );
+      console.log(response.data);
+
+      onAddressAdded(response.data.user.billing_address);
+      onClose();
+      toast.success("Billing address added successfully!");
+    } catch (err) {
+      setError("Failed to add billing address. Please try again.");
+      console.error("Error adding billing address", err);
     } finally {
       setLoading(false);
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      className="p-6"
-      fullWidth
-      maxWidth="xs"
-    >
-      <DialogTitle className="flex flex-col gap-1 text-2xl font-semibold">
-        {billingAddress ? "Update" : "Add"} Billing Address
-      </DialogTitle>
-      <DialogContent>
-        <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-y-6">
-          {errors.root && <Alert severity="error">{errors.root.message}</Alert>}
-
-          <TextField
-            variant="standard"
-            label="Name"
-            placeholder="Enter your name"
-            fullWidth
-            margin="dense"
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-white text-black p-6 rounded-lg w-full max-w-md">
+        <h2 className="text-xl font-semibold mb-4">Add Billing Address</h2>
+        <div className="space-y-3">
+          <input
             type="text"
-            color="success"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Image
-                    src="/Log-icon/name.svg"
-                    alt="Email Icon"
-                    width={20}
-                    height={15}
-                  />
-                </InputAdornment>
-              ),
-            }}
-            error={errors.name ? true : false}
-            helperText={errors.name ? errors.name.message : ""}
-            {...register("name", {
-              required: { value: true, message: "Enter your name" },
-              pattern: {
-                value: NAME_REGEX,
-                message: NAME_INVALID_ERROR_MESSAGE,
-              },
-              minLength: {
-                value: 3,
-                message: "Username must be at least 3 chars",
-              },
-            })}
+            name="name"
+            placeholder="Full Name"
+            className="w-full mx-auto block px-4 py-2 border border-gray-300 rounded-mdd"
+            value={form.name}
+            onChange={handleChange}
           />
-
-          <TextField
-            variant="standard"
-            label="Address"
-            placeholder="Enter your address"
-            fullWidth
-            margin="dense"
+          <input
             type="text"
-            color="success"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <LocationDotIcon className="text-default-500 pointer-events-none" />
-                </InputAdornment>
-              ),
-            }}
-            error={errors.address ? true : false}
-            helperText={errors.address ? errors.address.message : ""}
-            {...register("address", {
-              required: { value: true, message: "Enter your address" },
-              minLength: {
-                value: 10,
-                message: "Address must be at least 10 chars",
-              },
-            })}
+            name="address"
+            placeholder="Address"
+            className="w-full mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+            value={form.address}
+            onChange={handleChange}
           />
-
-          <TextField
-            variant="standard"
-            label="City"
-            placeholder="Enter your city"
-            fullWidth
-            margin="dense"
+          <input
             type="text"
-            color="success"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <CityIcon className="w-5 text-default-500 pointer-events-none" />
-                </InputAdornment>
-              ),
-            }}
-            error={errors.city ? true : false}
-            helperText={errors.city ? errors.city.message : ""}
-            {...register("city", {
-              required: { value: true, message: "Enter your city" },
-              minLength: {
-                value: 2,
-                message: "city must be at least 2 chars",
-              },
-            })}
+            name="city"
+            placeholder="City"
+            className="w-full mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+            value={form.city}
+            onChange={handleChange}
           />
+          <input
+            type="text"
+            name="country"
+            placeholder="Country"
+            className=" w-full mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+            value={form.country}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            className="w-full mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+            value={form.state}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="postal_code"
+            placeholder="Postal Code"
+            className="w-full mx-auto block px-4 py-2 border border-gray-300 rounded-md"
+            value={form.postal_code}
+            onChange={handleChange}
+          />
+        </div>
 
-          <div className="flex items-start gap-4">
-            <TextField
-              variant="standard"
-              label="State"
-              placeholder="State"
-              fullWidth
-              margin="dense"
-              type="text"
-              color="success"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <StateIcon className="w-5 text-default-500 pointer-events-none" />
-                  </InputAdornment>
-                ),
-              }}
-              error={errors.state ? true : false}
-              helperText={errors.state ? errors.state.message : ""}
-              {...register("state", {
-                required: { value: true, message: "Enter your state" },
-                minLength: {
-                  value: 2,
-                  message: "state must be at least 2 chars",
-                },
-              })}
-            />
-            <TextField
-              variant="standard"
-              label="Postal Code"
-              placeholder="Postal Code"
-              fullWidth
-              margin="dense"
-              type="text"
-              color="success"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <LocationDotIcon className="text-default-500 pointer-events-none" />
-                  </InputAdornment>
-                ),
-              }}
-              error={errors.postal_code ? true : false}
-              helperText={errors.postal_code ? errors.postal_code.message : ""}
-              {...register("postal_code", {
-                required: {
-                  value: true,
-                  message: "Enter your postal code",
-                },
-              })}
-            />
-          </div>
-          <DialogActions>
-            <Button
-              loading={isLoading}
-              loadingPosition="end"
-              fullWidth
-              type="submit"
-              size="large"
-              color="success"
-              variant="contained"
-            >
-              Submit
-            </Button>
-          </DialogActions>
-        </form>
-      </DialogContent>
-    </Dialog>
+        {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+
+        <div className="mt-4 flex justify-end gap-3">
+          <button
+            className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+            onClick={onClose}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+          <button
+            className="inline-block mt-2 px-6 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
-};
-
-export default BillingAddressModal;
+}
