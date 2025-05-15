@@ -16,42 +16,44 @@ export default function SignUpForm() {
   const [serverMessage, setServerMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data) => {
-    setLoading(true);
-    setServerMessage("");
+ const onSubmit = async (data) => {
+  setLoading(true);
+  setServerMessage(""); // Clear any previous error
 
-    try {
-      const response = await axios.post(
-        "https://seelvpn.tecclubb.com/api/signup",
-        {
-          name: data.username,
-          email: data.email,
-          password: data.password,
+  try {
+    const response = await axios.post(
+      "https://seelvpn.tecclubb.com/api/signup",
+      {
+        name: data.username,
+        email: data.email,
+        password: data.password,
+      },
+      {
+        headers: {
+          Accept: "application/json",
         },
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200 || response.status === 201) {
-        toast.success("Sign up successful!");
-        setServerMessage(" Sign up successful!");
-        reset();
-      } else {
-        toast.error("Signup failed.");
-        setServerMessage(" Signup failed.");
       }
-    } catch (error) {
-      const message =
-        error?.response?.data?.message || "Something went wrong.";
-      setServerMessage(` ${message}`);
-      console.error("Signup error:", error);
-    } finally {
-      setLoading(false);
+    );
+
+    const message = response?.data?.message +("!Please verify your email") || "Sign up successful!";
+
+    if (response.status === 200 || response.status === 201) {
+      toast.success(message);
+      reset();
+    } else {
+      toast.error("Sign up failed.");
+      setServerMessage("Please try again"); // Set only on failure
     }
-  };
+  } catch (error) {
+    
+    toast.error("Sign up failed.");
+    setServerMessage("Sign up failed."); // Set only on error
+    console.error("Signup error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-white text-gray-800">
@@ -119,15 +121,11 @@ export default function SignUpForm() {
 
           {/* Server message below button */}
           {serverMessage && (
-            <p
-              className={`text-center text-sm mt-2 ${/❌|failed|error/i.test(serverMessage)
-                  ? "text-red-500"
-                  : "text-green-500"
-                }`}
-            >
-              {serverMessage}
-            </p>
-          )}
+  <p className="text-center text-sm mt-2 text-red-500">
+    {serverMessage}
+  </p>
+)}
+
 
 
           {/* Already have an account */}
