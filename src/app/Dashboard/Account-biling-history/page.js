@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 // import DownloadInvoiceButton from "@/components/handleDawnloadInvoice";
 import DownloadInvoiceButton from "@/components/downloadInvoiceButton";
+import BillingAddressModal from "@/components/billilingAddressModal";
 
 
 const BillingHistory = () => {
   const [billingAddress, setbillingAddress] = useState(null);
   const [billingData, setBillingData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
 
@@ -53,9 +55,10 @@ const BillingHistory = () => {
         console.error("Error fetching billing history:", error.response?.data || error.message);
       });
   }, []);
-  const handleInvoice =()=>{
-    axox
-  }
+  
+  const handleAddressAdded = (newAddress) => {
+    setbillingAddress(newAddress);
+  };
 
   return (
     <div className="flex min-h-screen bg-white">
@@ -89,10 +92,10 @@ const BillingHistory = () => {
                     <td className="p-3 border-b border-gray-200 capitalize">{item.status}</td>
                     <td>
 
-                     <DownloadInvoiceButton
-                      purchaseId={item.id}
-                      token={localStorage.getItem("access_token")}
-                    />
+                      <DownloadInvoiceButton
+                        purchaseId={item.id}
+                        token={localStorage.getItem("access_token")}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -103,7 +106,7 @@ const BillingHistory = () => {
         <h2 className="text-neutral-600 text-2xl font-bold font-['Montserrat'] leading-10 mb-2">Billing Address</h2>
 
         {/* Billing Address Card */}
-        {billingAddress && (
+        {billingAddress ? (
           <div className="bg-gray-50 border border-gray-200 p-6 rounded-lg shadow-sm">
             <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
               <div><strong>Name:</strong> {billingAddress.name}</div>
@@ -114,8 +117,24 @@ const BillingHistory = () => {
               <div><strong>Created At:</strong> {new Date(billingAddress.created_at).toLocaleDateString()}</div>
             </div>
           </div>
+        ) : (
+          <div className="bg-gray-50 border border-gray-200 p-6 rounded-lg shadow-sm">
+            <p className="text-sm text-gray-600 mb-4">You don’t have a billing address yet.</p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+            >
+              Add Billing Address
+            </button>
+          </div>
         )}
+
       </main>
+      <BillingAddressModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onAddressAdded={handleAddressAdded}
+      />
     </div>
   );
 };

@@ -164,7 +164,7 @@ const Invoice = () => {
                   </tr>
                 </thead>
                 <tbody className="prose-tr:border-b-1 last:prose-tr:border-b-0 prose-tr:border-gray-300">
-                  <tr>
+                  <tr className="text-center">
                     <td>{userId}</td>
                     <td>Subscription</td>
                   </tr>
@@ -218,7 +218,7 @@ const Invoice = () => {
           <div className="w-full max-w-5xl mx-auto border border-gray-300 rounded-lg pb-4 overflow-auto">
             <table className="w-full text-sm prose-th:font-semibold prose-th:p-4 prose-th:text-start prose-td:p-4">
               <thead className="bg-[#1a1a78] text-white">
-                <tr className="border-b-1 border-gray-300">
+                <tr className="border-b-1 text-center border-gray-300">
                   <th>Plan Name</th>
                   <th>Duration</th>
                   <th>Amount Paid</th>
@@ -236,7 +236,7 @@ const Invoice = () => {
                 )}
 
                 {!isPurchasedPlanLoading && purchasedPlan && (
-                  <tr>
+                  <tr className="text-center">
                     <th>{purchasedPlan.plan.name}</th>
                     <td>{purchasedPlan.plan.duration}</td>
                     <td>${purchasedPlan.amount_paid}</td>
