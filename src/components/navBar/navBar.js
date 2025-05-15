@@ -95,7 +95,7 @@ useEffect(() => {
               )}
             </div>
 
-            <Link href="Download" className="hover:text-black">Download</Link>
+            <Link href="/download-device" className="hover:text-black">Download</Link>
             <Link href="#" className="hover:text-black">Help</Link>
           </div>
 
