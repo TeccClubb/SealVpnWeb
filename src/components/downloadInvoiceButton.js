@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CircularProgress, IconButton } from "@mui/material";
+ 
 import axios from "axios";
 import { toast } from "react-toastify";
 import DownloadIcon from "./DownloadIcon";
@@ -60,13 +60,18 @@ const DownloadInvoiceButton = ({ purchaseId, token }) => {
 
   return (
     <>
-      <IconButton onClick={handleDownload} disabled={isInvoiceDownloading}>
-        {isInvoiceDownloading ? (
-          <CircularProgress size={20} />
-        ) : (
-          <DownloadIcon className="h-5 w-5 text-gray-600 hover:text-blue-600" />
-        )}
-      </IconButton>
+    <button
+  onClick={handleDownload}
+  disabled={isInvoiceDownloading}
+  className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {isInvoiceDownloading ? (
+    <div className="h-5 w-5 animate-spin border-2 border-gray-300 border-t-transparent rounded-full" />
+  ) : (
+    <DownloadIcon className="h-5 w-5 text-gray-600 hover:text-blue-600" />
+  )}
+</button>
+
     </>
   );
 };

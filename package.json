@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mui/material": "^7.1.0",
     "@stripe/react-stripe-js": "^3.7.0",
     "aos": "^2.3.4",
     "axios": "^1.9.0",

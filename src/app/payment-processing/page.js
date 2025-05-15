@@ -9,32 +9,26 @@ import axios, { AxiosError } from "axios";
 // import { ErrorIcon, VerifiedIcon } from "@/icons";
 import ErrorIcon from "@/components/icon/ErrorIcon";
 import VerifiedIcon from "@/components/icon/VerifiedIcon";
- 
+
 // import { useDispatch } from "react-redux";
 // import { setActivePlan } from "@/store/plans.slice";
 // import { useNotifications } from "@toolpad/core/useNotifications";
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+ 
 import Link from "next/link";
 import { toast } from "react-toastify";
 
 const PaymentProcessingPage = () => {
-//   const dispatch = useDispatch();
-//   const notify = useNotifications();
+  //   const dispatch = useDispatch();
+  //   const notify = useNotifications();
   const searchParams = useSearchParams();
-//   const { user } = useUserCookie();
-const [user,setUser]=useState();
+  //   const { user } = useUserCookie();
+  const [user, setUser] = useState();
   const [isPaymentSuccessful, setPaymentStatus] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const myuser=JSON.parse(localStorage.getItem("user"))
+    const myuser = JSON.parse(localStorage.getItem("user"))
     setUser(myuser);
     const verifyPayment = async (planId, paymentIntent) => {
       try {
@@ -44,12 +38,12 @@ const [user,setUser]=useState();
 
         if (res.paymentStatus) {
           setPaymentStatus(true);
-    let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+          let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
 
-    console.log(" payment intedt///////////////////////////dddddddddddddd")
-    console.log(res)
+          console.log(" payment intedt///////////////////////////dddddddddddddd")
+          console.log(res)
 
-    const token= localStorage.getItem("access_token")
+          const token = localStorage.getItem("access_token")
 
           const response = await axios
             .post(
@@ -61,13 +55,13 @@ const [user,setUser]=useState();
               {
                 headers: {
                   Accept: "application/json",
-                  Authorization: `Bearer ${ token}`,
+                  Authorization: `Bearer ${token}`,
                 },
               }
             )
             .then((response) => response.data);
-            console.log("00000000000000000000000")
-            console.log(response)
+          console.log("00000000000000000000000")
+          console.log(response)
 
           if (response.status) {
             setSuccessMessage(response.message);
@@ -84,7 +78,7 @@ const [user,setUser]=useState();
               ? error.response.data.message
               : error.message
             : "An error occurred";
-            toast.error(error.message)
+        toast.error(error.message)
         // notify.show(errorMessage, {
         //   severity: "error",
         //   autoHideDuration: 3000,
@@ -108,10 +102,12 @@ const [user,setUser]=useState();
       <div className="min-h-[calc(100vh-4rem)] w-full max-w-7xl flex flex-col flex-wrap items-center justify-center gap-y-4 p-4">
         {isLoading && (
           <div className="flex flex-col items-center gap-y-6">
-            <CircularProgress size={128} color="success" />
-            <Typography variant="h4" component="h4" className="text-black">
+            <VerifiedIcon className="size-48 text-green-500" />
+
+            <h4 className="text-2xl font-semibold text-black">
               Processing Payment...
-            </Typography>
+            </h4>
+
           </div>
         )}
 
@@ -122,10 +118,13 @@ const [user,setUser]=useState();
               Payment Failed
             </h1>
 
-            <Alert severity="error" className="max-w-3xl flex-grow-0">
-              Unfortunately, we were unable to process your payment. Please try
-              again or contact support if the issue persists.
-            </Alert>
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-3xl">
+              <strong className="font-bold">Error: </strong>
+              <span>
+                Unfortunately, we were unable to process your payment. Please try again or contact support if the issue persists.
+              </span>
+            </div>
+
           </>
         )}
 
@@ -135,17 +134,19 @@ const [user,setUser]=useState();
             <h1 className="text-3xl font-semibold text-gray-900">
               Payment Successful
             </h1>
-            <Alert severity="success" className="max-w-3xl flex-grow-0">
-              {successMessage}
-            </Alert>
-            <Button
-              component={Link}
-              href={"/"}
-              color="success"
-              variant="contained"
-            >
-              Back to Home
-            </Button>
+           {successMessage && (
+  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded max-w-3xl">
+    <strong className="font-bold">Success: </strong>
+    <span>{successMessage}</span>
+  </div>
+)}
+
+          <Link
+  href="/"
+  className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200"
+>
+  Back to Home
+</Link>
           </>
         )}
       </div>

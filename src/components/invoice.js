@@ -1,14 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { CircularProgress, Divider, Skeleton } from "@mui/material";
 import { useEffect } from "react";
-// import { useBillingAddress } from "@/hooks/use-billing-address";
-// import { useBillingAddress } from "@/hooks/useBillingHistory";
-// import { usePurchasedPlan } from "@/hooks/usePlans";
-// import { usePurchasedPlan } from "@/hooks/usePlane";
-// import { getFormattedDate } from "@/lib/utils";
-// import { getFormattedDate } from "@/hooks/usePlane";
+ 
 import { notFound, useSearchParams } from "next/navigation";
 import axios from "axios";
 
@@ -108,14 +102,7 @@ const Invoice = () => {
 
   return (
     <div className="w-[49.625rem] text-black h-[70.1875rem]  bg-[#ecedee]  p-6 space-y-8 relative">
-      {/* {isBillingAddressLoading && (
-        <div className="space-y-4">
-          <Skeleton className="h-6 w-1/3" />
-          <Skeleton className="h-4 w-2/3" />
-          <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-4 w-3/4" />
-        </div>
-      )} */}
+    
 
       {!isBillingAddressLoading && !billingAddress && (
         <>No fetch data from server</>
@@ -137,11 +124,12 @@ const Invoice = () => {
                 <tbody className="prose-tr:border-b-1 text-center last:prose-tr:border-b-0 prose-tr:border-gray-300">
                   {isPurchasedPlanLoading && (
                     <tr>
-                      <td align="center" colSpan={2}>
-                        <CircularProgress color="success" />
+                      <td colSpan={2} className="py-6 text-center">
+                        <div className="h-6 w-6 mx-auto animate-spin rounded-full border-2 border-green-500 border-t-transparent" />
                       </td>
                     </tr>
                   )}
+
 
                   {!isPurchasedPlanLoading && purchasedPlan && (
                     <tr className="text-center">
@@ -211,7 +199,8 @@ const Invoice = () => {
             </div>
           </div>
 
-          <Divider />
+         <div className="border-t border-gray-300 my-4" />
+
 
           <h4 className="text-[#1a1a78] text-2xl font-semibold">Details:</h4>
 
@@ -228,12 +217,13 @@ const Invoice = () => {
               </thead>
               <tbody className="prose-tr:border-b-1 last:prose-tr:border-b-0 prose-tr:border-gray-300">
                 {isPurchasedPlanLoading && (
-                  <tr>
-                    <td align="center" colSpan={5}>
-                      <CircularProgress color="success" />
-                    </td>
-                  </tr>
-                )}
+  <tr>
+    <td colSpan={2} className="py-6 text-center">
+      <div className="h-6 w-6 mx-auto animate-spin rounded-full border-2 border-green-500 border-t-transparent" />
+    </td>
+  </tr>
+)}
+
 
                 {!isPurchasedPlanLoading && purchasedPlan && (
                   <tr className="text-center">

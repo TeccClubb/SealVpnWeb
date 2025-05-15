@@ -34,12 +34,12 @@ function PaymentForm({ billingAddress, amount, planId, seletedPlane }) {
     console.log(billingAddress)
     if (billingAddress) {
       // Set default values for the form using react-hook-form's `setValue`
-      // setValue("name", billingAddress.data.user.billing_address.name || '');
-      // setValue("address", billingAddress.data.user.billing_address.address || '');
-      // setValue("city", billingAddress.data.user.billing_address.city || '');
-      // setValue("state", billingAddress.data.user.billing_address.state || '');
-      // setValue("country", billingAddress.data.user.billing_address.country || '');
-      // setValue("postal_code", billingAddress.data.user.billing_address.postal_code || '');
+      setValue("name", billingAddress.data.user.billing_address.name || '');
+      setValue("address", billingAddress.data.user.billing_address.address || '');
+      setValue("city", billingAddress.data.user.billing_address.city || '');
+      setValue("state", billingAddress.data.user.billing_address.state || '');
+      setValue("country", billingAddress.data.user.billing_address.country || '');
+      setValue("postal_code", billingAddress.data.user.billing_address.postal_code || '');
 
     }
   }, [billingAddress, setValue]);
