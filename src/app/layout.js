@@ -28,9 +28,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="apple-touch-icon" href="/seelvpnlogo.png" />
-        <link rel="icon" href="/seelvpnlogo.png" sizes="any" />
-        <link rel="icon" href="/seelvpnlogo.png" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/loginicon.png" />
+        <link rel="icon" href="/loginicon.png" sizes="any" />
+        <link rel="icon" href="/loginicon.png" type="image/svg+xml" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
         </link>
         </head>

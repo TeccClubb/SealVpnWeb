@@ -33,7 +33,7 @@ const DashboardPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
-          <button className="w-full max-w-64 bg-teal-400 hover:bg-green-700 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
+          <button className="w-full max-w-64 bg-teal-400 hover:bg-teal-400 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
             Connect
           </button>
           <p className="text-default-500 text-2xl font-normal text-center">
@@ -44,7 +44,7 @@ const DashboardPage = () => {
         {/* Subscription Box */}
         <div className="flex flex-col justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
           <h3 className="text-2xl text-center font-bold text-neutral-600">Download SeelVpn</h3>
-          {activePlan ? (
+          
             <>
 
 
@@ -68,11 +68,7 @@ const DashboardPage = () => {
 
 
             </>
-          ) : (
-            <p className="text-default-500 text-base font-normal">
-              Loading or no active plan found.
-            </p>
-          )}
+          
         </div>
 
 

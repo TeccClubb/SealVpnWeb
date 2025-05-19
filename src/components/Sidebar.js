@@ -15,6 +15,7 @@ const Sidebar = () => {
     { name: 'Overview', href: '/Dashboard/accountOverview' },
     { name: 'Billing History', href: '/Dashboard/Account-biling-history' },
     { name: 'Security', href: '/Dashboard/twoFactorAuthentication' },
+    {name:'Account', href:'/Dashboard/accountSetting'},
     { name: 'Privacy', href: '/Dashboard/AccountPrivicy' },
     { name: 'Log Out', href: '/logout' },
   ];
