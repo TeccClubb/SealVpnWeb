@@ -4,6 +4,7 @@ import axios from "axios";
 import UpdateEmailModal from "@/components/updateModels/UpdateEmailModal";
 import UpdateNameModal from "@/components/updateModels/UpdateNameModal";
 import UpdatePasswordModal from "@/components/updateModels/UpdatePasswordModal";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 export default function AccountPage() {
