@@ -1,14 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UpdateEmailModal from "@/components/updateModels/UpdateEmailModal";
 import UpdateNameModal from "@/components/updateModels/UpdateNameModal";
 import UpdatePasswordModal from "@/components/updateModels/UpdatePasswordModal";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function AccountPage() {
   const [showNameModal, setShowNameModal] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [user, setUser] = useState(null); // ✅ Holds user data
+
+  // ✅ Fetch user info
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await axios.get("https://seelvpn.tecclubb.com/api/user", {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser(response.data.user);
+    } catch (error) {
+      console.error("Failed to fetch user info:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const handleDelete = () => {
     console.log("Account deleted");
@@ -24,7 +49,7 @@ export default function AccountPage() {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
         <div>
           <p className="text-xl font-bold text-gray-800">Name</p>
-          <p className="text-lg text-gray-600">Test</p>
+          <p className="text-lg text-gray-600">{user?.name || "Loading..."}</p>
         </div>
         <button
           onClick={() => setShowNameModal(true)}
@@ -38,7 +63,7 @@ export default function AccountPage() {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
         <div>
           <p className="text-xl font-bold text-gray-800">Email Address</p>
-          <p className="text-lg text-gray-700">altaf804@gmail.com</p>
+          <p className="text-lg text-gray-700">{user?.email || "Loading..."}</p>
         </div>
         <button
           onClick={() => setShowEmailModal(true)}
@@ -76,10 +101,21 @@ export default function AccountPage() {
         </button>
       </div>
 
-
       {/* Modals */}
-      <UpdateNameModal open={showNameModal} onClose={() => setShowNameModal(false)} />
-      <UpdateEmailModal open={showEmailModal} onClose={() => setShowEmailModal(false)} />
+      <UpdateNameModal
+        open={showNameModal}
+        onClose={() => {
+          setShowNameModal(false);
+          fetchUser(); // ✅ Refresh data after closing modal
+          toast.success(" Name update successful ")
+        }}
+      />
+      <UpdateEmailModal open={showEmailModal} onClose={() => {
+        setShowEmailModal(false)
+        fetchUser();
+        toast.success("Email update successful ")
+
+      }} />
       <UpdatePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
 
       {/* Delete Modal */}
