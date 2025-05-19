@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
 import UpdateEmailModal from "@/components/updateModels/UpdateEmailModal";
 import UpdateNameModal from "@/components/updateModels/UpdateNameModal";
 import UpdatePasswordModal from "@/components/updateModels/UpdatePasswordModal";
+import { toast } from "react-toastify";
 
 export default function AccountPage() {
   const [showNameModal, setShowNameModal] = useState(false);
@@ -10,10 +12,36 @@ export default function AccountPage() {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleDelete = () => {
-    console.log("Account deleted");
-    setShowDeleteModal(false);
-  };
+ const handleDelete = async () => {
+  try {
+    // ✅ Get the token from localStorage
+    const token = localStorage.getItem("access_token");
+
+    console.log("Token from localStorage:", token);
+
+    
+
+    
+    const response = await axios.delete("https://seelvpn.tecclubb.com/api/user/delete", {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Delete response:", response.data);
+
+    // ✅ Show success alert and redirect
+   toast.success(response.data.message)
+    localStorage.removeItem("token");
+   
+  } catch (error) {
+    console.error("Delete error:", error);
+    toast.error("Failed to delete account. Please try again.");
+  } finally {
+    setShowDeleteModal(false); // Close the modal whether successful or not
+  }
+};
 
   return (
     <div className="min-h-screen bg-white text-black p-8">
@@ -75,7 +103,6 @@ export default function AccountPage() {
           Delete Account
         </button>
       </div>
-
 
       {/* Modals */}
       <UpdateNameModal open={showNameModal} onClose={() => setShowNameModal(false)} />
