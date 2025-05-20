@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function UpdateNameModal({ open, onClose }) {
   const { register, handleSubmit, reset } = useForm();
@@ -62,6 +63,7 @@ export default function UpdateNameModal({ open, onClose }) {
     // ✅ Update user in localStorage
     if (response.data.user) {
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      toast.success("Name update successful")
     }
 
     reset();
@@ -71,6 +73,7 @@ export default function UpdateNameModal({ open, onClose }) {
     const message =
       error.response?.data?.message || "Something went wrong. Please try again.";
     setApiError(message);
+    toast.error(message);
   } finally {
     setLoading(false);
   }

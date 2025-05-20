@@ -134,14 +134,11 @@ export default function AccountPage() {
         onClose={() => {
           setShowNameModal(false);
           fetchUser(); // ✅ Refresh data after closing modal
-          toast.success(" Name update successful ")
         }}
       />
       <UpdateEmailModal open={showEmailModal} onClose={() => {
         setShowEmailModal(false)
         fetchUser();
-        toast.success("Email update successful ")
-
       }} />
       <UpdatePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
 

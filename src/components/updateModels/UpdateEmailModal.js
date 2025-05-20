@@ -63,6 +63,7 @@ const onSubmit = async (data) => {
     if (response.data.user) {
       // toast.success("name update successfull")
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      toast.success("Email update successful ");
     }
 
     reset();
@@ -72,6 +73,7 @@ const onSubmit = async (data) => {
     const message =
       error.response?.data?.message || "Something went wrong. Please try again.";
     setApiError(message);
+    toast.error(message);
   } finally {
     setLoading(false);
   }

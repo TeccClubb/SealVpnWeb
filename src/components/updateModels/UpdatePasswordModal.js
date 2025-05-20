@@ -46,7 +46,7 @@ export default function UpdatePasswordModal({ open, onClose }) {
 
     console.log(response.data);
 
-    if (response.data?.success) {
+    if (response.data?.status) {
       setSuccess("Password updated successfully!");
       setOldPassword("");
       setNewPassword("");
