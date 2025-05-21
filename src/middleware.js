@@ -2,21 +2,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req) {
-  const token = req.cookies.get("access_token")?.value;
+  const hasUserCookie = req.cookies.get("seel_user");
 
   // If accessing /Dashboard but not logged in → redirect to /login
   if (req.nextUrl.pathname.startsWith("/Dashboard")) {
-    if (!token) {
+    if (!hasUserCookie) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
-  }
-
-  // Optional: Prevent logged-in users from visiting login/signup again
-  if (
-    (req.nextUrl.pathname === "/login" || req.nextUrl.pathname === "/signup") &&
-    token
-  ) {
-    return NextResponse.redirect(new URL("/Dashboard", req.url));
+  } else if (req.nextUrl.pathname === "/login" || req.nextUrl.pathname === "/signup") {
+    // If accessing /login or /signup but already logged in → redirect to /Dashboard
+    if (hasUserCookie) {
+      return NextResponse.redirect(new URL("/Dashboard", req.url));
+    }
   }
 
   return NextResponse.next();

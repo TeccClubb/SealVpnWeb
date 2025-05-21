@@ -2,66 +2,59 @@
 
 import React, { useState } from "react";
 import { useEffect } from "react";
- 
+
 import { notFound, useSearchParams } from "next/navigation";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Invoice = () => {
   const searchParams = useSearchParams();
   const purchaseId = searchParams.get("purchaseId");
-  // const purchaseId = 11;
   const token = searchParams.get("token");
   const userId = searchParams.get("userId");
-  //   if (!purchaseId || !token || !userId) {
-  //     notFound();
-  //   }
+  if (!purchaseId || !token || !userId) {
+    notFound();
+  }
 
-  //   const { isBillingAddressLoading, billingAddress } = useBillingAddress(token);
-  //   const { isPurchasedPlanLoading, purchasedPlan } = usePurchasedPlan(
-  //     +purchaseId,
-  //     token
-  //   );
+  const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
 
-  // const { isBillingAddressLoading, billingAddress } = useBillingAddress();
-  // const { isPurchasedPlanLoading, purchasedPlan } = usePurchasedPlan(
-  //   +purchaseId
-  // );
   const [billingAddress, setBillingAddress] = useState();
   const [purchasedPlan, setPurchasedPlan] = useState();
-  const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(false);
-  const [isPurchasedPlanLoading, setisPurchasedPlanLoading] = useState(false);
+  const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
+  const [isPurchasedPlanLoading, setIsPurchasedPlanLoading] = useState(true);
 
-
-  // const [purchasedPlan,set]
-
-
-  //   if (!isPurchasedPlanLoading && !purchasedPlan) {
-  //     notFound();
-  //   }
   useEffect(() => {
-    // const token = localStorage.getItem("access_token");
+    const fetchBillingAddress = async () => {
+      try {
+        const response = await axios
+          .get(`${Api_Url}/billing-address`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => res.data);
 
-    // if (!token) {
-    //   router.push("/login");
-    //   return;
-    // }
-    let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-    //fatch billing address
-    axios.get(`${Api_Url}/billing-address`, {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        console.log(response.data)
-        console.log(response.data.user.billing_address);
-        setBillingAddress(response.data.user.billing_address);
-      })
-      .catch((error) => {
-        console.error("Error fetching billing address:", error.response?.data || error.message);
-      });
-    // Fetch billing history
+        if (response.status) {
+          setBillingAddress(response.user.billing_address);
+        }
+      } catch (error) {
+        const errorMessage =
+          error instanceof AxiosError
+            ? error.response
+              ? error.response.data.message
+              : error.message
+            : "Failed to Load Billing Address";
+        toast.error(errorMessage);
+      } finally {
+        setIsPurchasedPlanLoading(false);
+      }
+    };
+
+    fetchBillingAddress();
+  }, []);
+
+  useEffect(() => {
     const fetchPurchasedPlan = async () => {
       try {
         const response = await axios
@@ -73,7 +66,6 @@ const Invoice = () => {
           })
           .then((res) => res.data);
         if (response.status) {
-          console.log(response.purchase);
           setPurchasedPlan(response.purchase);
         }
       } catch (error) {
@@ -83,27 +75,17 @@ const Invoice = () => {
               ? error.response.data.message
               : error.message
             : "Failed to Load Active Plan";
-        notify.show(errorMessage, {
-          severity: "error",
-          autoHideDuration: 3000,
-        });
+        toast.error(errorMessage);
       } finally {
-        setLoading(false);
+        setIsPurchasedPlanLoading(false);
       }
     };
 
     fetchPurchasedPlan();
-
-
   }, []);
-
-
-
 
   return (
     <div className="w-[49.625rem] text-black h-[70.1875rem]  bg-[#ecedee]  p-6 space-y-8 relative">
-    
-
       {!isBillingAddressLoading && !billingAddress && (
         <>No fetch data from server</>
       )}
@@ -129,7 +111,6 @@ const Invoice = () => {
                       </td>
                     </tr>
                   )}
-
 
                   {!isPurchasedPlanLoading && purchasedPlan && (
                     <tr className="text-center">
@@ -183,11 +164,7 @@ const Invoice = () => {
 
             <div className="space-y-3 text-black max-w-64 w-full">
               <div className="flex items-center gap-x-2">
-                <img
-                  src="/loginicon.png"
-                  alt="Logo"
-                  className="w-10 h-auto"
-                />
+                <img src="/loginicon.png" alt="Logo" className="w-10 h-auto" />
                 <span className="text-[#1a1a78] text-2xl font-semibold">
                   SeelVpn
                 </span>
@@ -199,8 +176,7 @@ const Invoice = () => {
             </div>
           </div>
 
-         <div className="border-t border-gray-300 my-4" />
-
+          <div className="border-t border-gray-300 my-4" />
 
           <h4 className="text-[#1a1a78] text-2xl font-semibold">Details:</h4>
 
@@ -217,22 +193,24 @@ const Invoice = () => {
               </thead>
               <tbody className="prose-tr:border-b-1 last:prose-tr:border-b-0 prose-tr:border-gray-300">
                 {isPurchasedPlanLoading && (
-  <tr>
-    <td colSpan={2} className="py-6 text-center">
-      <div className="h-6 w-6 mx-auto animate-spin rounded-full border-2 border-green-500 border-t-transparent" />
-    </td>
-  </tr>
-)}
-
+                  <tr>
+                    <td colSpan={2} className="py-6 text-center">
+                      <div className="h-6 w-6 mx-auto animate-spin rounded-full border-2 border-green-500 border-t-transparent" />
+                    </td>
+                  </tr>
+                )}
 
                 {!isPurchasedPlanLoading && purchasedPlan && (
                   <tr className="text-center">
                     <th>{purchasedPlan.plan.name}</th>
                     <td>{purchasedPlan.plan.duration}</td>
                     <td>${purchasedPlan.amount_paid}</td>
-                    <td>{new Date(purchasedPlan.start_date).toLocaleDateString()}</td>
-                    <td>{new Date(purchasedPlan.end_date).toLocaleDateString()}</td>
-
+                    <td>
+                      {new Date(purchasedPlan.start_date).toLocaleDateString()}
+                    </td>
+                    <td>
+                      {new Date(purchasedPlan.end_date).toLocaleDateString()}
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -242,7 +220,9 @@ const Invoice = () => {
           <div className="flex justify-between items-start">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <h6 className="text-[#1a1a78] text-sm font-semibold">Sale by:</h6>
+                <h6 className="text-[#1a1a78] text-sm font-semibold">
+                  Sale by:
+                </h6>
                 <span>SeelVpn</span>
               </div>
               <span>Thanks for your business</span>

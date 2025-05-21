@@ -2,28 +2,32 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardSection from "@/components/dashboardSection/dashboard";
+import { useUserCookie } from "@/components/use-cookies";
 
 
 const DashboardPage = () => {
+  const { user } = useUserCookie();
   const [activePlan, setActivePlan] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
+    const fetchActivePlan = async () => {
+      try {
+        const res = await axios
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/purchase/active`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${user.access_token}`,
+            },
+          }).then((res) => res.data);
 
-    axios
-      .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/purchase/active`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log("Active plan response:", response.data);
-        setActivePlan(response.data.plan); // store full response if needed
-      })
-      .catch((error) => {
-        console.error("Error fetching active plan:", error.response?.data || error.message);
-      });
+          if(res.status) {
+            setActivePlan(response.plan);
+          }
+
+      } catch (error) {}
+    }
+
+    fetchActivePlan();
   }, []);
 
 

@@ -2,34 +2,21 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { notFound, useSearchParams } from "next/navigation";
-// import { useUserCookie } from "@/hooks/use-cookies";
-// import { ADD_PURCHASE_PLAN_ROUTE } from "@/lib/constants";
 import axios, { AxiosError } from "axios";
-// import { HOME_PAGE_PATH } from "@/lib/pathnames";
-// import { ErrorIcon, VerifiedIcon } from "@/icons";
 import ErrorIcon from "@/components/icon/ErrorIcon";
-import VerifiedIcon from "@/components/icon/VerifiedIcon";
-
-// import { useDispatch } from "react-redux";
-// import { setActivePlan } from "@/store/plans.slice";
-// import { useNotifications } from "@toolpad/core/useNotifications";
- 
+import VerifiedIcon from "@/components/icon/VerifiedIcon"; 
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useUserCookie } from "@/components/use-cookies";
 
 const PaymentProcessingPage = () => {
-  //   const dispatch = useDispatch();
-  //   const notify = useNotifications();
   const searchParams = useSearchParams();
-  //   const { user } = useUserCookie();
-  const [user, setUser] = useState();
+  const { user } = useUserCookie();
   const [isPaymentSuccessful, setPaymentStatus] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const myuser = JSON.parse(localStorage.getItem("user"))
-    setUser(myuser);
     const verifyPayment = async (planId, paymentIntent) => {
       try {
         const res = await axios
@@ -39,12 +26,6 @@ const PaymentProcessingPage = () => {
         if (res.paymentStatus) {
           setPaymentStatus(true);
           let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-
-          console.log(" payment intedt///////////////////////////dddddddddddddd")
-          console.log(res)
-
-          const token = localStorage.getItem("access_token")
-
           const response = await axios
             .post(
               `${Api_Url}/purchase/add`,
@@ -55,18 +36,15 @@ const PaymentProcessingPage = () => {
               {
                 headers: {
                   Accept: "application/json",
-                  Authorization: `Bearer ${token}`,
+                  Authorization: `Bearer ${user.access_token}`,
                 },
               }
             )
             .then((response) => response.data);
-          console.log("00000000000000000000000")
-          console.log(response)
 
           if (response.status) {
             setSuccessMessage(response.message);
             toast.success(response.message)
-            // dispatch(setActivePlan(res.purchase));
           }
         } else {
           setPaymentStatus(false);
@@ -79,10 +57,6 @@ const PaymentProcessingPage = () => {
               : error.message
             : "An error occurred";
         toast.error(error.message)
-        // notify.show(errorMessage, {
-        //   severity: "error",
-        //   autoHideDuration: 3000,
-        // });
       } finally {
         setLoading(false);
       }

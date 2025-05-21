@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { useUserCookie } from "../use-cookies";
 
 export default function UpdatePasswordModal({ open, onClose }) {
+  const { user } = useUserCookie();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,8 +30,6 @@ export default function UpdatePasswordModal({ open, onClose }) {
   setLoading(true);
 
   try {
-    const token = localStorage.getItem("access_token");
-
     const response = await axios.post(
       "https://seelvpn.tecclubb.com/api/user/update-password",
       {
@@ -39,12 +39,10 @@ export default function UpdatePasswordModal({ open, onClose }) {
       {
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.access_token}`,
         },
       }
     );
-
-    console.log(response.data);
 
     if (response.data?.status) {
       setSuccess("Password updated successfully!");

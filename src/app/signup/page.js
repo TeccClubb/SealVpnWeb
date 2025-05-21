@@ -48,7 +48,6 @@ export default function SignUpForm() {
     
     toast.error("Sign up failed.");
     setServerMessage("Sign up failed."); // Set only on error
-    console.error("Signup error:", error);
   } finally {
     setLoading(false);
   }

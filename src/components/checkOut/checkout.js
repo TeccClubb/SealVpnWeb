@@ -1,341 +1,254 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Suspense, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import Image from "next/image";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 // import { useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
 
 // import { useRouter } from 'next/navigation';
-import CheckOutForm from '../checkoutForm';
+import CheckOutForm from "../checkoutForm";
+import { useUserCookie } from "../use-cookies";
+import CheckedIcon from "../CheckedIcon";
+import { calculateDiscountPercentage } from "../pricingSection/pricingPlans";
 const CheckoutPage = () => {
-
-    const searchParams = useSearchParams();
-    const planId = searchParams.get("planId");
-    const [plans, setPlans] = useState();
-    const [billingAddress, setbillingAddress] = useState();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user } = useUserCookie();
+  const planId = searchParams.get("planId");
+  const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState();
+  const [isPlansLoading, setIsPlansLoading] = useState(true);
+  const [billingAddress, setBillingAddress] = useState(null);
+  const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
 
   if (!planId) {
-            notFound();
-            
-        }
-    useEffect(() => {
-        const token = localStorage.getItem("access_token");
+    notFound();
+  }
 
-      
-
-        // Fetch plans
-        axios.get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/plans`, {
-            headers: { Accept: "application/json" },
-        })
-            .then((response) => {
-                setPlans(response.data.plans);
-            })
-            .catch((error) => {
-                console.error("Error fetching plans:", error);
-            });
-
-        // Fetch billing address
-        axios.get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/billing-address`, {
+  useEffect(() => {
+    const fetchBillingAddress = async () => {
+      try {
+        const res = await axios
+          .get(`${Api_Url}/billing-address`, {
             headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+              Authorization: `Bearer ${user.access_token}`,
             },
-        })
-            .then((response) => {
-                // console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-                // console.log(response.data.user.billing_address);
-                setbillingAddress(response);
-            })
-            .catch((error) => {
-                console.error("Error fetching billing address:", error.response?.data || error.message);
-            });
+          })
+          .then((res) => res.data);
 
-    }, [planId]);
-
-
-    const [selectedPlan, setSelectedPlan] = useState(null);
-
-    useEffect(() => {
-        if (plans && planId) {
-            const plan = plans.find((p) => p.id === +planId);
-            console.log("Selected Plan:", plan);
-            setSelectedPlan(plan);
+        if (res.status) {
+          setBillingAddress(res.user.billing_address);
         }
-    }, [plans, planId]);
+      } catch (error) {
+      } finally {
+        setIsBillingAddressLoading(false);
+      }
+    };
 
+    fetchBillingAddress();
+  }, []);
 
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const res = await axios
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/plans`, {
+            headers: { Accept: "application/json" },
+          })
+          .then((res) => res.data);
 
+        if (res.status) {
+          setPlans(res.plans);
+          setSelectedPlan(res.plans.find((plan) => plan.id === +planId));
+        }
+      } catch (error) {
+      } finally {
+        setIsPlansLoading(false);
+      }
+    };
 
-const getDiscountAmountInSubunits = (originalPrice, discountPrice) => {
-  if (!originalPrice || !discountPrice) return 0;
-  const discount = originalPrice - discountPrice;
-  return Math.round(discount * 100); // Convert to subunit
+    fetchPlans();
+  }, [planId]);
+
+  return (
+    <section className="py-16 px-4 bg-white text-gray-800">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
+        Get SeelVpn at the lowest price of the year
+      </h2>
+      <p className="text-center text-gray-600 mb-10">
+        Includes all SeelVpn apps, priority customer support, and unlimited
+        data.
+      </p>
+      <div className="flex flex-wrap  gap-3 mb-8 max-w-4xl mx-auto px-4">
+        {isPlansLoading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <div
+              key={index}
+              className="rounded-lg p-4 w-70 max-w-sm animate-pulse bg-gray-200"
+            >
+              <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-1/3 mb-4"></div>
+            </div>
+          ))}
+
+        {plans.map((plan) => (
+          <div
+            key={plan.id}
+            className={`${
+              plan.id === +planId
+                ? "border-2 border-green-400 bg-[#f9fff6] cursor-default shadow-md overflow-visible relative"
+                : "border hover:border-green-500 cursor-pointer"
+            } rounded-lg p-4 w-70 max-w-sm`}
+            onClick={() =>
+              router.replace(`/account/checkout?planId=${plan.id}`)
+            }
+          >
+            {/* Top-right Ribbon */}
+            {plan.id === +planId && (
+              <div className="absolute top-2 -right-[36px] transform rotate-45 bg-teal-500 text-white text-xs font-bold px-6 py-1 rounded-sm shadow-md">
+                <div className="text-[10px] leading-none">SPRING SALE!</div>
+                <div className="text-sm leading-tight">
+                  SAVE{" "}
+                  {calculateDiscountPercentage(
+                    plan.original_price,
+                    plan.discount_price
+                  )}
+                  %
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center space-x-3">
+              <CheckedIcon checked={plan.id === +planId} />
+              <h3 className="text-xl font-semibold capitalize">{plan.name}</h3>
+            </div>
+            <b>
+              <p>
+                <span
+                  className={
+                    plan.id === +planId ? "text-green-600 text-xl" : "text-lg"
+                  }
+                >
+                  ${plan.discount_price}{" "}
+                </span>
+                <span className="text-sm font-semibold">
+                  /{plan.duration > 1 ? plan.duration : ""}
+                  <span className="capitalize">{plan.duration_unit}</span>
+                </span>
+              </p>
+            </b>
+            <p className="text-sm text-gray-600 mt-1">
+              ${plan.discount_price} billed for the first{" "}
+              {plan.duration > 1 ? plan.duration : ""}{" "}
+              <span className="lowercase">{plan.duration_unit}</span>
+            </p>
+
+            {/* Plant pot image - half in, half out */}
+            {plan.id === +planId && (
+              <div className="absolute -bottom-8 right-10">
+                <img
+                  src="/account/checkout/plantImg.png"
+                  alt="Plant Pot"
+                  className="w-20"
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        <CheckOutForm
+          isPlansLoading={isPlansLoading}
+          selectedPlan={selectedPlan}
+        />
+
+        {/* Left: Plan & Payment */}
+
+        {/* Right: Plan details */}
+        <div className="flex mt-10 flex-col bg-black/5 items-center text-center p-6 relative  rounded-2xl  ">
+          <Image
+            src="/imageofHero.png"
+            alt="Teams Plan"
+            width={200}
+            height={200}
+            className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
+          />
+          <h3 className="text-xl font-semibold my-4 pt-27">
+            What you get with your SeelVpn plan
+          </h3>
+          <ul className="text-gray-700 text-left mb-6 space-y-2">
+            {[
+              "Unlimited data",
+              "Unlimited device",
+              "Access to over 8000 VPN servers",
+              "The best and latest VPN tech",
+              "Core VPN features",
+              "City-level server selection",
+              "47 countries worldwide",
+              "Publicly audited apps",
+              "Best-in-class 256-bit AES encryption",
+            ].map((item, i) => (
+              <li key={item + i} className="flex items-center gap-2">
+                <CheckedIcon />
+                <span>{item}</span>
+              </li>
+            ))}
+
+            <li className="flex gap-2">
+              <CheckedIcon />
+              Apps for
+              <div className="ms-2">
+                <Image
+                  src="/andriodimg.svg"
+                  alt="Teams Plan"
+                  width={20}
+                  height={20}
+                  className="text-black invert"
+                />
+              </div>
+              <div className="ms-2">
+                <Image
+                  src="/appleImg.svg"
+                  alt="Teams Plan"
+                  width={20}
+                  height={20}
+                  className="text-black invert"
+                />
+              </div>
+              <div className="ms-2">
+                <Image
+                  src="/mobileLogo.svg"
+                  alt="Teams Plan"
+                  width={20}
+                  height={20}
+                  className="text-black invert"
+                />
+              </div>
+              <div className="ms-2">
+                <Image
+                  src="/window.svg"
+                  alt="Teams Plan"
+                  width={20}
+                  height={20}
+                  className="text-black   invert"
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-
-
-
-
-    return (
-        <section className="py-16 px-4 bg-white text-gray-800">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
-                Get SeelVpn at the lowest price of the year
-            </h2>
-            <p className="text-center text-gray-600 mb-10">
-                Includes all SeelVpn apps, priority customer support, and unlimited data.
-            </p>
-            <div className="flex flex-wrap  gap-3 mb-8 max-w-4xl mx-auto px-4">
-                <div className="border rounded-lg p-6  relative   cursor-pointer hover:border-green-500 w-70 h-32">
-                    <div className="flex items-center space-x-3">
-                        <div className="text-green-500 text-xl">
-                            <Image
-                                src="/tickIcon.svg"
-                                alt="Teams Plan"
-                                width={20}
-                                height={20}
-
-
-                            />
-                        </div>
-                        <h3 className="text-xl font-semibold">1 Month</h3>
-                    </div>
-                    <b>
-                        <p className="text-lg">$9.99<span className="text-sm">/month</span></p>
-
-                    </b>
-                    <p className="text-sm text-gray-600 absolute bottom-3 mt-1 ">$39.99 billed for the first year</p>
-
-                </div>
-                <div className="relative border-2 border-green-400 rounded-lg p-4 w-70 max-w-sm bg-[#f9fff6] shadow-md overflow-visible">
-                    {/* Top-right Ribbon */}
-                    <div className="absolute top-2 -right-[36px] transform rotate-45 bg-teal-500 text-white text-xs font-bold px-6 py-1 rounded-sm shadow-md">
-                        <div className="text-[10px] leading-none">SPRING SALE!</div>
-                        <div className="text-sm leading-tight">SAVE 67%</div>
-                    </div>
-
-                    {/* Plan content */}
-                    <div className="flex items-center space-x-3">
-                        <div className="text-green-500 text-xl">
-                            <Image
-                                src="/tickIcon.svg"
-                                alt="Teams Plan"
-                                width={20}
-                                height={20}
-
-
-                            />
-                        </div>
-                        <h3 className="text-xl font-semibold">1 Year</h3>
-                    </div>
-
-                    <div className="mt-2 text-2xl font-bold text-green-600">
-                        $3.33<span className="text-gray-500 text-base font-medium">/month</span>
-                    </div>
-
-                    <p className="text-sm text-gray-600 mt-1">$39.99 billed for the first year</p>
-
-                    {/* Plant pot image - half in, half out */}
-                    <div className="absolute -bottom-8 right-10">
-                        <img src="/account/checkout/plantImg.png" alt="Plant Pot" className="w-20" />
-
-                    </div>
-                </div>
-
-
-
-                <div className="border rounded-lg p-6  cursor-pointer hover:border-green-500 w-70 h-32">
-                    <div className="flex items-center space-x-3">
-                        <div className="text-green-500 text-xl">
-                            <Image
-                                src="/tickIcon.svg"
-                                alt="Teams Plan"
-                                width={20}
-                                height={20}
-
-
-                            />
-                        </div>
-                        <h3 className="text-xl font-semibold">3 Year</h3>
-                    </div>
-                    <b>
-
-                        <p className="text-lg">$3.33<span className="text-sm">/month</span></p>
-                    </b>
-                    <p className="text-sm text-gray-600 mt-1">$39.99 billed for the first year</p>
-
-                </div>
-            </div>
-
-
-
-            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-
-                <div>
-                    {selectedPlan && (
-                        <CheckOutForm
-                            billingAddress={billingAddress}
-                            amount={getDiscountAmountInSubunits(selectedPlan.original_price, selectedPlan.discount_price)}
-                            planId={planId}
-                            seletedPlane={selectedPlan}
-                        />
-                    )}
-
-                </div>
-
-                {/* Left: Plan & Payment */}
-
-                {/* Right: Plan details */}
-                <div className="flex mt-10 flex-col bg-black/5 items-center text-center p-6 relative  rounded-2xl  ">
-                    <Image
-                        src="/imageofHero.png"
-                        alt="Teams Plan"
-                        width={200}
-                        height={200}
-                        className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
-                    />
-                    <h3 className="text-xl font-semibold my-4 pt-27">What you get with your SeelVpn plan</h3>
-                    <ul className="text-gray-700 text-left mb-6 space-y-2">
-                        <li className='flex gap-2'>
-                            <Image
-                                src="/tickIcon.svg"
-                                alt="Teams Plan"
-                                width={20}
-                                height={20}
-
-
-                            />
-
-                            Unlimited data</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  Unlimited device</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  Access to over 8000 VPN servers</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  The best and latest VPN tech</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  Core VPN features</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  City-level server selection</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  47 countries worldwide</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  Publicly audited apps</li>
-                        <li className='flex gap-2'> <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        />  Best-in-class 256-bit AES encryption</li>
-                        <li className='flex gap-2'>  <Image
-                            src="/tickIcon.svg"
-                            alt="Teams Plan"
-                            width={20}
-                            height={20}
-
-
-                        /> Apps for
-                            <div className='ms-2'>
-
-                                <Image
-                                    src="/andriodimg.svg"
-                                    alt="Teams Plan"
-                                    width={20}
-                                    height={20}
-                                    className='text-black invert'
-
-                                />
-                            </div>
-                            <div className='ms-2'>
-
-                                <Image
-                                    src="/appleImg.svg"
-                                    alt="Teams Plan"
-                                    width={20}
-                                    height={20}
-                                    className='text-black invert'
-
-                                />
-                            </div>
-                            <div className='ms-2'>
-
-                                <Image
-                                    src="/mobileLogo.svg"
-                                    alt="Teams Plan"
-                                    width={20}
-                                    height={20}
-                                    className='text-black invert'
-
-                                />
-                            </div>
-                            <div className='ms-2'>
-                                <Image
-                                    src="/window.svg"
-                                    alt="Teams Plan"
-                                    width={20}
-                                    height={20}
-                                    className='text-black   invert'
-
-                                />
-                            </div>
-
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </section>
-    );
-}
-
 const Page = () => (
-        <Suspense>
-            <CheckoutPage />
-        </Suspense>
-    );
+  <Suspense>
+    <CheckoutPage />
+  </Suspense>
+);
 
-export default Page
+export default Page;

@@ -1,12 +1,14 @@
 "use client";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import LogOutModal from './logoutModal';
-import Cookies from "js-cookie";
+import { useUserCookie } from './use-cookies';
  
 
 const Sidebar = () => {
+  const router = useRouter();
+  const { removeUserCookie } = useUserCookie();
   const pathname = usePathname();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // Logout modal
 
@@ -19,20 +21,10 @@ const Sidebar = () => {
     { name: 'Privacy', href: '/Dashboard/AccountPrivicy' },
     { name: 'Log Out', href: '/logout' },
   ];
+
   const handleLogout = () => {
-   console.log("User logged out");
- 
-   // ✅ Remove token from local storage
-   localStorage.removeItem("access_token");
-   localStorage.removeItem("user");
- 
-   // ✅ Remove token from cookies
-   Cookies.remove("access_token", { path: "/" });
- 
-   // ✅ Redirect to login page
-   window.location.href = "/login";
- 
-   // ✅ Close modal (if you're using one)
+   removeUserCookie();
+   router.refresh();
    setIsLogoutModalOpen(false);
  };
 

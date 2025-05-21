@@ -5,8 +5,8 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import LogOutModal from '../logoutModal';
-import Cookies from "js-cookie";
 import { Oleo_Script } from 'next/font/google';
+import { useUserCookie } from '../use-cookies';
 
 const oleoScript = Oleo_Script({
   subsets: ['latin'],
@@ -15,51 +15,28 @@ const oleoScript = Oleo_Script({
 
 
 export default function Navbar() {
+  const router = useRouter();
+  const { user, removeUserCookie } = useUserCookie();
+  const [isMounted, setIsMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null); // State to hold user data
-  const router = useRouter();
   const pathname = usePathname(); // Get current route
 
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // Logout modal
 
   const handleLogout = () => {
-    console.log("User logged out");
-
-    // ✅ Remove token from local storage
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("user");
-
-    // ✅ Remove token from cookies
-    Cookies.remove("access_token", { path: "/" });
-
-    // ✅ Redirect to login page
-    window.location.href = "/login";
-
-    // ✅ Close modal (if you're using one)
+    removeUserCookie();
+    router.refresh();
     setIsLogoutModalOpen(false);
   };
 
-
-useEffect(() => {
-  const handleStorageChange = () => {
-    const storedUser = localStorage.getItem("user");
-    setUser(storedUser ? JSON.parse(storedUser) : null);
-  };
-
-  window.addEventListener("storage", handleStorageChange);
-  return () => window.removeEventListener("storage", handleStorageChange);
-}, []);
-useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  setUser(storedUser ? JSON.parse(storedUser) : null);
-}, [pathname]);
-
-
-
-
-
+  useEffect(() => {
+    setIsMounted(true);
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
 
   return (
     <nav className={`w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
@@ -101,8 +78,7 @@ useEffect(() => {
 
           {/* Right CTA Button (Desktop) */}
           <div className="hidden lg:flex items-center">
-            {
-              user ? (
+            {isMounted && user && (
                 <>
 
                 <span
@@ -119,7 +95,9 @@ useEffect(() => {
             </Link>
                 </>
                 
-              ) : (
+              )}
+              
+                {isMounted && !user &&(
                 <>
 
                 <Link
@@ -171,8 +149,7 @@ useEffect(() => {
           </details>
           <Link href="/download-device" className="block hover:text-black">Download</Link>
           <Link href="#" className="block hover:text-black">Help</Link>
-          {
-            user ? (
+          {isMounted && user && (
               <>
               <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black">Log Out</span>
                <Link
@@ -182,7 +159,9 @@ useEffect(() => {
               Client Area
             </Link>
               </>
-            ) : (
+            )}
+            
+             {isMounted && !user &&(
               <>
 
               <Link href="/login" className="block hover:text-black">Log In</Link>

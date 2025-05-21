@@ -1,84 +1,55 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useUserCookie } from "../use-cookies";
 
 export default function UpdateEmailModal({ open, onClose }) {
-  const { register, handleSubmit, reset } = useForm();
+  const { user, setUserCookie } = useUserCookie();
+  const { register, handleSubmit, reset } = useForm({
+    values: { email: user?.email || "" },
+  });
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
-  const [user,setUser]=useState();
-  
 
-  useEffect(() => {
-    if (!open) return;
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setApiError("");
 
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("access_token");
-        const response = await axios.get("https://seelvpn.tecclubb.com/api/user", {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
+    try {
+      const response = await axios
+        .post(
+          "https://seelvpn.tecclubb.com/api/user/update",
+          {
+            name: user.name, // Replace with dynamic value: data.name if needed
+            email: data.email,
           },
-        });
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${user.access_token}`,
+            },
+          }
+        )
+        .then((res) => res.data);
 
-        const user = response.data.user;
-        setUser(user)
-
-        reset({ email: user.email }); // preload current email
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-        setApiError("Failed to load user data.");
+      if (response.status) {
+        setUserCookie({ ...user, email: response.user.email });
+        toast.success("Email update successful");
+        reset();
+        onClose();
       }
-    };
-
-    fetchUser();
-  }, [open, reset]);
-
-const onSubmit = async (data) => {
-  setLoading(true);
-  setApiError("");
-  const token = localStorage.getItem("access_token");
-
-  try {
-    const response = await axios.post(
-      "https://seelvpn.tecclubb.com/api/user/update",
-      {
-        name:  user.name, // Replace with dynamic value: data.name if needed
-        email: data.email,
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    console.log("Email updated successfully:", response.data);
-
-    // ✅ Update localStorage with latest user data
-    if (response.data.user) {
-      // toast.success("name update successfull")
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      toast.success("Email update successful ");
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message ||
+        "Something went wrong. Please try again.";
+      setApiError(message);
+      toast.error(message);
+    } finally {
+      setLoading(false);
     }
-
-    reset();
-    onClose();
-  } catch (error) {
-    console.error("API error:", error);
-    const message =
-      error.response?.data?.message || "Something went wrong. Please try again.";
-    setApiError(message);
-    toast.error(message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   if (!open) return null;
 

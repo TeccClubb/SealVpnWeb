@@ -42,7 +42,6 @@ const ForgotPasswordPage = () => {
         error?.response?.data?.message || "Something went wrong.";
       toast.error(` ${message}`);
       toast.error(" Failed to send reset link.");
-      console.error("Error:", error);
     } finally {
       setLoading(false);
     }

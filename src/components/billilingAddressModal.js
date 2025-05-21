@@ -3,8 +3,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useUserCookie } from "./use-cookies";
 
 export default function BillingAddressModal({ isOpen, onClose, onAddressAdded }) {
+  const { user } = useUserCookie();
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -25,7 +27,6 @@ export default function BillingAddressModal({ isOpen, onClose, onAddressAdded })
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("access_token");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/billing-address/store`,
         {
@@ -39,18 +40,16 @@ export default function BillingAddressModal({ isOpen, onClose, onAddressAdded })
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user.access_token}`,
           },
         }
       );
-      console.log(response.data);
 
       onAddressAdded(response.data.user.billing_address);
       onClose();
       toast.success("Billing address added successfully!");
     } catch (err) {
       setError("Failed to add billing address. Please try again.");
-      console.error("Error adding billing address", err);
     } finally {
       setLoading(false);
     }

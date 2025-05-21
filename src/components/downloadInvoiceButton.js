@@ -1,43 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
  
 import axios from "axios";
 import { toast } from "react-toastify";
 import DownloadIcon from "./DownloadIcon";
 
-const DownloadInvoiceButton = ({ purchaseId, token }) => {
-  const [open, setOpen] = useState(false);
-  const [billingAddress, setBillingAddress] = useState();
+const DownloadInvoiceButton = ({ purchaseId, userId, token }) => {
   const [isInvoiceDownloading, setInvoiceDownloading] = useState(false);
-
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log("User from localStorage:", user);
-  }, []);
 
   const handleDownload = async () => {
     try {
-      setInvoiceDownloading(true); // show loader
-
-      let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-      const access_token = localStorage.getItem("access_token");
-
-      // Fetch billing address
-      const billingRes = await axios.get(`${Api_Url}/billing-address`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      setBillingAddress(billingRes.data.user.billing_address);
-
-      const user = JSON.parse(localStorage.getItem("user"));
+      setInvoiceDownloading(true);
 
       // Download invoice
       const response = await fetch(
-        `/api/dawnload-invoice?purchaseId=${purchaseId}&token=${token}&userId=${user.id}`
+        `/api/dawnload-invoice?purchaseId=${purchaseId}&token=${token}&userId=${userId}`
       );
 
       if (response.ok) {
@@ -52,9 +30,8 @@ const DownloadInvoiceButton = ({ purchaseId, token }) => {
       }
     } catch (error) {
       toast.error("Failed to download invoice");
-      console.error(error);
     } finally {
-      setInvoiceDownloading(false); // hide loader
+      setInvoiceDownloading(false);
     }
   };
 

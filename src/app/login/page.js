@@ -1,14 +1,14 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import Footer from "@/components/footer/footer";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
-  import Cookies from "js-cookie"; // Install this with: npm install js-cookie
+import { useUserCookie } from "@/components/use-cookies";
 
 export default function LoginForm() {
+  const { setUserCookie } = useUserCookie();
   const {
     register,
     handleSubmit,
@@ -18,52 +18,43 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
+  const onSubmit = async (data) => {
+    const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
+    setIsLoading(true);
+    setResponseMessage("");
 
-const onSubmit = async (data) => {
-  const Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-  setIsLoading(true);
-  setResponseMessage("");
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
 
-  const payload = {
-    email: data.email,
-    password: data.password,
-  };
-
-  try {
-    const response = await axios.post(`${Api_Url}/login`, payload, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-
-    if (response.data.status) {
-      // Store in localStorage (optional)
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
-      // ✅ Store in cookies
-      Cookies.set("access_token", response.data.access_token, {
-        expires: 1, // 1 day
-        secure: true,
-        sameSite: "Strict",
-        path: "/",
+    try {
+      const response = await axios.post(`${Api_Url}/login`, payload, {
+        headers: {
+          Accept: "application/json",
+        },
       });
 
-      setIsLoading(false);
-      toast.success("Login successful!");
-      router.push("/Dashboard");
-    } else {
-      setIsLoading(false);
-      setResponseMessage("Login failed. Please try again.");
-    }
-  } catch (error) {
-    setIsLoading(false);
-    setResponseMessage(error.response?.data?.message || "Login failed.");
-    console.error("Login error:", error);
-  }
-};
+      if (response.data.status) {
+        setUserCookie({
+          id: response.data.user.id,
+          name: response.data.user.name,
+          email: response.data.user.email,
+          access_token: response.data.access_token,
+        });
 
+        setIsLoading(false);
+        toast.success("Login successful!");
+        router.push("/Dashboard");
+      } else {
+        setIsLoading(false);
+        setResponseMessage("Login failed. Please try again.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setResponseMessage(error.response?.data?.message || "Login failed.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-white text-gray-800">
@@ -71,36 +62,40 @@ const onSubmit = async (data) => {
         <img src="/loginicon.png" alt="Logo" className="w-16 h-16 mb-4" />
         <h1 className="text-xl font-bold mb-6">Log in to SeelVpn</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full max-w-sm mx-auto"
+        >
           {/* Email */}
 
-
           <div className="w-[70%] mx-auto">
-
-          <input
-            type="email"
-            placeholder="Email"
-            {...register("email", { required: "Email is required" })}
-            className="w-full block px-4 mt-2 py-2 mb-1 border border-gray-300 rounded-md"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm  mb-2">{errors.email.message}</p>
-          )}
+            <input
+              type="email"
+              placeholder="Email"
+              {...register("email", { required: "Email is required" })}
+              className="w-full block px-4 mt-2 py-2 mb-1 border border-gray-300 rounded-md"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm  mb-2">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
 
           <div className="w-[70%] mx-auto">
-
-          <input
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: "Password is required" })}
-            className="w-full block mt-4 px-4 py-2 mb-1 border border-gray-300 rounded-md"
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm  mb-3">{errors.password.message}</p>
-          )}
+            <input
+              type="password"
+              placeholder="Password"
+              {...register("password", { required: "Password is required" })}
+              className="w-full block mt-4 px-4 py-2 mb-1 border border-gray-300 rounded-md"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm  mb-3">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Login Button */}
@@ -114,18 +109,24 @@ const onSubmit = async (data) => {
 
           {/* Message below button */}
           {responseMessage && (
-            <p className="text-center mt-3 text-sm text-red-500">{responseMessage}</p>
+            <p className="text-center mt-3 text-sm text-red-500">
+              {responseMessage}
+            </p>
           )}
 
           {/* Forgot Password */}
           <div className="text-center mt-2 text-sm">
-            <a href="/forgotPassword" className="text-gray-500 underline">I forgot my password</a>
+            <a href="/forgotPassword" className="text-gray-500 underline">
+              I forgot my password
+            </a>
           </div>
 
           {/* Sign Up */}
           <div className="text-center mt-2 text-sm">
             Don’t have a SeelVpn account?{" "}
-            <a href="/signup" className="text-teal-600 underline">Sign up</a>
+            <a href="/signup" className="text-teal-600 underline">
+              Sign up
+            </a>
           </div>
         </form>
       </main>

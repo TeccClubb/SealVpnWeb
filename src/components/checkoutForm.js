@@ -1,55 +1,52 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useForm } from "react-hook-form"; // Import react-hook-form
+import {
+  Elements,
+  // PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { calculateDiscountPercentage } from "./pricingSection/pricingPlans";
+import { useUserCookie } from "./use-cookies";
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-function PaymentForm({ billingAddress, amount, planId, seletedPlane }) {
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+function PaymentForm({ amount, planId, billingAddress }) {
+  const { user } = useUserCookie();
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const [user, setUser] = useState();
-
 
   const stripe = useStripe();
   const elements = useElements();
-  //     useEffect(() => {
-  //     if (errorMessage) {
-  //       toast.error("payment failed")
-  //     }
-  //   }, [errorMessage]);
-
-  // Initialize React Hook Form
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
-    setUser(user)
-    console.log("/////////////////////////////")
-    console.log(billingAddress)
-    if (billingAddress) {
-      // Set default values for the form using react-hook-form's `setValue`
-      setValue("name", billingAddress.data.user.billing_address.name || '');
-      setValue("address", billingAddress.data.user.billing_address.address || '');
-      setValue("city", billingAddress.data.user.billing_address.city || '');
-      setValue("state", billingAddress.data.user.billing_address.state || '');
-      setValue("country", billingAddress.data.user.billing_address.country || '');
-      setValue("postal_code", billingAddress.data.user.billing_address.postal_code || '');
-
+    if (errorMessage) {
+      toast.error("payment failed");
     }
-  }, [billingAddress, setValue]);
+  }, [errorMessage]);
 
-  // Handle form submission
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: billingAddress ? billingAddress.name : "",
+      address: billingAddress ? billingAddress.address : "",
+      city: billingAddress ? billingAddress.city : "",
+      state: billingAddress ? billingAddress.state : "",
+      country: billingAddress ? billingAddress.country : "",
+      postal_code: billingAddress ? billingAddress.postal_code : "",
+    },
+  });
+
   const onSubmit = async (values) => {
-    console.log(",,,,,,,,,,,,,,,,,,,,,,,")
-    console.log(values)
     if (!stripe || !elements) {
-      console.log("//////////////////////////")
       return;
     }
 
@@ -61,7 +58,6 @@ function PaymentForm({ billingAddress, amount, planId, seletedPlane }) {
         setErrorMessage(submitError.message);
         return;
       }
-      console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
       setLoading(true);
       setErrorMessage(undefined);
 
@@ -70,8 +66,6 @@ function PaymentForm({ billingAddress, amount, planId, seletedPlane }) {
           amount,
         })
         .then((res) => res.data);
-      console.log(".............................")
-      console.log(res)
 
       if (!res.clientSecret) {
         setErrorMessage("Client secret is missing");
@@ -119,128 +113,79 @@ function PaymentForm({ billingAddress, amount, planId, seletedPlane }) {
     }
   };
 
-  const calculateDiscount = (originalPrice, discountedPrice) => {
-    if (!originalPrice || !discountedPrice) return 0;
-    const discount = ((originalPrice - discountedPrice) / originalPrice) * 100;
-    return Math.round(discount); // Rounds to nearest whole number
-  };
-  const getDiscountAmount = (originalPrice, discountPrice) => {
-  if (!originalPrice || !discountPrice) return "0.00";
-  const discount = originalPrice - discountPrice;
-  return discount.toFixed(2);
-};
-
-
-
   return (
-    <div>
-      <h1>Payment Details</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-2">
-        {/* Name Input */}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-2">
+      {/* Name Input */}
+      <input
+        type="text"
+        {...register("name", { required: "Name is required" })}
+        placeholder="Name"
+        className="w-full bg-black/5 border rounded p-3"
+      />
+      {errors.name && <p className="text-red-600">{errors.name.message}</p>}
+
+      {/* Address Input */}
+      <input
+        type="text"
+        {...register("address", { required: "Address is required" })}
+        placeholder="Address"
+        className="w-full bg-black/5 border rounded p-3"
+      />
+      {errors.address && (
+        <p className="text-red-600">{errors.address.message}</p>
+      )}
+      <input
+        type="text"
+        {...register("city", { required: "City is required" })}
+        placeholder="City"
+        className="w-full border bg-black/5 rounded p-3"
+      />
+      {errors.city && <p className="text-red-600">{errors.city.message}</p>}
+
+      {/* City and State Inputs */}
+      <div className="grid grid-cols-2 gap-4">
         <input
           type="text"
-          {...register("name", { required: "Name is required" })}
-          placeholder="Name"
+          {...register("state", { required: "State is required" })}
+          placeholder="State"
           className="w-full bg-black/5 border rounded p-3"
         />
-        {errors.name && <p className="text-red-600">{errors.name.message}</p>}
-
-        {/* Address Input */}
+        {errors.state && <p className="text-red-600">{errors.state.message}</p>}
         <input
           type="text"
-          {...register("address", { required: "Address is required" })}
-          placeholder="Address"
+          {...register("postal_code", {
+            required: "postal code is required",
+          })}
+          placeholder="Postal Code"
           className="w-full bg-black/5 border rounded p-3"
         />
-        {errors.address && <p className="text-red-600">{errors.address.message}</p>}
-        <input
-          type="text"
-          {...register("city", { required: "City is required" })}
-          placeholder="City"
-          className="w-full border bg-black/5 rounded p-3"
-        />
-        {errors.city && <p className="text-red-600">{errors.city.message}</p>}
+        {errors.state && (
+          <p className="text-red-600">{errors.postal_code.message}</p>
+        )}
+      </div>
 
+      {/* <PaymentElement /> */}
 
-        {/* City and State Inputs */}
-        <div className="grid grid-cols-2 gap-4">
-
-          <input
-            type="text"
-            {...register("state", { required: "State is required" })}
-            placeholder="State"
-            className="w-full bg-black/5 border rounded p-3"
-          />
-          {errors.state && <p className="text-red-600">{errors.state.message}</p>}
-          <input
-            type="text"
-            {...register("postal_code", { required: "postal code is required" })}
-            placeholder="Postal Code"
-            className="w-full bg-black/5 border rounded p-3"
-          />
-          {errors.state && <p className="text-red-600">{errors.postal_code.message}</p>}
-        </div>
-
-
-        {/* Country Select */}
-
-        {/* Stripe Payment Element */}
-        <PaymentElement />
-        {/* Pricing summary */}
-        <div className="text-sm text-gray-600 mb-5">
-          Subscription renews automatically. Enter promo SEELVPN10 to save an extra 10% on your first year.
-        </div>
-        <div className="flex justify-between text-xl pb-4">
-          <span>{`SeelVpn  (${seletedPlane.duration_unit})`}</span>
-          <span className="line-through text-gray-400">{seletedPlane.original_price}</span>
-        </div>
-        <div className="flex justify-between  text-xl mb-4">
-          <span>{`${seletedPlane.duration_unit} Plan (${calculateDiscount(seletedPlane.original_price, seletedPlane.discount_price)}% discount)`}</span>
-
-          <span className="text-red-600">$39.99</span>
-        </div>
-        <div className="w-[540px] h-0.5 relative bg-neutral-300 " />
-        <div className="flex justify-between font-bold text-lg mb-4">
-          <span>Total Order</span>
-          <span className="text-red-600">
-           ${getDiscountAmount(seletedPlane.original_price, seletedPlane.discount_price)}
-          </span>
-
-        </div>
-        <div>
-          <p className="text-md text-gray-600">
-            By clicking <strong>Buy Now</strong>, you accept the{' '}
-            <a href="#" className="text-blue-600 hover:underline">Terms of Service</a>,{' '}
-            <a href="#" className="text-blue-600 hover:underline">Auto-renew Policy</a>, and{' '}
-            <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>.
-          </p>
-        </div>
-
-        {/* Pay Button */}
-        <button
+      {/* <button
           type="submit"
           disabled={!stripe || !elements || isLoading}
-          className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           {isLoading ? "Processing..." : "Pay"}
-        </button>
+        </button> */}
 
-        {/* Display error message */}
-        {errorMessage && (
-          <div className="mt-2 text-red-600">
-            <p>{errorMessage}</p>
-          </div>
-        )}
-
-      </form>
-    </div>
+      {errorMessage && (
+        <div className="mt-2 text-red-600">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+    </form>
   );
 }
 
-export default function CheckOutForm({ billingAddress, amount, planId, seletedPlane }) {
-  console.log("Checkout amount:", amount); // should log something like 3999
-  console.log("seleted plane:", seletedPlane); // should log something like 3999
-
+function PaymentElement({ amount, planId, billingAddress }) {
   const options = {
     mode: "payment",
     amount,
@@ -259,10 +204,151 @@ export default function CheckOutForm({ billingAddress, amount, planId, seletedPl
   };
 
   return (
+    <Elements stripe={stripePromise} options={options}>
+      <PaymentForm
+        amount={amount}
+        planId={planId}
+        billingAddress={billingAddress}
+      />
+    </Elements>
+  );
+}
+
+export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
+  const { user } = useUserCookie();
+  const [billingAddress, setBillingAddress] = useState(null);
+  const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBillingAddress = async () => {
+      try {
+        const res = await axios
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/billing-address`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${user.access_token}`,
+            },
+          })
+          .then((res) => res.data);
+
+        if (res.status) {
+          setBillingAddress(res.user.billing_address);
+        } else {
+        }
+      } catch (error) {
+      } finally {
+        setIsBillingAddressLoading(false);
+      }
+    };
+
+    fetchBillingAddress();
+  }, []);
+
+  return (
     <div>
-      <Elements stripe={stripePromise} options={options}>
-        <PaymentForm billingAddress={billingAddress} amount={amount} planId={planId} seletedPlane={seletedPlane} />
-      </Elements>
+      <h1>Payment Details</h1>
+
+      {isBillingAddressLoading && (
+        <div className="space-y-4 mb-2">
+          <div className="w-full bg-gray-200 animate-pulse h-10 rounded"></div>
+          <div className="w-full bg-gray-200 animate-pulse h-10 rounded"></div>
+          <div className="w-full bg-gray-200 animate-pulse h-10 rounded"></div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="w-full bg-gray-200 animate-pulse h-10 rounded"></div>
+            <div className="w-full bg-gray-200 animate-pulse h-10 rounded"></div>
+          </div>
+        </div>
+      )}
+
+      {selectedPlan && billingAddress && (
+        <PaymentElement
+          amount={selectedPlan.discount_price * 100}
+          planId={selectedPlan.id}
+          billingAddress={billingAddress}
+        />
+      )}
+
+      <div className="text-sm text-gray-600 mb-5">
+        Subscription renews automatically. Enter promo SEEL VPN to save an extra
+        10% on your first year.
+      </div>
+
+      {isPlansLoading && (
+        <div className="space-y-4">
+          <div className="flex justify-between text-xl">
+            <span className="w-1/2 bg-gray-200 animate-pulse h-6 rounded"></span>
+            <span className="w-1/4 bg-gray-200 animate-pulse h-6 rounded"></span>
+          </div>
+          <div className="flex justify-between text-xl mb-4">
+            <span className="w-1/2 bg-gray-200 animate-pulse h-6 rounded"></span>
+            <span className="w-1/4 bg-gray-200 animate-pulse h-6 rounded"></span>
+          </div>
+          <div className="w-[540px] h-0.5 relative bg-gray-200 animate-pulse"></div>
+          <div className="flex justify-between font-bold text-lg mb-4">
+            <span className="w-1/3 bg-gray-200 animate-pulse h-6 rounded"></span>
+            <span className="w-1/4 bg-gray-200 animate-pulse h-6 rounded"></span>
+          </div>
+          <div>
+            <p className="text-md text-gray-600">
+              <span className="w-full bg-gray-200 animate-pulse h-4 rounded block mb-2"></span>
+              <span className="w-3/4 bg-gray-200 animate-pulse h-4 rounded block"></span>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {selectedPlan && (
+        <>
+          <div className="flex justify-between text-xl">
+            <span>
+              SeelVpn ({selectedPlan.duration}{" "}
+              <span className="capitalize">{selectedPlan.duration_unit}</span>)
+            </span>
+            <span className="line-through text-gray-400">
+              ${selectedPlan.original_price}
+            </span>
+          </div>
+          <div className="flex justify-between  text-xl mb-4">
+            {selectedPlan.name} Plan (
+            {calculateDiscountPercentage(
+              selectedPlan.original_price,
+              selectedPlan.discount_price
+            )}
+            % discount)
+            <span className="text-red-600">
+              -$
+              {Math.round(
+                (selectedPlan.original_price - selectedPlan.discount_price) *
+                  100
+              ) / 100}
+            </span>
+          </div>
+          <div className="w-[540px] h-0.5 relative bg-neutral-300 " />
+          <div className="flex justify-between font-bold text-lg mb-4">
+            <span>Order Total</span>
+            <span className="text-green-600">
+              ${selectedPlan.discount_price}
+            </span>
+          </div>
+          <div>
+            <p className="text-md text-gray-600">
+              By clicking <strong>Buy Now</strong>, you accept the{" "}
+              <a href="#" className="text-blue-600 hover:underline">
+                Terms of Service
+              </a>
+              ,{" "}
+              <a href="#" className="text-blue-600 hover:underline">
+                Auto-renew Policy
+              </a>
+              , and{" "}
+              <a href="#" className="text-blue-600 hover:underline">
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -4,79 +4,55 @@ import axios from "axios";
 import UpdateEmailModal from "@/components/updateModels/UpdateEmailModal";
 import UpdateNameModal from "@/components/updateModels/UpdateNameModal";
 import UpdatePasswordModal from "@/components/updateModels/UpdatePasswordModal";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useUserCookie } from "@/components/use-cookies";
+import { useRouter } from "next/navigation";
 
 export default function AccountPage() {
+  const router = useRouter();
+  const { user, removeUserCookie } = useUserCookie();
   const [showNameModal, setShowNameModal] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const [user, setUser] = useState(null); // ✅ Holds user data
-
-  // ✅ Fetch user info
-  const fetchUser = async () => {
+  const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("access_token");
-      const response = await axios.get("https://seelvpn.tecclubb.com/api/user", {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setUser(response.data.user);
+      const response = await axios
+        .delete("https://seelvpn.tecclubb.com/api/user/delete", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${user.access_token}`,
+          },
+        })
+        .then((res) => res.data);
+      if (response.status) {
+        removeUserCookie();
+        toast.success(response.message);
+        router.refresh();
+      }
     } catch (error) {
-      console.error("Failed to fetch user info:", error);
+      toast.error("Failed to delete account. Please try again.");
+    } finally {
+      setShowDeleteModal(false);
     }
   };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
- const handleDelete = async () => {
-  try {
-    // ✅ Get the token from localStorage
-    const token = localStorage.getItem("access_token");
-
-    console.log("Token from localStorage:", token);
-
-    
-
-    
-    const response = await axios.delete("https://seelvpn.tecclubb.com/api/user/delete", {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log("Delete response:", response.data);
-
-    // ✅ Show success alert and redirect
-   toast.success(response.data.message)
-    localStorage.removeItem("token");
-   
-  } catch (error) {
-    console.error("Delete error:", error);
-    toast.error("Failed to delete account. Please try again.");
-  } finally {
-    setShowDeleteModal(false); // Close the modal whether successful or not
-  }
-};
 
   return (
     <div className="min-h-screen bg-white text-black p-8">
       <h2 className="text-teal-400 text-xl font-semibold mb-6">My Account</h2>
-      <h1 className="text-3xl font-bold mb-6 text-neutral-600">User Information</h1>
+      <h1 className="text-3xl font-bold mb-6 text-neutral-600">
+        User Information
+      </h1>
 
       {/* Name Section */}
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
         <div>
           <p className="text-xl font-bold text-gray-800">Name</p>
-          <p className="text-lg text-gray-600">{user?.name || "Loading..."}</p>
+          {user && <p className="text-lg text-gray-600">{user.name}</p>}
+          {!user && (
+            <div className="h-4 bg-gray-300 rounded w-32 animate-pulse"></div>
+          )}
         </div>
         <button
           onClick={() => setShowNameModal(true)}
@@ -90,7 +66,14 @@ export default function AccountPage() {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
         <div>
           <p className="text-xl font-bold text-gray-800">Email Address</p>
-          <p className="text-lg text-gray-700">{user?.email || "Loading..."}</p>
+          {user && (
+            <p className="text-lg text-gray-700">
+              {user.email}
+            </p>
+          )}
+          {!user && (
+            <div className="h-4 bg-gray-300 rounded w-32 animate-pulse"></div>
+          )}
         </div>
         <button
           onClick={() => setShowEmailModal(true)}
@@ -118,7 +101,9 @@ export default function AccountPage() {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
         <div>
           <p className="text-xl font-bold text-red-600 mb-2">Delete Account</p>
-          <p className="text-gray-700">Permanently remove your account and all associated data.</p>
+          <p className="text-gray-700">
+            Permanently remove your account and all associated data.
+          </p>
         </div>
         <button
           onClick={() => setShowDeleteModal(true)}
@@ -133,21 +118,30 @@ export default function AccountPage() {
         open={showNameModal}
         onClose={() => {
           setShowNameModal(false);
-          fetchUser(); // ✅ Refresh data after closing modal
         }}
       />
-      <UpdateEmailModal open={showEmailModal} onClose={() => {
-        setShowEmailModal(false)
-        fetchUser();
-      }} />
-      <UpdatePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
+      <UpdateEmailModal
+        open={showEmailModal}
+        onClose={() => {
+          setShowEmailModal(false);
+        }}
+      />
+      <UpdatePasswordModal
+        open={showPasswordModal}
+        onClose={() => setShowPasswordModal(false)}
+      />
 
       {/* Delete Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-md space-y-4">
-            <h2 className="text-lg font-semibold text-red-600">Confirm Deletion</h2>
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <h2 className="text-lg font-semibold text-red-600">
+              Confirm Deletion
+            </h2>
+            <p>
+              Are you sure you want to delete your account? This action cannot
+              be undone.
+            </p>
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
