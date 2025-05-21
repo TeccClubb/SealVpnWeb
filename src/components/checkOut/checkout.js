@@ -19,36 +19,10 @@ const CheckoutPage = () => {
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState();
   const [isPlansLoading, setIsPlansLoading] = useState(true);
-  const [billingAddress, setBillingAddress] = useState(null);
-  const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
 
   if (!planId) {
     notFound();
   }
-
-  useEffect(() => {
-    const fetchBillingAddress = async () => {
-      try {
-        const res = await axios
-          .get(`${Api_Url}/billing-address`, {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
-            },
-          })
-          .then((res) => res.data);
-
-        if (res.status) {
-          setBillingAddress(res.user.billing_address);
-        }
-      } catch (error) {
-      } finally {
-        setIsBillingAddressLoading(false);
-      }
-    };
-
-    fetchBillingAddress();
-  }, []);
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -73,7 +47,7 @@ const CheckoutPage = () => {
   }, [planId]);
 
   return (
-    <section className="py-16 px-4 bg-white text-gray-800">
+    <section className="w-full max-w-7xl mx-auto py-16 px-4 bg-white text-gray-800">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
         Get SeelVpn at the lowest price of the year
       </h2>
@@ -81,12 +55,12 @@ const CheckoutPage = () => {
         Includes all SeelVpn apps, priority customer support, and unlimited
         data.
       </p>
-      <div className="flex flex-wrap  gap-3 mb-8 max-w-4xl mx-auto px-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {isPlansLoading &&
           Array.from({ length: 3 }).map((_, index) => (
             <div
               key={index}
-              className="rounded-lg p-4 w-70 max-w-sm animate-pulse bg-gray-200"
+              className="rounded-lg p-4 w-full animate-pulse bg-gray-200"
             >
               <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
               <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
@@ -101,7 +75,7 @@ const CheckoutPage = () => {
               plan.id === +planId
                 ? "border-2 border-green-400 bg-[#f9fff6] cursor-default shadow-md overflow-visible relative"
                 : "border hover:border-green-500 cursor-pointer"
-            } rounded-lg p-4 w-70 max-w-sm`}
+            } rounded-lg p-4 w-full`}
             onClick={() =>
               router.replace(`/account/checkout?planId=${plan.id}`)
             }
@@ -160,27 +134,27 @@ const CheckoutPage = () => {
         ))}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-12 w-full">
+        {/* Left: Plan & Payment */}
         <CheckOutForm
           isPlansLoading={isPlansLoading}
           selectedPlan={selectedPlan}
         />
 
-        {/* Left: Plan & Payment */}
-
         {/* Right: Plan details */}
-        <div className="flex mt-10 flex-col bg-black/5 items-center text-center p-6 relative  rounded-2xl  ">
+        <div className="flex md:mt-40 flex-col bg-black/5 px-10 rounded-2xl">
           <Image
             src="/imageofHero.png"
             alt="Teams Plan"
-            width={200}
-            height={200}
-            className="absolute top-[-50px] left-1/2 transform -translate-x-1/2"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-80 h-auto mx-auto mb-4 md:-mt-40 mt-10"
           />
-          <h3 className="text-xl font-semibold my-4 pt-27">
+          <h3 className="text-xl font-semibold my-4">
             What you get with your SeelVpn plan
           </h3>
-          <ul className="text-gray-700 text-left mb-6 space-y-2">
+          <ul className="w-full text-gray-700 text-left mb-6 space-y-2">
             {[
               "Unlimited data",
               "Unlimited device",

@@ -59,11 +59,12 @@ export default function PrivacySection() {
                             
                         >
                             <Image
-                                src="/vpnfeatureImg/pirvacyImg.png"
+                                src="/vpnFeatureImg/pirvacyImg.png"
                                 alt="Privacy Illustration"
-                                width={300}
-                                height={300}
-                                className="object-contain"
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                className="w-full h-auto"
                             />
                         </div>
                     </div>

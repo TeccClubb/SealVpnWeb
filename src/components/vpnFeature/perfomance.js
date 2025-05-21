@@ -30,7 +30,7 @@ export default function Performance() {
                             
                         >
                             <Image
-                                src="/vpnfeatureImg/performanceImg.png"
+                                src="/vpnFeatureImg/performanceImg.png"
                                 alt="Privacy Illustration"
                                 width={300}
                                 height={300}

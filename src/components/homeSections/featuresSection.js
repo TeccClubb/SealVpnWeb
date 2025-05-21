@@ -10,24 +10,24 @@ export default function FeaturesSection() {
       desc: 'Hackers can steal passwords and data over insecure public WiFi. SeeIVpn blocks them to keep you secure.'
     },
     {
-      img: '/protectOnlinePrivecy.png',
+      img: '/protectOnlinePrivecy.svg',
       title: 'Protect your online privacy',
       desc: 'Network owners and internet providers can see everything you do online. With SeeIVpn on, they can’t see a thing.'
     },
     {
-      img: '/globleContent.png',
+      img: '/globleContent.svg',
       title: 'Access global content',
       desc: 'Some content is only available in certain regions. SeeIVpn changes your virtual location so you can see it anywhere.'
     },
     {
       img: '/preventIpTracking.svg',
-      title: 'Bypass local censorship',
-      desc: 'Some governments block popular websites and apps. SeeIVpn unblocks them by changing your virtual location.'
+      title: 'Prevent IP-based tracking',
+      desc: 'Ad services use your IP address to track your behavior across sites. SeeIVpn stops them by assigning you a new IP.'
     },
     {
       img: '/bypassLocal.svg',
-      title: 'Prevent IP-based tracking',
-      desc: 'Ad services use your IP address to track your behavior across sites. SeeIVpn stops them by assigning you a new IP.'
+      title: 'Bypass local censorship',
+      desc: 'Some governments block popular websites and apps. SeeIVpn unblocks them by changing your virtual location.'
     },
     {
       img: '/wayMoreImg.svg',

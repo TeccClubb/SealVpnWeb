@@ -83,7 +83,7 @@ const BrowseCountries = () => {
         <div className="flex justify-center" >
           <div className="relative w-64 h-64 md:w-96 md:h-96">
             <Image
-              src="/vpnfeatureImg/worldWide.png"
+              src="/vpnFeatureImg/worldWide.svg"
               alt="Vector Globe"
               fill
               className="object-contain"

@@ -1,5 +1,4 @@
 "use client"
-import { useEffect } from 'react';
 import Image from 'next/image';
 
 
@@ -32,11 +31,12 @@ export default function DownloadPage() {
           {/* Image Column */}
           <div className="w-full md:w-1/2 flex justify-center" >
             <Image
-              src="/downloadImg/Rectangle.png"
+              src="/vpnFeatureImg/pirvacyImg.png"
               alt="Bear in pipe"
-              width={200}
-              height={250}
-              className="max-w-full h-auto"
+              width={0}
+              height={0}
+              sizes='100vw'
+              className="w-full max-w-sm h-auto"
             />
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function DownloadPage() {
           {/* Step 1 */}
           <div className="w-60 text-center" >
             <Image
-              src="/downloadImg/install.png"
+              src="/downloadImg/install.svg"
               alt="Install the app"
               width={128}
               height={128}
@@ -68,7 +68,7 @@ export default function DownloadPage() {
           {/* Step 2 */}
           <div className="w-60 text-center"  >
             <Image
-              src="/downloadImg/login.png"
+              src="/downloadImg/login.svg"
               alt="Sign up or log in"
               width={128}
               height={128}
@@ -88,7 +88,7 @@ export default function DownloadPage() {
           {/* Step 3 */}
           <div className="w-60 text-center"  >
             <Image
-              src="/downloadImg/startTunnel.png"
+              src="/globleContent.svg"
               alt="Start tunneling"
               width={128}
               height={128}

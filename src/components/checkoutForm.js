@@ -283,7 +283,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
             <span className="w-1/2 bg-gray-200 animate-pulse h-6 rounded"></span>
             <span className="w-1/4 bg-gray-200 animate-pulse h-6 rounded"></span>
           </div>
-          <div className="w-[540px] h-0.5 relative bg-gray-200 animate-pulse"></div>
+          <div className="w-full h-0.5 relative bg-gray-200 animate-pulse"></div>
           <div className="flex justify-between font-bold text-lg mb-4">
             <span className="w-1/3 bg-gray-200 animate-pulse h-6 rounded"></span>
             <span className="w-1/4 bg-gray-200 animate-pulse h-6 rounded"></span>
@@ -323,7 +323,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
               ) / 100}
             </span>
           </div>
-          <div className="w-[540px] h-0.5 relative bg-neutral-300 " />
+          <div className="w-full h-0.5 relative bg-neutral-300 " />
           <div className="flex justify-between font-bold text-lg mb-4">
             <span>Order Total</span>
             <span className="text-green-600">

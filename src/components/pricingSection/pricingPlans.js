@@ -69,8 +69,10 @@ export default function PricingPlans() {
             <Image
               src="/pricing/freeOfferImg.svg"
               alt="Free Plan"
-              width={100}
-              height={100}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-auto"
             />
             <h3 className="text-2xl font-semibold my-4">Free</h3>
             <p className="mb-6 text-neutral-500">Testing and limited usage</p>
@@ -92,7 +94,7 @@ export default function PricingPlans() {
           </div>
 
           {isPlansLoading &&
-            Array.from({ length: 2 }).map((_, index) => (
+            Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center text-center p-6 relative rounded-lg bg-gray-200 animate-pulse h-full"
@@ -111,7 +113,7 @@ export default function PricingPlans() {
             ))}
 
           {plans.length !== 0 &&
-            plans.map((plan) => (
+            plans.map((plan, index) => (
               <div
                 key={plan.id}
                 style={{
@@ -120,11 +122,12 @@ export default function PricingPlans() {
                 className="flex flex-col items-center text-center p-6 relative sm:rounded-lg lg:rounded-r-2xl bg-white h-full"
               >
                 <Image
-                  src="/pricing/heroCardImg.svg"
+                  src={(index + 1) %2 === 0 ? "/pricing/even_pricing_image.png" : "/pricing/odd_pricing_image.png"}
                   alt="Plan"
-                  width={170}
-                  height={180}
-                  className="mb-4 xl:-mt-30"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="w-full h-auto mb-4 xl:-mt-30"
                 />
                 <span className="absolute top-20 w-18 h-18 right-4 bg-zinc-500 rounded-[100px] text-white text-sm font-bold px-2 py-2">
                   <div className="w-12 h-12 absolute justify-center text-white text-lg font-black font-['Montserrat'] leading-snug">
