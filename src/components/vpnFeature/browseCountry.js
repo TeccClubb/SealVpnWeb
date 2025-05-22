@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 const countries = [
@@ -93,9 +94,9 @@ const BrowseCountries = () => {
       </div>
 
       <div className="flex justify-center" >
-        <button className="bg-teal-400 mt-5 hover:bg-teal-500 text-white px-6 py-2 rounded-full text-sm">
+        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 mt-5 text-white px-6 py-2 rounded-full text-sm">
           Get SeeVpn now
-        </button>
+        </Link>
       </div>
     </div>
   );

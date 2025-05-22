@@ -1,5 +1,7 @@
 'use client';
 
+import Link from "next/link";
+
 export default function DeviceAppsSection() {
   return (
     <div className="w-full bg-[#2d4a4e] text-white  mb-20 px-6 md:px-10">
@@ -40,12 +42,12 @@ export default function DeviceAppsSection() {
         </div>
 
         {/* CTA Button */}
-        <button className="bg-teal-400 hover:bg-teal-500 text-white px-8 py-2 rounded-full text-base mb-6">
+        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white px-8 py-2 rounded-full text-base mb-6">
           Get SeeVpn now
-        </button>
+        </Link>
 
         {/* Image Section aligned to left + moved further up */}
-        <div className="w-full flex justify-start -mt-55">
+        <div className="w-full flex justify-start -mt-55 pointer-events-none">
           <img
             src="/mobileMapImg.png"
             alt="Mobile App"

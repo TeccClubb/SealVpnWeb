@@ -1,5 +1,6 @@
 "use client"
 
+import Link from 'next/link';
 import React, { useEffect } from 'react';
 
 
@@ -17,32 +18,32 @@ export default function DownloadVpn() {
                 {/* Desktop Section */}
                 <div  className="flex flex-col items-center gap-4">
                     <h2 className="text-xl font-semibold text-gray-800">Desktop</h2>
-                    <button className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                    <Link href="/Download?device-name=MAC&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
                         <img src="/buttonImg/desktop.png" alt="Mac Icon" className="w-5 h-5" />
                         Mac
-                    </button>
-                    <p className="text-sm text-gray-500">64-bit macOS 11.0 and later. <a className="underline" href="#">What’s new?</a></p>
+                    </Link>
+                    <p className="text-sm text-gray-500">64-bit macOS 11.0 and later.</p>
 
-                    <button className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                    <Link href="/Download?device-name=Windows&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
                         <img src="/buttonImg/window.png" alt="Windows Icon" className="w-5 h-5" />
                         Windows
-                    </button>
-                    <p className="text-sm text-gray-500">Windows 10 and later. <a className="underline" href="#">What’s New?</a></p>
+                    </Link>
+                    <p className="text-sm text-gray-500">Windows 10 and later.</p>
                 </div>
 
                 {/* Mobile Section */}
                 <div  className="flex flex-col items-center gap-4">
                     <h2 className="text-xl font-semibold text-gray-800">Mobile</h2>
-                    <button className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                    <Link href="/Download?device-name=iPhone-or-iPad&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
                         <img src="/buttonImg/mobile.png" alt="iOS Icon" className="w-5 h-5" />
                         iOS
-                    </button>
+                    </Link>
                     <p className="text-sm text-gray-500">iPads and iPhones with 12.0 and later</p>
 
-                    <button className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                    <Link href="/Download?device-name=Android&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
                         <img src="/buttonImg/android.png" alt="Android Icon" className="w-5 h-5" />
                         Android
-                    </button>
+                    </Link>
                     <p className="text-sm text-gray-500">Android 8.1 and later</p>
                 </div>
             </div>

@@ -1,9 +1,18 @@
 "use client"
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 
 export default function DownloadPage() {
+  const searchParams = useSearchParams();
+  const deviceName = searchParams.get("device-name")
+  const downloadLink = searchParams.get("download-link")
   
+  useEffect(() => {
+    // const download = 
+    console.log(downloadLink)
+  }, [])
 
   return (
     <>
@@ -16,7 +25,7 @@ export default function DownloadPage() {
             
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-bold text-[#3D3D3D]">
-              Downloading SeelVpn for Windows
+              Downloading SeelVpn for {deviceName}
             </h1>
             <p className="mt-4 text-neutral-500  text-sm sm:text-base text-center leading-relaxed">
               Your SeelVpn download should start automatically.
