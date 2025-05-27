@@ -7,8 +7,8 @@ export default function EncryptionSection() {
   
 
     return (
-        <div className="bg-white text-black px-6 py-5">
-            <div className="flex justify-center">
+        <div className="bg-white text-black  px-6 py-12 md:py-20">
+            <div className=" w-[85%] m-auto flex justify-center">
                 <div>
                     <h1 className="text-3xl text-center" >
                         <b>Encrypt your connection, everywhere</b>

@@ -61,7 +61,7 @@ const BrowseCountries = () => {
   return (
     <div className="bg-gray-900 text-white px-20 py-5">
       <div className="flex justify-center" >
-        <h1 className="font-bold text-4xl pb-4">Browse 46+ countries</h1>
+        <h1 className="font-bold text-center text-4xl pb-10">Browse 46+ countries</h1>
       </div>
       <div className="max-w-7xl w-[87%] m-auto mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Text + Countries List */}

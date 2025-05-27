@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 
@@ -18,14 +19,26 @@ export default function DownloadVpn() {
                 {/* Desktop Section */}
                 <div  className="flex flex-col items-center gap-4">
                     <h2 className="text-xl font-semibold text-gray-800">Desktop</h2>
-                    <Link href="/Download?device-name=MAC&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
-                        <img src="/buttonImg/desktop.png" alt="Mac Icon" className="w-5 h-5" />
+                    <Link href="/Download?device-name=MAC&download-link=" className="flex w-[230px] h-[41px]   justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                        <Image src="/buttonImg/desktop.png"
+                         alt="Mac Icon"
+                         width={30} 
+                         height={30}
+                          />
+                          <span>
+
                         Mac
+                          </span>
                     </Link>
                     <p className="text-sm text-gray-500">64-bit macOS 11.0 and later.</p>
 
-                    <Link href="/Download?device-name=Windows&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
-                        <img src="/buttonImg/window.png" alt="Windows Icon" className="w-5 h-5" />
+                    <Link href="/Download?device-name=Windows&download-link=" className="flex w-[230px] h-[41px]   justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                        <Image
+                         src="/buttonImg/window.png" 
+                         alt="Windows Icon"
+                         width={30}
+                         height={30}
+                           />
                         Windows
                     </Link>
                     <p className="text-sm text-gray-500">Windows 10 and later.</p>
@@ -34,14 +47,24 @@ export default function DownloadVpn() {
                 {/* Mobile Section */}
                 <div  className="flex flex-col items-center gap-4">
                     <h2 className="text-xl font-semibold text-gray-800">Mobile</h2>
-                    <Link href="/Download?device-name=iPhone-or-iPad&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
-                        <img src="/buttonImg/mobile.png" alt="iOS Icon" className="w-5 h-5" />
+                    <Link href="/Download?device-name=iPhone-or-iPad&download-link=" className="flex w-[230px] h-[41px]   justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
+                        <Image
+                         src="/buttonImg/mobile-button-solid.svg"
+                          alt="iOS Icon"
+                          width={18}
+                            height={18}
+                             />
                         iOS
                     </Link>
                     <p className="text-sm text-gray-500">iPads and iPhones with 12.0 and later</p>
 
-                    <Link href="/Download?device-name=Android&download-link=" className="flex w-[230px] h-[41px] px-[105.7px] justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full text-sm font-medium">
-                        <img src="/buttonImg/android.png" alt="Android Icon" className="w-5 h-5" />
+                    <Link href="/Download?device-name=Android&download-link=" className="flex w-[230px] h-[41px]    justify-center items-center gap-[6.64px] shrink-0 bg-teal-400 hover:bg-teal-500 text-white rounded-full   font-medium">
+                        <Image
+                         src="/buttonImg/android.png"
+                          alt="Android Icon"
+                          width={30}
+                            height={30}
+                             />
                         Android
                     </Link>
                     <p className="text-sm text-gray-500">Android 8.1 and later</p>
@@ -55,7 +78,7 @@ export default function DownloadVpn() {
                 </div>
 
                 <div  className="max-w-6xl mx-auto text-center mt-[20px]">
-                    By downloading SeelVpn, you agree to the <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
+                    By downloading SeelVpn, you agree to the <Link href="/terms-of-service" className="underline">Terms of Service</Link> and <Link href="/privacy-policy" className="underline">Privacy Policy</Link>.
                 </div>
             </div>
 

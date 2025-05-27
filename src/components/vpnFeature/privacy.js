@@ -2,6 +2,7 @@
 
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from 'react';
 
 export default function PrivacySection() {
@@ -23,7 +24,10 @@ export default function PrivacySection() {
                             <h3 className="font-semibold text-lg">VigilantSeal</h3>
                             <p className="mt-2 text-neutral-500 text-lg font-normal font-['Montserrat'] leading-relaxed">
                                 If your connection gets disrupted for any reason, SeelVpn will block all unsecured traffic until it’s safely reconnected.{" "}
-                                <span className="text-blue-500 cursor-pointer">Learn More</span>
+                              <Link href="/terms-of-service" className="text-blue-700 cursor-pointer">
+
+                                <span className="text-blue-500 cursor-pointer">Tears of services</span>
+                              </Link>
                             </p>
                         </div>
 
@@ -38,7 +42,10 @@ export default function PrivacySection() {
                             <h3 className="font-semibold text-lg">No logging</h3>
                             <p className="mt-2 text-neutral-500 text-lg font-normal font-['Montserrat'] leading-relaxed">
                                 SeelVpn does NOT log any activity of customers connected to our service.{" "}
+                                <Link href="/privacy-policy" className="text-blue-700 cursor-pointer">
+
                                 <span className="text-blue-500 cursor-pointer">privacy policy</span>.
+                                </Link>
                             </p>
                         </div>
                     </div>
@@ -49,7 +56,7 @@ export default function PrivacySection() {
                             <h3 className="font-semibold text-lg">SplitVPN</h3>
                             <p className="mt-2 text-neutral-500 text-lg font-normal font-['Montserrat'] leading-relaxed">
                                 Control which apps and websites are tunnelled through SeelVpn’s secure and encrypted connection.{" "}
-                                <span className="text-blue-500 cursor-pointer">Learn More</span>
+                                {/* <span className="text-blue-500 cursor-pointer">Learn More</span> */}
                             </p>
                         </div>
 

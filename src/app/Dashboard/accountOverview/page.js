@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardSection from "@/components/dashboardSection/dashboard";
 import { useUserCookie } from "@/components/use-cookies";
+import Link from "next/link";
 
 
 const DashboardPage = () => {
@@ -33,11 +34,11 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading="Welcome back, TeccClub">
+    <DashboardSection title="Dashboard" heading={`Welcome back,${user.name}  `}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
-          <button className="w-full max-w-64 bg-teal-400 hover:bg-teal-400 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
+          <button className="w-full max-w-64 cursor-pointer bg-teal-400 hover:bg-teal-400 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
             Connect
           </button>
           <p className="text-default-500 text-2xl font-normal text-center">
@@ -63,7 +64,10 @@ const DashboardPage = () => {
                 ].map((item) => (
                   <div key={item.label} className="flex flex-col items-center gap-2">
                     <div className="w-16 h-16 rounded-full  bg-neutral-100 flex items-center justify-center hover:bg-gray-300 transition duration-200">
+                      <Link href={`/Download?device-name=${item.label}&download-link=`} className="flex items-center justify-center">
+
                       <img src={item.src} alt={item.label} className="w-8 h-8 object-contain" />
+                      </Link>
                     </div>
                     <span className="text-sm font-bold text-neutral-700">{item.label}</span>
                   </div>

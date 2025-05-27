@@ -64,7 +64,7 @@ const BrowseCountries = () => {
     <div className="bg-gray-900 text-white px-6 py-12 md:py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Globe Image */}
-        <div  className="flex justify-center">
+        <div  className="flex items-center justify-center">
           <div className="relative w-64 h-64 md:w-96 md:h-96">
             {/* Replace with actual image */}
             <Image
@@ -77,7 +77,7 @@ const BrowseCountries = () => {
         </div>
 
         {/* Text + Countries List */}
-        <div  className="flex flex-col items-start space-y-6">
+        <div  className="flex flex-col justify-center items-center   space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Browse the internet from  47 countries 
           </h2>
@@ -85,7 +85,7 @@ const BrowseCountries = () => {
             Discover something new, or tunnel back home to enjoy your favourite websites and apps while travelling or living abroad.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm text-gray-100">
+          <div className="grid grid-cols-2  sm:grid-cols-4 gap-2 text-sm text-gray-100">
             {countries.map((country) => (
               <div key={country.name} className="flex items-center space-x-2">
                 <img src={country.flag} alt={`${country.name} flag`} className="w-6 h-4" />

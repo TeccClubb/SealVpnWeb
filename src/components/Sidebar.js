@@ -14,7 +14,7 @@ const Sidebar = () => {
 
 
   const links = [
-    { name: 'Overview', href: '/Dashboard/accountOverview' },
+    { name: 'Overview', href: '/Dashboard' },
     { name: 'Billing History', href: '/Dashboard/Account-biling-history' },
     {name:'Account', href:'/Dashboard/accountSetting'},
     { name: 'Log Out', href: '/logout' },

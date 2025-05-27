@@ -7,7 +7,7 @@ export default function VpnFeature() {
 
  
   return (
-    <section className="bg-gray-50 py-16 px-6 sm:px-10 lg:px-20">
+    <section className="bg-gray-50 md:py-10 py-5 px-6 sm:px-10 lg:px-40">
       {/* Heading */}
       <div  className="max-w-4xl mx-auto text-center mb-12">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
@@ -16,11 +16,11 @@ export default function VpnFeature() {
       </div>
 
       {/* Top Grid Section */}
-      <div  className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div  className="max-w-6xl mx-auto grid  md:grid-cols-2 gap-12 items-center">
         {/* Left Column - Features */}
         <div  className="space-y-6">
           {/* Feature 1 */}
-          <div className="flex items-start space-x-4">
+          <div className="flex items-center space-x-4">
             <img src="/vpnFeature/Engi.svg" alt="Speed Icon" className="w-9 h-9 sm:w-10 sm:h-10" />
             <div>
               <p className="font-semibold text-gray-800 text-sm sm:text-base">Engineered for speed</p>
@@ -32,7 +32,7 @@ export default function VpnFeature() {
           </div>
 
           {/* Feature 2 */}
-          <div className="flex items-start space-x-4">
+          <div className="flex items-center space-x-4">
             <img src="/vpnFeature/Sequrity.svg" alt="Audited Icon" className="w-9 h-9 sm:w-10 sm:h-10" />
             <div>
               <p className="font-semibold text-gray-800 text-sm sm:text-base">Security you can rely on</p>
@@ -44,7 +44,7 @@ export default function VpnFeature() {
           </div>
 
           {/* Feature 3 */}
-          <div className="flex items-start space-x-4">
+          <div className="flex  items-center space-x-4">
             <img src="/vpnFeature/Strong.svg" alt="Encryption Icon" className="w-9 h-9 sm:w-10 sm:h-10" />
             <div>
               <p className="font-semibold text-gray-800 text-sm sm:text-base">Strong Encryption</p>

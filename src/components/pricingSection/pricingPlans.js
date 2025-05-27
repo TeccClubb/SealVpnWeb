@@ -58,7 +58,7 @@ export default function PricingPlans() {
       </h2>
 
       <div className="flex justify-center py-10 px-4">
-        <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {/* Free Plan */}
           <div
             className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
@@ -130,7 +130,7 @@ export default function PricingPlans() {
                   className="w-full h-auto mb-4 xl:-mt-30"
                 />
                 <span className="absolute top-20 w-18 h-18 right-4 bg-zinc-500 rounded-[100px] text-white text-sm font-bold px-2 py-2">
-                  <div className="w-12 h-12 absolute justify-center text-white text-lg font-black font-['Montserrat'] leading-snug">
+                  <div className="w-14 h-14 absolute  justify-center text-white text-lg font-black font-['Montserrat'] leading-snug">
                     {Math.round(
                       calculateDiscountPercentage(
                         plan.original_price,

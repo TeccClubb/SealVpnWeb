@@ -1,5 +1,6 @@
 "use client"
 import Image from 'next/image';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -18,7 +19,7 @@ export default function DownloadPage() {
     <>
       {/* Hero Download Section */}
       <section className="bg-gray-50 py-2 px-6 sm:px-10 lg:px-20">
-        <div className="max-w-4xl mx-auto flex flex-col-reverse md:flex-row items-center gap-8">
+        <div className="max-w-4xl mx-auto py-10 flex flex-col-reverse md:flex-row items-center gap-8">
           {/* Text Column */}
           <div
             className="w-full md:w-1/2 text-center md:text-left"
@@ -29,10 +30,10 @@ export default function DownloadPage() {
             </h1>
             <p className="mt-4 text-neutral-500  text-sm sm:text-base text-center leading-relaxed">
               Your SeelVpn download should start automatically.
-              If it doesn’t, <a href="#" className="text-gray-500 underline">restart the download</a>,
+              If it doesn’t, <a href="#" className="text-gray-500 ">restart the download</a>,
               <span className="block">Windows 10 and later</span>
               <span className="block">
-                Or get SeelVpn for a <a href="#" className="text-gray-500 underline">different device</a>.
+                Or get SeelVpn for a <a href="#" className="text-gray-500">different device</a>.
               </span>
             </p>
           </div>
@@ -123,7 +124,7 @@ export default function DownloadPage() {
           <a href="#"    className="mr-[127px]">Uninstall SeelVpn</a>
         </div>
         <div className="max-w-6xl mx-auto text-center mt-[20px]">
-          By downloading SeelVpn, you agree to the <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
+          By downloading SeelVpn, you agree to the <Link href="/terms-of-service" className="underline">Terms of Service</Link> and <Link href="/privacy-policy" className="underline">Privacy Policy</Link>.
         </div>
       </footer>
     </>

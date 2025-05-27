@@ -20,7 +20,7 @@ export default function FeatureSection() {
               { src: "/vpnFeatureImg/privacy.svg", alt: "Privacy" },
               { src: "/vpnFeatureImg/performance.svg", alt: "Performance" },
               { src: "/vpnFeatureImg/encryption.svg", alt: "Encryption" },
-              { src: "/vpnFeatureImg/worldWide.svg", alt: "Worldwide" },
+              { src: "/vpnFeatureImg/worldWide.png", alt: "Worldwide" },
             ].map((item, index) => (
               <div
                 key={index}
@@ -29,10 +29,10 @@ export default function FeatureSection() {
                 <Image
                   src={item.src}
                   alt={item.alt}
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-16 h-auto"
+                  width={110}
+                  height={110}
+                  
+                  className=" h-auto"
                 />
                 <span className="text-sm md:text-base font-semibold text-gray-300">
                   {item.alt}
