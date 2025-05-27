@@ -34,7 +34,7 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading={`Welcome back,${user.name}  `}>
+    <DashboardSection title="Dashboard" heading={`Welcome back,${user ? user.name : ""}  `}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
