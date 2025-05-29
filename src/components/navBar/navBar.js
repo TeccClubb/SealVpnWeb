@@ -126,7 +126,7 @@ export default function Navbar() {
               Download
             </Link>
 
-            <Link href="#" className="hover:text-black">Help</Link>
+            <Link href="/help" className="hover:text-black">Help</Link>
           </div>
 
           {/* Right CTA Button (Desktop) */}
@@ -214,7 +214,7 @@ export default function Navbar() {
             className={`hover:text-black block ${pathname === '/download-device' ? 'text-teal-500 font-semibold' : ''}`}
 
           >Download</Link>
-          <Link href="#" className="block hover:text-black">Help</Link>
+          <Link href="/help" className="block hover:text-black">Help</Link>
           {isMounted && user && (
             <>
               <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black">Log Out</span>
