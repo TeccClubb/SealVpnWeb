@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useEffect } from "react";
 
 export default function FeatureSection() {
   return (
@@ -24,17 +23,18 @@ export default function FeatureSection() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col gap-2 items-center justify-center transition-transform duration-300 hover:scale-110"
+                className="flex flex-col items-center justify-center transition-transform duration-300 hover:scale-110"
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={110}
-                  height={110}
-                  
-                  className=" h-auto"
-                />
-                <span className="text-sm md:text-base font-semibold text-gray-300">
+                <div className="w-[80px] h-[80px] flex items-center justify-center mb-2">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={80}
+                    height={80}
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-sm md:text-base font-semibold text-gray-300 text-center">
                   {item.alt}
                 </span>
               </div>

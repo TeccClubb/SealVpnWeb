@@ -58,7 +58,7 @@ export default function PricingPlans() {
       </h2>
 
       <div className="flex justify-center py-10 px-4">
-        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
           {/* Free Plan */}
           <div
             className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
@@ -122,13 +122,21 @@ export default function PricingPlans() {
                 className="flex flex-col items-center text-center p-6 relative sm:rounded-lg lg:rounded-r-2xl bg-white h-full"
               >
                 <Image
-                  src={(index + 1) %2 === 0 ? "/pricing/even_pricing_image.png" : "/pricing/odd_pricing_image.png"}
+                  src={
+                    (index + 1) % 2 === 0
+                      ? "/pricing/even_pricing_image.png"
+                      : "/pricing/odd_pricing_image.png"
+                  }
                   alt="Plan"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="w-full h-auto mb-4 xl:-mt-30"
+                  className={`mb-4 xl:-mt-30 object-contain ${(index + 1) % 2 === 0
+                      ? "w-[280px] h-[225px]"
+                      : "w-[280px] h-[225px]" // Slightly taller for odd images
+                    }`}
                 />
+
                 <span className="absolute top-20 w-18 h-18 right-4 bg-zinc-500 rounded-[100px] text-white text-sm font-bold px-2 py-2">
                   <div className="w-14 h-14 absolute  justify-center text-white text-lg font-black font-['Montserrat'] leading-snug">
                     {Math.round(

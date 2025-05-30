@@ -10,7 +10,7 @@ export default function VisaSection() {
         width={0}
         height={0}
         sizes="100vw"
-        className="w-80 h-auto mx-auto"
+        className="w-40 h-auto mx-auto"
       />
 
       <p className="text-center text-sm text-gray-500 mt-4">

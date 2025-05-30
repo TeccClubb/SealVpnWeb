@@ -94,7 +94,7 @@ const BrowseCountries = () => {
       </div>
 
       <div className="flex justify-center" >
-        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 mt-5 text-white px-6 py-2 rounded-full text-sm">
+        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 mt-5 text-white px-9 py-4 text-[20px] rounded-full text-sm">
           Get SeeVpn now
         </Link>
       </div>
