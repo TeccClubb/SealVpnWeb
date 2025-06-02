@@ -39,14 +39,15 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black p-8">
+    <div className="min-h-screen bg-white text-black  py-8">
       <h2 className="text-teal-400 text-xl font-semibold mb-6">My Account</h2>
       <h1 className="text-3xl font-bold mb-6 text-neutral-600">
         User Information
       </h1>
 
       {/* Name Section */}
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
         <div>
           <p className="text-xl font-bold text-gray-800">Name</p>
           {user && <p className="text-lg text-gray-600">{user.name}</p>}
@@ -63,28 +64,27 @@ export default function AccountPage() {
       </div>
 
       {/* Email Section */}
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
           <p className="text-xl font-bold text-gray-800">Email Address</p>
-          {user && (
-            <p className="text-lg text-gray-700">
-              {user.email}
-            </p>
-          )}
-          {!user && (
+          {user ? (
+            <p className="text-lg text-gray-700">{user.email}</p>
+          ) : (
             <div className="h-4 bg-gray-300 rounded w-32 animate-pulse"></div>
           )}
         </div>
         <button
           onClick={() => setShowEmailModal(true)}
-          className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 rounded-xl"
+          className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 rounded-xl w-full md:w-auto"
         >
           Update Email
         </button>
       </div>
 
+
       {/* Password Section */}
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
+      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
         <div>
           <p className="text-xl font-bold text-gray-800">Password</p>
           <p className="text-lg text-gray-600">•••••••••••</p>
@@ -98,7 +98,8 @@ export default function AccountPage() {
       </div>
 
       {/* Delete Account Section */}
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-center">
+           <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+
         <div>
           <p className="text-xl font-bold text-red-600 mb-2">Delete Account</p>
           <p className="text-gray-700">
