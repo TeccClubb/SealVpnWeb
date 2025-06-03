@@ -1,8 +1,8 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
-  // PaymentElement,
+  PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
@@ -164,9 +164,9 @@ function PaymentForm({ amount, planId, billingAddress }) {
         )}
       </div>
 
-      {/* <PaymentElement /> */}
+      <PaymentElement />
 
-      {/* <button
+      <button
           type="submit"
           disabled={!stripe || !elements || isLoading}
           className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
@@ -174,7 +174,7 @@ function PaymentForm({ amount, planId, billingAddress }) {
           }`}
         >
           {isLoading ? "Processing..." : "Pay"}
-        </button> */}
+        </button>
 
       {errorMessage && (
         <div className="mt-2 text-red-600">
