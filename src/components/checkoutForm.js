@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
-  PaymentElement,
+  PaymentElement as StripePaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
@@ -164,7 +164,7 @@ function PaymentForm({ amount, planId, billingAddress }) {
         )}
       </div>
 
-      <PaymentElement />
+      <StripePaymentElement />
 
       <button
           type="submit"
