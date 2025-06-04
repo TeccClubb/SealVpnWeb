@@ -260,7 +260,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
         </div>
       )}
 
-      {selectedPlan && billingAddress && (
+      {selectedPlan && (
         <PaymentElement
           amount={selectedPlan.discount_price * 100}
           planId={selectedPlan.id}
