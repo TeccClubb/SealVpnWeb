@@ -45,7 +45,11 @@ export default function PricingPlans() {
 
   const handleClick = (planId) => {
     if (!user) {
-      router.push("/login");
+      router.push(
+        `/login?redirect=${encodeURIComponent(
+          `/account/checkout?planId=${planId}`
+        )}`
+      );
     } else {
       router.push(`/account/checkout?planId=${planId}`);
     }
@@ -131,10 +135,11 @@ export default function PricingPlans() {
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className={`mb-4 xl:-mt-30 object-contain ${(index + 1) % 2 === 0
+                  className={`mb-4 xl:-mt-30 object-contain ${
+                    (index + 1) % 2 === 0
                       ? "w-[280px] h-[225px]"
                       : "w-[280px] h-[225px]" // Slightly taller for odd images
-                    }`}
+                  }`}
                 />
 
                 <span className="absolute top-20 w-18 h-18 right-4 bg-zinc-500 rounded-[100px] text-white text-sm font-bold px-2 py-2">

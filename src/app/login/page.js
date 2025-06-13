@@ -2,12 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useUserCookie } from "@/components/use-cookies";
 
 export default function LoginForm() {
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
   const { setUserCookie } = useUserCookie();
   const {
     register,
@@ -45,7 +47,11 @@ export default function LoginForm() {
 
         setIsLoading(false);
         toast.success("Login successful!");
-        router.push("/Dashboard");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/Dashboard");
+        }
       } else {
         setIsLoading(false);
         setResponseMessage("Login failed. Please try again.");
