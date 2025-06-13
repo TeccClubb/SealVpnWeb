@@ -79,7 +79,7 @@ const ForgotPasswordPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-[50%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
+            className="w-[50%] cursor-pointer mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
           >
             {loading ? "Loading..." : "Send Reset Link"}
           </button>
@@ -87,7 +87,7 @@ const ForgotPasswordPage = () => {
           {/* Back to Login */}
           <div className="text-center mt-4 text-sm">
             Remembered your password?{" "}
-            <a href="/login" className="text-teal-600 underline">
+            <a href="/login" className="text-teal-600 cursor-pointer underline">
               Log in
             </a>
           </div>

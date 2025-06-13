@@ -102,7 +102,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-[70%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full transition duration-200 disabled:opacity-60"
+            className="w-[70%] mx-auto mt-4 block cursor-pointer bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full transition duration-200 disabled:opacity-60"
           >
             {isLoading ? "Logging in..." : "Log In"}
           </button>

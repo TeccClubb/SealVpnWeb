@@ -87,7 +87,7 @@ export default function PricingPlans() {
             </div>
             <button
               onClick={() => router.push("/signup")}
-              className="w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto"
+              className="w-full cursor-pointer bg-teal-400 hover:bg-teal-500 rounded-full text-white py-3 mt-auto hver:bg-[#3a9f9b] transition duration-200"
             >
               Try for free
             </button>
@@ -172,7 +172,7 @@ export default function PricingPlans() {
                 </p>
                 <button
                   onClick={() => handleClick(plan.id)}
-                  className="w-full bg-[#4DB8AC] rounded-full text-white py-3"
+                  className="w-full cursor-pointer bg-teal-400 hover:bg-teal-500 rounded-full text-white py-3"
                 >
                   Get Started
                 </button>

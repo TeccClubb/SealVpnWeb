@@ -98,14 +98,14 @@ export default function UpdatePasswordModal({ open, onClose }) {
         <div className="flex justify-end">
           <button
             onClick={onClose}
-            className="mr-2 px-4 py-2 bg-gray-600 text-white rounded"
+            className="mr-2 cursor-pointer px-4 py-2 bg-gray-600  hover:bg-gray-800 text-white rounded"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="px-4 py-2 bg-teal-500 text-white rounded disabled:opacity-50"
+            className="px-4 py-2 cursor-pointer bg-teal-400 hover:bg-teal-500 text-white rounded disabled:opacity-50"
           >
             {loading ? "Updating..." : "Update"}
           </button>

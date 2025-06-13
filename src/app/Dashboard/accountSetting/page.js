@@ -57,7 +57,7 @@ export default function AccountPage() {
         </div>
         <button
           onClick={() => setShowNameModal(true)}
-          className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 rounded-xl"
+          className="bg-teal-400 hover:bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-xl"
         >
           Update Name
         </button>
@@ -75,7 +75,7 @@ export default function AccountPage() {
         </div>
         <button
           onClick={() => setShowEmailModal(true)}
-          className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 rounded-xl w-full md:w-auto"
+          className="bg-teal-400 hover:bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-xl w-full md:w-auto"
         >
           Update Email
         </button>
@@ -91,7 +91,7 @@ export default function AccountPage() {
         </div>
         <button
           onClick={() => setShowPasswordModal(true)}
-          className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 rounded-xl"
+          className="bg-teal-400 hover:bg-teal-500  cursor-pointer text-white px-4 py-2 rounded-xl"
         >
           Update Password
         </button>
@@ -146,7 +146,7 @@ export default function AccountPage() {
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 rounded border border-gray-300"
+                className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-400"
               >
                 Cancel
               </button>

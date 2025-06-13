@@ -8,7 +8,7 @@ export default function LogOutModal({ isOpen, onClose, onConfirm }) {
       <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full relative">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-black"
+          className="absolute top-3 right-3 cursor-pointer text-gray-400 hover:text-black hover:bg-gray-100 rounded-full p-1 transition duration-200"
         >
           ✕
         </button>
@@ -21,13 +21,13 @@ export default function LogOutModal({ isOpen, onClose, onConfirm }) {
               onConfirm();
               onClose();
             }}
-            className="bg-teal-500 text-white px-4 py-2 rounded-full w-full"
+            className="bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-full w-full hover:bg-teal-600 transition duration-200"
           >
             Log Out
           </button>
           <button
             onClick={onClose}
-            className="border border-teal-500 text-teal-500 px-4 py-2 rounded-full w-full"
+            className="border cursor-pointer border-teal-500 text-teal-500 px-4 py-2 rounded-full w-full hover:bg-teal-400 hover:text-white transition duration-200"
           >
             Cancel
           </button>

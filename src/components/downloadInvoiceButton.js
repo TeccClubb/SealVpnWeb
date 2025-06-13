@@ -40,7 +40,7 @@ const DownloadInvoiceButton = ({ purchaseId, userId, token }) => {
     <button
   onClick={handleDownload}
   disabled={isInvoiceDownloading}
-  className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+  className="p-2 rounded-full hover:bg-gray-100 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 >
   {isInvoiceDownloading ? (
     <div className="h-5 w-5 animate-spin border-2 border-gray-300 border-t-transparent rounded-full" />

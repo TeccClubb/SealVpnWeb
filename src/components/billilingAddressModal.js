@@ -116,14 +116,14 @@ export default function BillingAddressModal({ isOpen, onClose, onAddressAdded })
 
         <div className="mt-4 flex justify-end gap-3">
           <button
-            className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+            className="inline-block mt-2 px-4 py-2 cursor-pointer rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
             onClick={onClose}
             disabled={loading}
           >
             Cancel
           </button>
           <button
-            className="inline-block mt-2 px-6 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+            className="inline-block mt-2 px-6 cursor-pointer py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
             onClick={handleSubmit}
             disabled={loading}
           >

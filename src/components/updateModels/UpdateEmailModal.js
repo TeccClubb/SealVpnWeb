@@ -70,14 +70,14 @@ export default function UpdateEmailModal({ open, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="mr-2 px-4 py-2 bg-gray-600 text-white rounded"
+              className="mr-2 cursor-pointer px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
               disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-teal-500 text-white rounded"
+              className="px-4 cursor-pointer py-2 bg-teal-400 hover:bg-teal-500 text-white rounded"
               disabled={loading}
             >
               {loading ? "Updating..." : "Update"}

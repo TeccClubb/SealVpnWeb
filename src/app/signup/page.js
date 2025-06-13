@@ -113,7 +113,7 @@ export default function SignUpForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-[70%] mx-auto block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full mt-2"
+            className="w-[70%] mx-auto block bg-teal-400 hover:bg-teal-500 cursor-pointer text-white py-2 rounded-full mt-2"
           >
             {loading ? "Loading..." : "Sign Up"}
           </button>

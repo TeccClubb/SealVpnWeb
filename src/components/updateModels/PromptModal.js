@@ -65,14 +65,14 @@ export default function UpdatePromptModal({ open, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="mr-2 px-4 py-2 bg-gray-600 text-white rounded-xl"
+              className="mr-2 px-4 py-2 cursor-pointer bg-gray-600 hover:bg-gray-800 text-white rounded-xl"
               disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-teal-500 text-white rounded-xl"
+              className="px-4 py-2 cursor-pointer bg-teal-400 hover:bg-teal-500 text-white rounded-xl"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}

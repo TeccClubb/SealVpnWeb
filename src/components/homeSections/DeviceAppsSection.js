@@ -43,7 +43,7 @@ export default function DeviceAppsSection() {
 
         {/* CTA Button */}
         <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20">
-          Get SeeVpn now
+          Get SeelVpn now
         </Link>
 
         {/* Image Section aligned to left + moved further up */}

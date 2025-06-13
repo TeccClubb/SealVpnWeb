@@ -10,7 +10,7 @@ export default function DawnloadSection() {
         href="/download-device"
         className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white text-[22px] px-8 py-4 rounded-full t"
       >
-        Get SeeVpn now
+        Get SeelVpn now
       </Link>
     </div>
   );

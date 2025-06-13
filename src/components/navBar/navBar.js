@@ -136,7 +136,7 @@ export default function Navbar() {
 
                 <span
                   onClick={() => setIsLogoutModalOpen(true)}
-                  className="px-4 py-2 rounded-full bg-white border border-neutral-300 text-black text-sm hover:bg-teal-500 hover:text-white transition"
+                  className="px-4 py-2 rounded-full bg-white border border-neutral-300  text-black text-sm hover:bg-teal-400 hover:text-white transition"
                 >
                   Log Out
                 </span>
@@ -163,7 +163,7 @@ export default function Navbar() {
                   href="/pricing"
                   className="ml-4 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
                 >
-                  Get SeeVpn
+                  Get SeelVpn
                 </Link>
               </>
             )
@@ -217,7 +217,7 @@ export default function Navbar() {
           <Link href="/help" className="block hover:text-black">Help</Link>
           {isMounted && user && (
             <>
-              <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black">Log Out</span>
+              <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black cursor-pointer">Log Out</span>
               <Link
                 href="/Dashboard"
                 className=" px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
@@ -235,7 +235,7 @@ export default function Navbar() {
                 href="/pricing"
                 className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
               >
-                Get SeeVpn
+                Get SeelVpn
               </Link>
             </>
           )

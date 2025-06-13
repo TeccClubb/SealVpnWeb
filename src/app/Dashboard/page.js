@@ -39,7 +39,7 @@ const DashboardPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
-          <button onClick={()=>router.push("/download-device")} className="w-full max-w-64 cursor-pointer bg-teal-400 hover:bg-teal-400 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
+          <button onClick={()=>router.push("/download-device")} className="w-full max-w-64 cursor-pointer bg-teal-400 hover:bg-teal-500 text-white text-lg font-semibold py-3 px-6 rounded-full transition">
             Connect
           </button>
           <p className="text-default-500 text-2xl font-normal text-center">

@@ -17,7 +17,7 @@ export default function SpringSaleSection() {
             <span className="text-black font-bold">browse the web</span>
           </h1>
           <p className="mt-4 text-gray-600 text-sm md:text-base">
-            SeeVpn encrypts your internet connection to keep{" "}
+            SeelVpn encrypts your internet connection to keep{" "}
             <br className="hidden md:block" />
             your online activity private on any network.
           </p>
@@ -28,11 +28,11 @@ export default function SpringSaleSection() {
               href="/pricing"
               className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white    text-[20px] px-6 py-4  rounded-full transition"
             >
-              Spring Sale! Get 67% off
+              Summer Sale! Get 67% off
             </Link>
 
             <p className="mt-5 text-gray-500 text-xs  md:text-sm">
-              Your first year of SeeVpn for $3.99/mo $10.99 $8.99 USD
+              Your first year of SeelVpn for $3.99/mo $10.99 $8.99 USD
             </p>
           </div>
         </div>

@@ -138,7 +138,7 @@ const ResetPasswordPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-[50%] mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
+              className="w-[50%] cursor-pointer mx-auto mt-4 block bg-teal-400 hover:bg-teal-500 text-white py-2 rounded-full"
               disabled={!!linkError || isSubmitting}
             >
               {isSubmitting ? "Resetting..." : "Reset Password"}
