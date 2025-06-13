@@ -61,7 +61,7 @@ const BillingHistory = () => {
   }, []);
 
   const handleAddressAdded = (newAddress) => {
-    setbillingAddress(newAddress);
+    setBillingAddress(newAddress);
   };
 
   return (

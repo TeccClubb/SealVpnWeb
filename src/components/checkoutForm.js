@@ -1,8 +1,8 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
-  // PaymentElement,
+  PaymentElement as StripePaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
@@ -164,9 +164,9 @@ function PaymentForm({ amount, planId, billingAddress }) {
         )}
       </div>
 
-      {/* <PaymentElement /> */}
+      <StripePaymentElement />
 
-      {/* <button
+      <button
           type="submit"
           disabled={!stripe || !elements || isLoading}
           className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
@@ -174,7 +174,7 @@ function PaymentForm({ amount, planId, billingAddress }) {
           }`}
         >
           {isLoading ? "Processing..." : "Pay"}
-        </button> */}
+        </button>
 
       {errorMessage && (
         <div className="mt-2 text-red-600">
@@ -260,7 +260,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
         </div>
       )}
 
-      {selectedPlan && billingAddress && (
+      {selectedPlan && (
         <PaymentElement
           amount={selectedPlan.discount_price * 100}
           planId={selectedPlan.id}

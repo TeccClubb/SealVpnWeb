@@ -94,7 +94,7 @@ export default function PricingPlans() {
           </div>
 
           {isPlansLoading &&
-            Array.from({ length: 3 }).map((_, index) => (
+            Array.from({ length: 2 }).map((_, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center text-center p-6 relative rounded-lg bg-gray-200 animate-pulse h-full"
