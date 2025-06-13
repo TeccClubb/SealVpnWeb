@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useUserCookie } from "@/components/use-cookies";
 
-export default function LoginForm() {
+function LoginForm() {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
   const { setUserCookie } = useUserCookie();
@@ -48,9 +48,9 @@ export default function LoginForm() {
         setIsLoading(false);
         toast.success("Login successful!");
         if (redirect) {
-          router.push(redirect);
+          router.replace(redirect);
         } else {
-          router.push("/Dashboard");
+          router.replace("/Dashboard");
         }
       } else {
         setIsLoading(false);
@@ -140,5 +140,13 @@ export default function LoginForm() {
       {/* Uncomment if needed */}
       {/* <Footer /> */}
     </div>
+  );
+}
+
+export default function () {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
