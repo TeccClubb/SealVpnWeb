@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { notFound, useSearchParams } from "next/navigation";
 import axios, { AxiosError } from "axios";
 import ErrorIcon from "@/components/icon/ErrorIcon";
-import VerifiedIcon from "@/components/icon/VerifiedIcon"; 
+import VerifiedIcon from "@/components/icon/VerifiedIcon";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUserCookie } from "@/components/use-cookies";
@@ -17,7 +17,7 @@ const PaymentProcessingPage = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const verifyPayment = async (planId, paymentIntent) => {
+    const verifyPayment = async (planId, paymentIntent, promoCode) => {
       try {
         const res = await axios
           .post("/api/verify-payment", { paymentIntent })
@@ -32,6 +32,7 @@ const PaymentProcessingPage = () => {
               {
                 plan_id: planId,
                 payment_intent: paymentIntent,
+                promo_code: promoCode,
               },
               {
                 headers: {
@@ -44,7 +45,7 @@ const PaymentProcessingPage = () => {
 
           if (response.status) {
             setSuccessMessage(response.message);
-            toast.success(response.message)
+            toast.success(response.message);
           }
         } else {
           setPaymentStatus(false);
@@ -56,7 +57,7 @@ const PaymentProcessingPage = () => {
               ? error.response.data.message
               : error.message
             : "An error occurred";
-        toast.error(error.message)
+        toast.error(error.message);
       } finally {
         setLoading(false);
       }
@@ -64,10 +65,11 @@ const PaymentProcessingPage = () => {
 
     const paymentIntent = searchParams.get("payment_intent");
     const planId = searchParams.get("planId");
+    const promoCode = searchParams.get("promoCode");
     if (!paymentIntent) {
       notFound();
     } else {
-      verifyPayment(+planId, paymentIntent);
+      verifyPayment(+planId, paymentIntent, promoCode);
     }
   }, []);
 
@@ -81,7 +83,6 @@ const PaymentProcessingPage = () => {
             <h4 className="text-2xl font-semibold text-black">
               Processing Payment...
             </h4>
-
           </div>
         )}
 
@@ -95,10 +96,10 @@ const PaymentProcessingPage = () => {
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-3xl">
               <strong className="font-bold">Error: </strong>
               <span>
-                Unfortunately, we were unable to process your payment. Please try again or contact support if the issue persists.
+                Unfortunately, we were unable to process your payment. Please
+                try again or contact support if the issue persists.
               </span>
             </div>
-
           </>
         )}
 
@@ -108,19 +109,19 @@ const PaymentProcessingPage = () => {
             <h1 className="text-3xl font-semibold text-gray-900">
               Payment Successful
             </h1>
-           {successMessage && (
-  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded max-w-3xl">
-    <strong className="font-bold">Success: </strong>
-    <span>{successMessage}</span>
-  </div>
-)}
+            {successMessage && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded max-w-3xl">
+                <strong className="font-bold">Success: </strong>
+                <span>{successMessage}</span>
+              </div>
+            )}
 
-          <Link
-  href="/"
-  className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200"
->
-  Back to Home
-</Link>
+            <Link
+              href="/"
+              className="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-200"
+            >
+              Back to Home
+            </Link>
           </>
         )}
       </div>

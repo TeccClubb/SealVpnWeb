@@ -8,7 +8,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { calculateDiscountPercentage } from "./pricingSection/pricingPlans";
 import { useUserCookie } from "./use-cookies";
 
@@ -16,7 +16,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-function PaymentForm({ amount, planId, billingAddress }) {
+function PaymentForm({ amount, planId, billingAddress, promoCode }) {
   const { user } = useUserCookie();
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -90,7 +90,7 @@ function PaymentForm({ amount, planId, billingAddress }) {
               },
             },
           },
-          return_url: `${window.location.origin}/payment-processing?planId=${planId}`,
+          return_url: `${window.location.origin}/payment-processing?planId=${planId}&promoCode=${promoCode}`,
         },
       });
 
@@ -167,14 +167,14 @@ function PaymentForm({ amount, planId, billingAddress }) {
       <StripePaymentElement />
 
       <button
-          type="submit"
-          disabled={!stripe || !elements || isLoading}
-          className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
-            isLoading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {isLoading ? "Processing..." : "Pay"}
-        </button>
+        type="submit"
+        disabled={!stripe || !elements || isLoading}
+        className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
+          isLoading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+      >
+        {isLoading ? "Processing..." : "Pay"}
+      </button>
 
       {errorMessage && (
         <div className="mt-2 text-red-600">
@@ -185,7 +185,7 @@ function PaymentForm({ amount, planId, billingAddress }) {
   );
 }
 
-function PaymentElement({ amount, planId, billingAddress }) {
+function PaymentElement({ amount, planId, billingAddress, promoCode }) {
   const options = {
     mode: "payment",
     amount,
@@ -209,6 +209,7 @@ function PaymentElement({ amount, planId, billingAddress }) {
         amount={amount}
         planId={planId}
         billingAddress={billingAddress}
+        promoCode={promoCode}
       />
     </Elements>
   );
@@ -218,6 +219,61 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
   const { user } = useUserCookie();
   const [billingAddress, setBillingAddress] = useState(null);
   const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
+
+  const [promoCode, setPromoCode] = useState(null);
+  const [promoCodeDiscount, setPromoCodeDiscount] = useState(0);
+  const [isApplyingPromoCode, setIsApplyingPromoCode] = useState(false);
+  const [promoCodeError, setPromoCodeError] = useState(null);
+  const [promoCodeSuccessMessage, setPromoCodeSuccessMessage] = useState(null);
+
+  const calculateDiscountedAmount = (originalPrice, discountPercentage) =>
+    (originalPrice * (discountPercentage / 100)).toFixed(2);
+
+  const applyPromoCode = async (e) => {
+    e.preventDefault();
+    if (!promoCode.trim()) {
+      setPromoCodeError("Promo code is required");
+      return;
+    }
+
+    try {
+      setPromoCodeError(null);
+      setPromoCodeSuccessMessage(null);
+      setIsApplyingPromoCode(true);
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/apply-promo-code`,
+        {
+          code: promoCode.trim(),
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${user.access_token}`,
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        setPromoCodeDiscount(res.data.discount_percent);
+        setPromoCodeSuccessMessage(res.data.message);
+        console.log(res);
+      } else {
+        setPromoCodeError(res.message);
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response
+            ? error.response.data.message
+            : error.message
+          : "Failed to apply promo code";
+
+      setPromoCodeError(errorMessage);
+    } finally {
+      setIsApplyingPromoCode(false);
+    }
+  };
 
   useEffect(() => {
     const fetchBillingAddress = async () => {
@@ -265,12 +321,36 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
           amount={selectedPlan.discount_price * 100}
           planId={selectedPlan.id}
           billingAddress={billingAddress}
+          promoCode={promoCode}
         />
       )}
 
       <div className="text-sm text-gray-600 mb-5">
         Subscription renews automatically. Enter promo SEEL VPN to save an extra
         10% on your first year.
+        <form onSubmit={applyPromoCode} className="flex items-start gap-2 mt-4">
+          <div>
+            <input
+              type="text"
+              placeholder="Enter your prompt code"
+              onChange={(e) => setPromoCode(e.target.value)}
+              className="p-2 rounded-xl bg-gray-300 text-black"
+            />
+            {promoCodeError && (
+              <p className="mt-1 text-red-500">{promoCodeError}</p>
+            )}
+            {promoCodeSuccessMessage && (
+              <p className="mt-1 text-green-600">Promo code is valid</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-teal-500 hover:opacity-80 active:opacity-70 text-white rounded-xl"
+            disabled={isApplyingPromoCode}
+          >
+            {isApplyingPromoCode ? "Applying..." : "Apply"}
+          </button>
+        </form>
       </div>
 
       {isPlansLoading && (
@@ -298,7 +378,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
       )}
 
       {selectedPlan && (
-        <>
+        <div className="flex flex-col gap-2">
           <div className="flex justify-between text-xl">
             <span>
               SeelVpn ({selectedPlan.duration}{" "}
@@ -308,7 +388,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
               ${selectedPlan.original_price}
             </span>
           </div>
-          <div className="flex justify-between  text-xl mb-4">
+          <div className="flex justify-between  text-xl">
             {selectedPlan.name} Plan (
             {calculateDiscountPercentage(
               selectedPlan.original_price,
@@ -323,11 +403,28 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
               ) / 100}
             </span>
           </div>
+          {promoCodeDiscount ? (
+            <div className="flex justify-between  text-xl mb-4">
+              PromoCode ({promoCodeDiscount}% discount)
+              <span className="text-red-600">
+                -$
+                {calculateDiscountedAmount(
+                  selectedPlan.discount_price,
+                  promoCodeDiscount
+                )}
+              </span>
+            </div>
+          ) : null}
           <div className="w-full h-0.5 relative bg-neutral-300 " />
           <div className="flex justify-between font-bold text-lg mb-4">
             <span>Order Total</span>
             <span className="text-green-600">
-              ${selectedPlan.discount_price}
+              $
+              {selectedPlan.discount_price -
+                calculateDiscountedAmount(
+                  selectedPlan.discount_price,
+                  promoCodeDiscount
+                )}
             </span>
           </div>
           <div>
@@ -347,7 +444,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
               .
             </p>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
