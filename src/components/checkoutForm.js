@@ -116,52 +116,62 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-2">
       {/* Name Input */}
-      <input
-        type="text"
-        {...register("name", { required: "Name is required" })}
-        placeholder="Name"
-        className="w-full bg-black/5 border rounded p-3"
-      />
-      {errors.name && <p className="text-red-600">{errors.name.message}</p>}
-
+      <div className="flex flex-col gap-2">
+        <input
+          type="text"
+          {...register("name", { required: "Name is required" })}
+          placeholder="Name"
+          className="w-full block px-4 py-3 border border-gray-300 rounded-md"
+        />
+        {errors.name && <p className="text-red-600">{errors.name.message}</p>}
+      </div>
       {/* Address Input */}
-      <input
-        type="text"
-        {...register("address", { required: "Address is required" })}
-        placeholder="Address"
-        className="w-full bg-black/5 border rounded p-3"
-      />
-      {errors.address && (
-        <p className="text-red-600">{errors.address.message}</p>
-      )}
-      <input
-        type="text"
-        {...register("city", { required: "City is required" })}
-        placeholder="City"
-        className="w-full border bg-black/5 rounded p-3"
-      />
-      {errors.city && <p className="text-red-600">{errors.city.message}</p>}
-
+      <div className="flex flex-col gap-2">
+        <input
+          type="text"
+          {...register("address", { required: "Address is required" })}
+          placeholder="Address"
+          className="w-full block px-4 py-3 border border-gray-300 rounded-md"
+        />
+        {errors.address && (
+          <p className="text-red-600">{errors.address.message}</p>
+        )}
+      </div>
+      <div className="flex flex-col gap-2">
+        <input
+          type="text"
+          {...register("city", { required: "City is required" })}
+          placeholder="City"
+          className="w-full block px-4 py-3 border border-gray-300 rounded-md"
+        />
+        {errors.city && <p className="text-red-600">{errors.city.message}</p>}
+      </div>
       {/* City and State Inputs */}
       <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          {...register("state", { required: "State is required" })}
-          placeholder="State"
-          className="w-full bg-black/5 border rounded p-3"
-        />
-        {errors.state && <p className="text-red-600">{errors.state.message}</p>}
-        <input
-          type="text"
-          {...register("postal_code", {
-            required: "postal code is required",
-          })}
-          placeholder="Postal Code"
-          className="w-full bg-black/5 border rounded p-3"
-        />
-        {errors.state && (
-          <p className="text-red-600">{errors.postal_code.message}</p>
-        )}
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            {...register("state", { required: "State is required" })}
+            placeholder="State"
+            className="w-full block px-4 py-3 border border-gray-300 rounded-md"
+          />
+          {errors.state && (
+            <p className="text-red-600">{errors.state.message}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            {...register("postal_code", {
+              required: "postal code is required",
+            })}
+            placeholder="Postal Code"
+            className="w-full block px-4 py-3 border border-gray-300 rounded-md"
+          />
+          {errors.state && (
+            <p className="text-red-600">{errors.postal_code.message}</p>
+          )}
+        </div>
       </div>
 
       <StripePaymentElement />
@@ -302,7 +312,9 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
 
   return (
     <div>
-      <h1>Payment Details</h1>
+      <h1 className="text-neutral-600 text-xl font-bold mb-4">
+        Payment Details
+      </h1>
 
       {isBillingAddressLoading && (
         <div className="space-y-4 mb-2">
@@ -325,16 +337,16 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
         />
       )}
 
-      <div className="text-sm text-gray-600 mb-5">
-        Subscription renews automatically. Enter promo SEEL VPN to save an extra
-        10% on your first year.
+      <div className="text-neutral-500 text-sm font-normal mb-5">
+        Subscription renews every 12 months at $59.88 USD. You can turn off the
+        renewal any time from your account page.
         <form onSubmit={applyPromoCode} className="flex items-start gap-2 mt-4">
           <div>
             <input
               type="text"
               placeholder="Enter your prompt code"
               onChange={(e) => setPromoCode(e.target.value)}
-              className="p-2 rounded-xl bg-gray-300 text-black"
+              className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {promoCodeError && (
               <p className="mt-1 text-red-500">{promoCodeError}</p>
@@ -345,7 +357,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-teal-500 hover:opacity-80 active:opacity-70 text-white rounded-xl"
+            className="px-4 py-2 bg-teal-500 hover:opacity-80 active:opacity-70 text-white rounded-md"
             disabled={isApplyingPromoCode}
           >
             {isApplyingPromoCode ? "Applying..." : "Apply"}
@@ -379,7 +391,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
 
       {selectedPlan && (
         <div className="flex flex-col gap-2">
-          <div className="flex justify-between text-xl">
+          <div className="flex justify-between text-neutral-500 text-lg font-normal">
             <span>
               SeelVpn ({selectedPlan.duration}{" "}
               <span className="capitalize">{selectedPlan.duration_unit}</span>)
@@ -388,7 +400,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
               ${selectedPlan.original_price}
             </span>
           </div>
-          <div className="flex justify-between  text-xl">
+          <div className="flex justify-between text-neutral-500 text-lg font-normal">
             {selectedPlan.name} Plan (
             {calculateDiscountPercentage(
               selectedPlan.original_price,
@@ -404,7 +416,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
             </span>
           </div>
           {promoCodeDiscount ? (
-            <div className="flex justify-between  text-xl mb-4">
+            <div className="flex justify-between text-neutral-500 text-lg font-normal mb-4">
               PromoCode ({promoCodeDiscount}% discount)
               <span className="text-red-600">
                 -$
@@ -416,10 +428,10 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
             </div>
           ) : null}
           <div className="w-full h-0.5 relative bg-neutral-300 " />
-          <div className="flex justify-between font-bold text-lg mb-4">
+          <div className="flex justify-between text-neutral-600 text-lg font-bold mb-4">
             <span>Order Total</span>
-            <span className="text-green-600">
-              $
+            <span className="text-neutral-600 text-3xl font-bold flex items-center gap-1.5">
+              <span className="text-neutral-400 text-sm font-bold">USD</span>$
               {selectedPlan.discount_price -
                 calculateDiscountedAmount(
                   selectedPlan.discount_price,
@@ -428,8 +440,8 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
             </span>
           </div>
           <div>
-            <p className="text-md text-gray-600">
-              By clicking <strong>Buy Now</strong>, you accept the{" "}
+            <p className="text-neutral-500 text-xs font-normal">
+              By clicking Buy Now, you accept the{" "}
               <a href="#" className="text-blue-600 hover:underline">
                 Terms of Service
               </a>
