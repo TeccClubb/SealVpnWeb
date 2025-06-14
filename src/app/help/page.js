@@ -182,7 +182,7 @@ const HelpPage = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 cursor-pointer rounded  sabled:opacity-50"
+            className="bg-teal-400 hover:bg-teal-500 text-white px-4 py-2 cursor-pointer rounded disabled::opacity-50"
           >
             {isSubmitting ? "Sending..." : "Send Feedback"}
           </button>

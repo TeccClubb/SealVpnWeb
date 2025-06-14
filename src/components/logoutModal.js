@@ -21,7 +21,7 @@ export default function LogOutModal({ isOpen, onClose, onConfirm }) {
               onConfirm();
               onClose();
             }}
-            className="bg-teal-500 cursor-pointer text-white px-4 py-2 rounded-full w-full hover:bg-teal-600 transition duration-200"
+            className="bg-teal-400 cursor-pointer text-white px-4 py-2 rounded-full w-full hover:bg-teal-500 transition duration-200"
           >
             Log Out
           </button>

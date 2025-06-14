@@ -224,7 +224,7 @@ const BillingHistory = () => {
             </p>
             <button
               onClick={() => setShowModal(true)}
-              className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 transition"
+              className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-md hover:bg-teal-500 cursor-pointer"
             >
               Add Billing Address
             </button>

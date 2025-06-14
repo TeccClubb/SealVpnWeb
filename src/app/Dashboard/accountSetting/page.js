@@ -108,7 +108,7 @@ export default function AccountPage() {
         </div>
         <button
           onClick={() => setShowDeleteModal(true)}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl"
+          className="bg-red-600 hover:bg-red-700 text-white cursor-pointer px-4 py-2 rounded-xl"
         >
           Delete Account
         </button>
@@ -146,13 +146,13 @@ export default function AccountPage() {
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-400"
+                className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-400 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
               >
                 Confirm
               </button>

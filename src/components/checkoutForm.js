@@ -179,9 +179,7 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
       <button
         type="submit"
         disabled={!stripe || !elements || isLoading}
-        className={`w-full bg-[#4DB8AC] rounded-full text-white py-3 mt-auto ${
-          isLoading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
+        className="w-full bg-teal-400 hover:bg-teal-500 cursor-pointer rounded-full text-white py-3 mt-auto disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "Processing..." : "Pay"}
       </button>
@@ -357,7 +355,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-teal-500 hover:opacity-80 active:opacity-70 text-white rounded-md"
+            className="px-4 py-2 bg-teal-400 hover:bg-teal-500 cursor-pointer active:opacity-70 text-white rounded-md"
             disabled={isApplyingPromoCode}
           >
             {isApplyingPromoCode ? "Applying..." : "Apply"}
