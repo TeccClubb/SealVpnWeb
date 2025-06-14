@@ -1,5 +1,5 @@
 // middleware.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export function middleware(req) {
   const hasUserCookie = req.cookies.get("seel_user");

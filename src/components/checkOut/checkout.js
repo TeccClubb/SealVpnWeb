@@ -3,18 +3,14 @@
 import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { useEffect } from 'react';
 import axios from "axios";
 
-// import { useRouter } from 'next/navigation';
 import CheckOutForm from "../checkoutForm";
-import { useUserCookie } from "../use-cookies";
 import CheckedIcon from "../CheckedIcon";
 import { calculateDiscountPercentage } from "../pricingSection/pricingPlans";
 const CheckoutPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user } = useUserCookie();
   const planId = searchParams.get("planId");
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState();

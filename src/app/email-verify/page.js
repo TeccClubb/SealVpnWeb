@@ -1,5 +1,3 @@
-
-"use clie"
 import EmailVerificationPage from "@/components/EmailVerificationPage";
 import { Suspense } from "react";
 

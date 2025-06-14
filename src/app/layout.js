@@ -1,20 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// import Navbar from "@/components/navBar/navBar";
-import Footer from "@/components/footer/footer";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import LayoutWrapper from "@/components/layoutWrapper";
-import { ToastContainer } from 'react-toastify';
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "SeelVPN -Secure Your Internet Connection",
@@ -31,17 +18,13 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/loginicon.png" />
         <link rel="icon" href="/loginicon.png" sizes="any" />
         <link rel="icon" href="/loginicon.png" type="image/svg+xml" />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-        </link>
-        </head>
-      <body
-      //   className={`${geistSans.variable} ${geistMono.variable} antialiased`
-      // }
-      className="bg-background text-foreground"
-      >
-       
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
+      <body className="bg-background text-foreground">
         <LayoutWrapper>{children}</LayoutWrapper>
-        {/* <Footer></Footer> */}
         <ToastContainer></ToastContainer>
       </body>
     </html>

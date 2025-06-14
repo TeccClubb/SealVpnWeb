@@ -1,4 +1,3 @@
-import Footer from "@/components/footer/footer";
 import Sidebar from "@/components/Sidebar";
 
 export default function RootLayout({ children }) {

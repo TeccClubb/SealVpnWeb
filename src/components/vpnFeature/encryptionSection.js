@@ -1,11 +1,7 @@
 "use client"
-import { useEffect } from "react";
 import Image from "next/image";
 
-
 export default function EncryptionSection() {
-  
-
     return (
         <div className="bg-white text-black  px-6 py-12 md:py-20">
             <div className=" w-[85%] m-auto flex justify-center">

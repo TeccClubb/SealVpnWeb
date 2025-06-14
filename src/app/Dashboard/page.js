@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardSection from "@/components/dashboardSection/dashboard";
 import { useUserCookie } from "@/components/use-cookies";

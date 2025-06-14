@@ -1,8 +1,4 @@
-
-
-
 import React, { Suspense } from "react";
-// import Invoice from "@/components/Invoice";
 import Invoice from "@/components/invoice";
 
 export const metadata = {

@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 
 import "./footer.css";
 import Link from "next/link";

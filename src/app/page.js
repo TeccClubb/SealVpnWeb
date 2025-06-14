@@ -8,7 +8,6 @@ import PartnersSection from "@/components/partnersSection/partnersSection";
 import VpnFeature from "@/components/homeSections/vpn-feature";
 import DawnloadSection from "@/components/homeSections/dawnloadSection";
 import FAQSection from "@/components/homeSections/frequentQuestionSection";
-import Link from "next/link";
 import SpringSaleSection from "@/components/homeSections/springSeleSection";
 
 export default function HomePage() {

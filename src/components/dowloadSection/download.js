@@ -2,18 +2,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-
 
 export default function DownloadPage() {
   const searchParams = useSearchParams();
   const deviceName = searchParams.get("device-name")
-  const downloadLink = searchParams.get("download-link")
-  
-  useEffect(() => {
-    // const download = 
-    console.log(downloadLink)
-  }, [])
 
   return (
     <>

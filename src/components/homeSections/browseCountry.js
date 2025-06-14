@@ -4,8 +4,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect } from 'react';
-
 
 const countries = [
   { name: 'Argentina', flag: 'https://flagcdn.com/w320/ar.png' },

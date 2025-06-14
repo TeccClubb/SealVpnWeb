@@ -5,7 +5,6 @@ import { useState } from 'react';
 import LogOutModal from './logoutModal';
 import { useUserCookie } from './use-cookies';
 
-
 const Sidebar = () => {
   const router = useRouter();
   const { removeUserCookie } = useUserCookie();

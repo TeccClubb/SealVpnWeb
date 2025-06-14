@@ -1,7 +1,4 @@
 "use client";
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import Image from "next/image";
 import WhatIsVpnFirstSection from "@/components/whatIs-vpn/whats-vpn";
 import Link from "next/link";

@@ -1,4 +1,3 @@
-// import { INVOICE_PAGE_PATH } from "@/lib/pathnames";
 import { chromium } from "playwright";
 
 export async function GET(request) {

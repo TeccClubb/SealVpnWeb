@@ -1,7 +1,5 @@
 "use client";
 import Image from 'next/image';
-import { use } from 'react';
-import { useEffect } from 'react';
 
 const faqItems = [
   {
