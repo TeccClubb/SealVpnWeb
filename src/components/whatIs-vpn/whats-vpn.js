@@ -1,9 +1,10 @@
 "use client"
 
+import Image from 'next/image';
 import React from 'react';
 
 export default function WhatIsVpnFirstSection() {
- 
+
   const topics = [
     'What is a VPN?',
     'Why do I need a VPN?',
@@ -18,11 +19,12 @@ export default function WhatIsVpnFirstSection() {
   return (
     <div className="bg-white min-h-screen flex flex-col items-center ">
       {/* Globe Image Full Width & Left */}
-      <img
+      <Image
         src="/whatIsVpnImg/whatsVpn-full-image.png"
         alt="Globe"
-        className="w-full h-auto object-cover object-left mb-10 "
-        
+        width={1200} // Or the actual width of your image
+        height={600} // Maintain aspect ratio
+        className="w-full h-auto object-cover object-left mb-10"
       />
 
       {/* Description Section */}
@@ -45,20 +47,20 @@ export default function WhatIsVpnFirstSection() {
       </h2>
 
       {/* List with Numbered Circles */}
-      <div  className="w-full flex justify-start max-w-2xl">
+      <div className="w-full flex justify-start max-w-2xl">
 
-      <div className="max-w-2xl  text-gray-600 mb-12">
+        <div className="max-w-2xl  text-gray-600 mb-12">
 
-      <ul className="text-gray-700 space-y-4 text-base max-w-2xl ">
-  {topics.map((item, index) => (
-    <li key={index} className="flex items-start gap-3" >
-      <img src="/whatIsVpnImg/checkSvg.svg" alt="Check" className="w-6 h-6 mt-1" />
-      <span >{item}</span>
-    </li>
-  ))}
-</ul>
+          <ul className="text-gray-700 space-y-4 text-base max-w-2xl ">
+            {topics.map((item, index) => (
+              <li key={index} className="flex items-start gap-3" >
+                <img src="/whatIsVpnImg/checkSvg.svg" alt="Check" className="w-6 h-6 mt-1" />
+                <span >{item}</span>
+              </li>
+            ))}
+          </ul>
 
-      </div>
+        </div>
       </div>
 
       {/* Optional SeelVpn Bot */}

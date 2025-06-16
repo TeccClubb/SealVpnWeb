@@ -1,4 +1,7 @@
+
 "use client";
+import Image from 'next/image';
+import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function SpringSaleSection() {
@@ -36,7 +39,13 @@ export default function SpringSaleSection() {
 
         {/* Right Bear Image */}
         <div className="flex-1 flex justify-center">
-          <img className="w-[400px]" src="imageofHero.png"></img>
+          <Image
+  src="/imageofHero.png"
+  alt="Hero Image"
+  width={400}
+  height={0} // height will auto adjust unless specified; you can also set it based on aspect ratio
+  className="w-[400px] h-auto"
+/>
         </div>
       </section>
   );

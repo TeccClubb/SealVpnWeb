@@ -212,10 +212,10 @@ export default function WhatIsVPN() {
               <Image
                 src={imageSrc}
                 alt={title}
-                width={0}
-                height={0}
-                sizes="100vw"
+                width={200} // set actual width in px
+                height={192} // match or approximate `h-48`
                 className="w-auto h-48"
+                priority={index < 3} // Optional: prioritize first few images
               />
 
               <h3 className="text-xl font-bold">{title}</h3>
