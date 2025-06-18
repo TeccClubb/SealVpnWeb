@@ -40,7 +40,6 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
       address: billingAddress ? billingAddress.address : "",
       city: billingAddress ? billingAddress.city : "",
       state: billingAddress ? billingAddress.state : "",
-      country: billingAddress ? billingAddress.country : "",
       postal_code: billingAddress ? billingAddress.postal_code : "",
     },
   });
@@ -86,7 +85,6 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
                 city: values.city,
                 state: values.state,
                 postal_code: values.postal_code,
-                country: values.country,
               },
             },
           },
@@ -168,7 +166,7 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
             placeholder="Postal Code"
             className="w-full block px-4 py-3 border border-gray-300 rounded-md"
           />
-          {errors.state && (
+          {errors.postal_code && (
             <p className="text-red-600">{errors.postal_code.message}</p>
           )}
         </div>
