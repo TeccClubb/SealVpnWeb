@@ -8,6 +8,7 @@ import VerifiedIcon from "@/components/icon/VerifiedIcon";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUserCookie } from "@/components/use-cookies";
+import { Loader } from "lucide-react";
 
 const PaymentProcessingPage = () => {
   const searchParams = useSearchParams();
@@ -57,7 +58,7 @@ const PaymentProcessingPage = () => {
               ? error.response.data.message
               : error.message
             : "An error occurred";
-        toast.error(error.message);
+        toast.error(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -78,7 +79,7 @@ const PaymentProcessingPage = () => {
       <div className="min-h-[calc(100vh-4rem)] w-full max-w-7xl flex flex-col flex-wrap items-center justify-center gap-y-4 p-4">
         {isLoading && (
           <div className="flex flex-col items-center gap-y-6">
-            <VerifiedIcon className="size-48 text-green-500" />
+            <Loader className="size-48 text-gray-500 animate-spin" />
 
             <h4 className="text-2xl font-semibold text-black">
               Processing Payment...

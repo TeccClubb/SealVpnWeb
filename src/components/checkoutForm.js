@@ -88,7 +88,11 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
               },
             },
           },
-          return_url: `${window.location.origin}/payment-processing?planId=${planId}&promoCode=${promoCode}`,
+          return_url: `${
+            window.location.origin
+          }/payment-processing?planId=${planId}${
+            promoCode ? `&promoCode=${promoCode}` : ""
+          }`,
         },
       });
 
@@ -263,7 +267,6 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
       if (res.status === 200) {
         setPromoCodeDiscount(res.data.discount_percent);
         setPromoCodeSuccessMessage(res.data.message);
-        console.log(res);
       } else {
         setPromoCodeError(res.message);
       }
@@ -326,7 +329,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
 
       {selectedPlan && (
         <PaymentElement
-          amount={selectedPlan.discount_price * 100}
+          amount={Math.round(Number(selectedPlan.discount_price) * 100)}
           planId={selectedPlan.id}
           billingAddress={billingAddress}
           promoCode={promoCode}

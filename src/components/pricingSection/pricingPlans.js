@@ -30,9 +30,13 @@ export default function PricingPlans() {
               Accept: "application/json",
             },
           })
-          .then((response) => {
-            setPlans(response.data.plans);
-          });
+          .then((res) => res.data);
+
+        if (res.status) {
+          setPlans(res.plans);
+        } else {
+          toast.error("Error fetching plans. Please try again later.");
+        }
       } catch (error) {
         toast.error("Error fetching plans. Please try again later.");
       } finally {

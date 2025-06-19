@@ -25,7 +25,6 @@ export const useLegalNotes = () => {
           }
         );
         if (res.status === 200) {
-          console.log(res.data);
           setLegalNotes({
             termsAndConditions: res.data.tos,
             privacyPolicy: res.data.privacy_policy,
