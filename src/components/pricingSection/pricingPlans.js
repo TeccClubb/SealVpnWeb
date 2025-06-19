@@ -64,7 +64,7 @@ export default function PricingPlans() {
       <div className="flex justify-center py-10 px-4">
         <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
           {/* Free Plan */}
-          <div
+          {/* <div
             className="flex flex-col items-center text-center p-6 relative rounded-l-2xl bg-white h-full"
             style={{
               boxShadow: "5px 8px 15px rgba(0, 0, 0, 0.1)",
@@ -91,11 +91,11 @@ export default function PricingPlans() {
             </div>
             <button
               onClick={() => router.push("/signup")}
-              className="w-full cursor-pointer bg-teal-400 hover:bg-teal-500 rounded-full text-white py-3 mt-auto hver:bg-[#3a9f9b] transition duration-200"
+              className="w-full cursor-pointer bg-teal-400 hover:bg-teal-500 rounded-full text-white py-3 mt-auto transition duration-200"
             >
               Try for free
             </button>
-          </div>
+          </div> */}
 
           {isPlansLoading &&
             Array.from({ length: 2 }).map((_, index) => (
