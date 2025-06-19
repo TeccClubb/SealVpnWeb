@@ -98,7 +98,7 @@ export default function PricingPlans() {
           </div> */}
 
           {isPlansLoading &&
-            Array.from({ length: 2 }).map((_, index) => (
+            Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center text-center p-6 relative rounded-lg bg-gray-200 animate-pulse h-full"
@@ -127,7 +127,9 @@ export default function PricingPlans() {
               >
                 <Image
                   src={
-                    (index + 1) % 2 === 0
+                    (index + 1) % 3 === 1
+                      ? "/pricing/freeOfferImg.svg"
+                      : (index + 1) % 3 === 2
                       ? "/pricing/even_pricing_image.png"
                       : "/pricing/odd_pricing_image.png"
                   }
