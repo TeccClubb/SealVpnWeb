@@ -33,16 +33,17 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: billingAddress ? billingAddress.name : "",
-      address: billingAddress ? billingAddress.address : "",
-      city: billingAddress ? billingAddress.city : "",
-      state: billingAddress ? billingAddress.state : "",
-      postal_code: billingAddress ? billingAddress.postal_code : "",
-    },
-  });
+  } = useForm();
+
+  useEffect(() => {
+    setValue("name", billingAddress ? billingAddress.name : "");
+    setValue("address", billingAddress ? billingAddress.address : "");
+    setValue("city", billingAddress ? billingAddress.city : "");
+    setValue("state", billingAddress ? billingAddress.state : "");
+    setValue("postal_code", billingAddress ? billingAddress.postal_code : "");
+  }, [billingAddress]);
 
   const onSubmit = async (values) => {
     if (!stripe || !elements) {
