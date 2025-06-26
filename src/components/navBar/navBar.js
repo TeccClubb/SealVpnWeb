@@ -104,13 +104,13 @@ export default function Navbar() {
               <>
                 <span
                   onClick={() => setIsLogoutModalOpen(true)}
-                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30  text-black text-sm hover:bg-teal-700 hover:text-white transition cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30 text-black text-sm hover:bg-teal-700 hover:text-white transition duration-200 cursor-pointer"
                 >
                   Log Out
                 </span>
                 <Link
                   href="/Dashboard"
-                  className="ml-4 px-4 py-2 rounded-full border border-teal-700/30 bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
+                  className="ml-4 px-4 py-2 rounded-full border border-teal-700/30 bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
                 >
                   Client Area
                 </Link>
@@ -119,13 +119,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30 text-black text-sm hover:bg-teal-500 hover:text-white transition"
+                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30 text-black text-sm hover:bg-teal-700 hover:text-white transition duration-200"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/pricing"
-                  className="ml-4 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
+                  className="ml-4 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
                 >
                   Get SeelVpn
                 </Link>
@@ -190,7 +190,7 @@ export default function Navbar() {
               </span>
               <Link
                 href="/Dashboard"
-                className="px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition block"
+                className="px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200 block"
               >
                 Client Area
               </Link>
@@ -200,7 +200,7 @@ export default function Navbar() {
               <Link href="/login" className="block hover:text-teal-700">Log In</Link>
               <Link
                 href="/pricing"
-                className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
+                className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
               >
                 Get SeelVpn
               </Link>
