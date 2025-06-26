@@ -76,15 +76,14 @@ export default function Navbar() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <div className="flex items-center cursor-pointer gap-1 hover:text-teal-700">
+              <div className={`flex items-center cursor-pointer gap-1 hover:text-teal-700 ${pathname === '/what-is-vpn' || pathname === '/vpnFeature' ? 'text-teal-700 font-medium' : ''}`}>
                 What is a VPN?
                 <ChevronDown className="w-4 h-4" />
               </div>
 
               <div
                 className={`absolute top-full left-0 mt-2 w-44 bg-white rounded-lg shadow-lg text-sm z-10 py-5 px-3 transition-all duration-200 ${
-                  isDropdownOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                }`}
+                  isDropdownOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
@@ -94,7 +93,7 @@ export default function Navbar() {
                     pathname === '/what-is-vpn' ? 'text-teal-700 font-medium' : ''
                   }`}
                 >
-                  Why VPN?
+                  Why Vpn?
                 </Link>
                 <Link
                   href="/vpnFeature"
