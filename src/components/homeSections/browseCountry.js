@@ -59,7 +59,7 @@ const countries = [
 const BrowseCountries = () => {
  
   return (
-    <div className="bg-gray-900 text-white px-6 py-12 md:py-20">
+    <div className="bg-[#2d4a4e] text-white px-6 py-12 md:py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Globe Image */}
         <div  className="flex items-center justify-center">

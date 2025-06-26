@@ -48,7 +48,7 @@ export default function PricingPlans() {
   }, []);
 
   const handleClick = (planId) => {
-    if (!user) {
+    if (user) {
       router.push(
         `/login?redirect=${encodeURIComponent(
           `/account/checkout?planId=${planId}`

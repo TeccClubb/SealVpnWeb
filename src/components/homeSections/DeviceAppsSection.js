@@ -42,12 +42,12 @@ export default function DeviceAppsSection() {
         </div>
 
         {/* CTA Button */}
-        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20">
+        <Link href="/plans" className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20 transition duration-200">
           Get SeelVpn now
         </Link>
 
         {/* Image Section aligned to left + moved further up */}
-        <div className="w-full flex justify-start -mt-55 pointer-events-none">
+        <div className="w-full flex justify-start -mt-55 mr-20 lg:-mt-95 lg:mr-0 pointer-events-none">
           <img
             src="/mobileMapImg.png"
             alt="Mobile App"

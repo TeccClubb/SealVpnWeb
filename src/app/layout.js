@@ -4,7 +4,7 @@ import LayoutWrapper from "@/components/layoutWrapper";
 import { ToastContainer } from "react-toastify";
 
 export const metadata = {
-  title: "SeelVPN -Secure Your Internet Connection",
+  title: "SeelVPN - Secure Your Internet Connection",
   keywords: "VPN, Secure VPN, Fast VPN, Private VPN, Anonymous VPN",
   authors: [{ name: "SEELVPN" }],
   creator: "SEELVPN",

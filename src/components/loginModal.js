@@ -27,7 +27,7 @@ export default function LogInModal({ isOpen, onClose }) {
 
     try {
       const response = await axios.post(
-        "https://seelvpn.tecclubb.com/api/signup",
+        process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/signup",
         {
           name: data.username,
           email: data.email,
