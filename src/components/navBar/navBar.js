@@ -35,8 +35,12 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false); // Close the menu on route change
+  }, [pathname]);
+
   return (
-    <nav className={`w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
+    <nav className={`relative w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[75%] mx-auto px-4 py-4 flex items-center justify-between cursor-pointer">
         <Link href="/">
           <div className={`w-44 h-9 flex items-center text-4xl leading-[52px] text-neutral-600 font-bold cursor-pointer ${oleoScript.className}`}>
@@ -144,16 +148,16 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden px-6 pb-4 space-y-3 text-gray-700 text-sm">
+        <div className="absolute top-full left-0 w-full bg-white px-6 pb-4 flex flex-col space-y-3 text-gray-700 text-base items-center z-40 shadow-md">
           <Link
             href="/pricing"
-            className={`hover:text-teal-700 ${pathname === '/pricing' ? 'text-teal-500' : ''}`}
+            className={`hover:text-teal-700 ${pathname === '/pricing' ? 'text-teal-700' : ''}`}
           >
             Plans
           </Link>
 
           <details className="group">
-            <summary className="mt-2 flex items-center justify-between cursor-pointer hover:text-teal-700">
+            <summary className="flex items-center justify-between cursor-pointer hover:text-teal-700">
               What is a VPN? 
             </summary>
             <div className="ml-4 mt-2 space-y-2">
@@ -161,7 +165,7 @@ export default function Navbar() {
                 href="/what-is-vpn"
                 className={`hover:text-teal-700 ${pathname === '/what-is-vpn' ? 'text-teal-700' : ''}`}
               >
-                 - Why VPN?
+                - Why VPN?
               </Link>
               <Link
                 href="/vpnFeature"
@@ -178,7 +182,9 @@ export default function Navbar() {
           >
             Download
           </Link>
-          <Link href="/help" className={`hover:text-teal-700 block ${pathname === '/help' ? 'text-teal-700' : ''}`}>Help</Link>
+          <Link href="/help" className={`hover:text-teal-700 block ${pathname === '/help' ? 'text-teal-700' : ''}`}>
+            Help
+          </Link>
 
           {isMounted && user ? (
             <>
@@ -190,7 +196,7 @@ export default function Navbar() {
               </span>
               <Link
                 href="/Dashboard"
-                className=" w-[110px] text-center px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200 block"
+                className="w-[120px] text-center px-4 py-2 rounded-full bg-teal-600 text-white text-base hover:bg-teal-700 transition duration-200 block"
               >
                 Client Area
               </Link>
@@ -200,7 +206,7 @@ export default function Navbar() {
               <Link href="/login" className="block hover:text-teal-700">Log In</Link>
               <Link
                 href="/pricing"
-                className="inline-block w-[150px] mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
+                className="inline-block w-[130px] text-center mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-base hover:bg-teal-700 transition duration-200"
               >
                 Get SeelVpn
               </Link>
@@ -208,6 +214,8 @@ export default function Navbar() {
           )}
         </div>
       )}
+
+
 
       <LogOutModal
         isOpen={isLogoutModalOpen}
