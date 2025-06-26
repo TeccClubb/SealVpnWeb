@@ -13,17 +13,14 @@ const oleoScript = Oleo_Script({
   weight: ['400', '700'],
 });
 
-
 export default function Navbar() {
   const router = useRouter();
   const { user, removeUserCookie } = useUserCookie();
   const [isMounted, setIsMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get current route
-  const dropdownRef = useRef(null);
-
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // Logout modal
+  const pathname = usePathname();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogout = () => {
     removeUserCookie();
@@ -38,40 +35,15 @@ export default function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-
   return (
     <nav className={`w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
-      <div className="w-[85%] mx-auto px-4 py-3 flex items-center justify-between cursor-pointer">
-        {/* Left Section (Logo) */}
-
-
+      <div className="w-[75%] mx-auto px-4 py-4 flex items-center justify-between cursor-pointer">
         <Link href="/">
           <div className={`w-44 h-9 flex items-center text-4xl leading-[52px] text-neutral-600 font-bold cursor-pointer ${oleoScript.className}`}>
             SeelVpn
           </div>
         </Link>
 
-
-
-
-        {/* Right Section (Nav + CTA) */}
         <div className="flex items-center space-x-6">
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-gray-600">
@@ -81,43 +53,40 @@ export default function Navbar() {
             >
               Plans
             </Link>
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center cursor-pointer gap-1 hover:text-black"
-              >
+
+            <div
+              className="relative"
+              onMouseEnter={() => setIsDropdownOpen(true)}
+            >
+              <div className="flex items-center cursor-pointer gap-1 hover:text-black">
                 What is a VPN?
                 <ChevronDown className="w-4 h-4" />
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute top-6 left-0 mt-2 w-44 bg-white border rounded shadow-md text-sm z-10">
-                  <Link
-                    href="/what-is-vpn"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className={`block px-4 py-2 hover:bg-gray-100 ${pathname === '/what-is-vpn' ? 'bg-gray-100 font-medium text-teal-600' : ''}`}
-                  >
-                    Why VPN?
-                  </Link>
+              </div>
 
-                  <Link
-                    href="/vpnFeature"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className={`block px-4 py-2 hover:bg-gray-100 ${pathname === '/vpnFeature' ? 'bg-gray-100 font-medium text-teal-600' : ''}`}
-                  >
-                    Feature
-                  </Link>
-
-                  {/* <Link
-                    href="/vpnFeature"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Feature
-                  </Link> */}
-                </div>
-              )}
+              <div
+                className={`absolute top-full left-0 mt-2 w-44 bg-white rounded-lg shadow-lg text-sm z-10 py-5 px-3 transition-all duration-200 ${
+                  isDropdownOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                }`}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+              >
+                <Link
+                  href="/what-is-vpn"
+                  className={`block px-4 py-2 rounded-lg hover:text-teal-500 ${
+                    pathname === '/what-is-vpn' ? 'text-teal-500 font-medium' : ''
+                  }`}
+                >
+                  Why VPN?
+                </Link>
+                <Link
+                  href="/vpnFeature"
+                  className={`block px-4 py-2 rounded-lg hover:text-teal-500 ${
+                    pathname === '/vpnFeature' ? 'text-teal-500 font-medium' : ''
+                  }`}
+                >
+                  Feature
+                </Link>
+              </div>
             </div>
-
 
             <Link
               href="/download-device"
@@ -131,12 +100,11 @@ export default function Navbar() {
 
           {/* Right CTA Button (Desktop) */}
           <div className="hidden lg:flex items-center">
-            {isMounted && user && (
+            {isMounted && user ? (
               <>
-
                 <span
                   onClick={() => setIsLogoutModalOpen(true)}
-                  className="px-4 py-2 rounded-full bg-white border border-neutral-300  text-black text-sm hover:bg-teal-400 hover:text-white transition"
+                  className="px-4 py-2 rounded-full bg-white border border-neutral-300  text-black text-sm hover:bg-teal-400 hover:text-white transition cursor-pointer"
                 >
                   Log Out
                 </span>
@@ -147,12 +115,8 @@ export default function Navbar() {
                   Client Area
                 </Link>
               </>
-
-            )}
-
-            {isMounted && !user && (
+            ) : (
               <>
-
                 <Link
                   href="/login"
                   className="px-4 py-2 rounded-full bg-white border border-neutral-300 text-black text-sm hover:bg-teal-500 hover:text-white transition"
@@ -166,9 +130,7 @@ export default function Navbar() {
                   Get SeelVpn
                 </Link>
               </>
-            )
-            }
-
+            )}
           </div>
 
           {/* Mobile Hamburger */}
@@ -183,53 +145,58 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden px-6 pb-4 space-y-3 text-gray-700 text-sm">
-          <Link href="/pricing"
+          <Link
+            href="/pricing"
             className={`hover:text-black ${pathname === '/pricing' ? 'text-teal-500 font-semibold' : ''}`}
+          >
+            Plans
+          </Link>
 
-          >Plans</Link>
-          <details className="group"  ref={dropdownRef}>
-            <summary onClick={() => setIsDropdownOpen(true)} className="flex items-center justify-between cursor-pointer hover:text-black">
+          <details className="group">
+            <summary className="flex items-center justify-between cursor-pointer hover:text-black">
               What is a VPN?
             </summary>
-            {
-              isDropdownOpen && (
-                <div className="ml-4 mt-2 space-y-2">
-                  <Link href="/what-is-vpn" onClick={() => setIsDropdownOpen(false)}
-                    className={`hover:text-black ${pathname === '/what-is-vpn' ? 'text-teal-500 font-semibold' : ''}`}
-
-                  >
-                    Why VPN?</Link>
-                  <Link href="/vpnFeature" onClick={() => setIsDropdownOpen(false)}
-                                      className={`hover:text-black block ${pathname === '/vpnFeature' ? 'text-teal-500 font-semibold' : ''}`}
-
-                   >Feature</Link>
-                  {/* <Link href="#" onClick={() => setIsDropdownOpen(false)} className="block hover:text-black">Online Privacy</Link> */}
-                  {/* <Link href="#" onClick={() => setIsDropdownOpen(false)} className="block hover:text-black">VPN for WFH</Link> */}
-                </div>
-              )
-            }
-
+            <div className="ml-4 mt-2 space-y-2">
+              <Link
+                href="/what-is-vpn"
+                className={`hover:text-black ${pathname === '/what-is-vpn' ? 'text-teal-500 font-semibold' : ''}`}
+              >
+                Why VPN?
+              </Link>
+              <Link
+                href="/vpnFeature"
+                className={`hover:text-black block ${pathname === '/vpnFeature' ? 'text-teal-500 font-semibold' : ''}`}
+              >
+                Feature
+              </Link>
+            </div>
           </details>
-          <Link href="/download-device"
-            className={`hover:text-black block ${pathname === '/download-device' ? 'text-teal-500 font-semibold' : ''}`}
 
-          >Download</Link>
+          <Link
+            href="/download-device"
+            className={`hover:text-black block ${pathname === '/download-device' ? 'text-teal-500 font-semibold' : ''}`}
+          >
+            Download
+          </Link>
           <Link href="/help" className="block hover:text-black">Help</Link>
-          {isMounted && user && (
+
+          {isMounted && user ? (
             <>
-              <span onClick={() => setIsLogoutModalOpen(true)} className="block hover:text-black cursor-pointer">Log Out</span>
+              <span
+                onClick={() => setIsLogoutModalOpen(true)}
+                className="block hover:text-black cursor-pointer"
+              >
+                Log Out
+              </span>
               <Link
                 href="/Dashboard"
-                className=" px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
+                className="px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition block"
               >
                 Client Area
               </Link>
             </>
-          )}
-
-          {isMounted && !user && (
+          ) : (
             <>
-
               <Link href="/login" className="block hover:text-black">Log In</Link>
               <Link
                 href="/pricing"
@@ -238,12 +205,10 @@ export default function Navbar() {
                 Get SeelVpn
               </Link>
             </>
-          )
-          }
-
+          )}
         </div>
-
       )}
+
       <LogOutModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
