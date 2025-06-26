@@ -8,10 +8,9 @@ export default function SpringSaleSection() {
 
  
   return (
-    <section className="md:py-16 py-5 px-6 sm:px-10 lg:px-20  flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-20 ">
+    <section className="w-full lg:w-[75%] m-auto md:py-16 py-5 px-6 flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-20">
         {/* Left Text Section */}
-        <section className="bg-gray-50 "></section>
-        <div className=" text-center md:text-left max-w-xl flex-1">
+        <div className="text-center md:text-left max-w-xl flex-1">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-800 leading-snug">
             A more secure way <br /> to{" "}
             <span className="text-black font-bold">browse the web</span>
@@ -23,29 +22,29 @@ export default function SpringSaleSection() {
           </p>
 
           {/* CTA Button */}
-          <div className="mt-6">
+          <div className="my-10">
             <Link
               href="/pricing"
-              className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white    text-[20px] px-6 py-4  rounded-full transition"
+              className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white text-[20px] px-10 py-6 rounded-full transition duration-200"
             >
               Summer Sale! Get 67% off
             </Link>
 
-            <p className="mt-5 text-gray-500 text-xs  md:text-sm">
+            <p className="mt-7 text-gray-500 text-xs  md:text-sm">
               Your first year of SeelVpn for $3.99/mo $10.99 $8.99 USD
             </p>
           </div>
         </div>
 
         {/* Right Bear Image */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center mt-5 md:mt-0">
           <Image
-  src="/imageofHero.png"
-  alt="Hero Image"
-  width={400}
-  height={0} // height will auto adjust unless specified; you can also set it based on aspect ratio
-  className="w-[400px] h-auto"
-/>
+            src="/imageofHero.png"
+            alt="Hero Image"
+            width={400}
+            height={0} // height will auto adjust unless specified; you can also set it based on aspect ratio
+            className="w-[400px] h-auto"
+          />
         </div>
       </section>
   );
