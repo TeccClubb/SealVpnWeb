@@ -153,21 +153,21 @@ export default function Navbar() {
           </Link>
 
           <details className="group">
-            <summary className="flex items-center justify-between cursor-pointer hover:text-teal-700">
-              What is a VPN?
+            <summary className="mt-2 flex items-center justify-between cursor-pointer hover:text-teal-700">
+              What is a VPN? 
             </summary>
             <div className="ml-4 mt-2 space-y-2">
               <Link
                 href="/what-is-vpn"
                 className={`hover:text-teal-700 ${pathname === '/what-is-vpn' ? 'text-teal-700' : ''}`}
               >
-                Why VPN?
+                 - Why VPN?
               </Link>
               <Link
                 href="/vpnFeature"
                 className={`hover:text-teal-700 block ${pathname === '/vpnFeature' ? 'text-teal-700' : ''}`}
               >
-                Feature
+                - Feature
               </Link>
             </div>
           </details>
@@ -190,7 +190,7 @@ export default function Navbar() {
               </span>
               <Link
                 href="/Dashboard"
-                className="px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200 block"
+                className=" w-[110px] text-center px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200 block"
               >
                 Client Area
               </Link>
@@ -200,7 +200,7 @@ export default function Navbar() {
               <Link href="/login" className="block hover:text-teal-700">Log In</Link>
               <Link
                 href="/pricing"
-                className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
+                className="inline-block w-[150px] mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition duration-200"
               >
                 Get SeelVpn
               </Link>
