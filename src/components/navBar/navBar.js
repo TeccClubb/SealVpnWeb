@@ -39,6 +39,19 @@ export default function Navbar() {
     setIsMobileMenuOpen(false); // Close the menu on route change
   }, [pathname]);
 
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 200);
+  };
+
   return (
     <nav className={`relative w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[90%] md:w-[75%] mx-auto px-4 py-4 flex items-center align-center justify-between cursor-pointer">
@@ -60,7 +73,8 @@ export default function Navbar() {
 
             <div
               className="relative"
-              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="flex items-center cursor-pointer gap-1 hover:text-teal-700">
                 What is a VPN?
@@ -71,7 +85,8 @@ export default function Navbar() {
                 className={`absolute top-full left-0 mt-2 w-44 bg-white rounded-lg shadow-lg text-sm z-10 py-5 px-3 transition-all duration-200 ${
                   isDropdownOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                 }`}
-                onMouseLeave={() => setIsDropdownOpen(false)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <Link
                   href="/what-is-vpn"
