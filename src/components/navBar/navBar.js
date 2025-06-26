@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center space-x-6 text-gray-600">
             <Link
               href="/pricing"
-              className={`hover:text-black ${pathname === '/pricing' ? 'text-teal-500 font-semibold' : ''}`}
+              className={`hover:text-teal-700 ${pathname === '/pricing' ? 'text-teal-700' : ''}`}
             >
               Plans
             </Link>
@@ -58,7 +58,7 @@ export default function Navbar() {
               className="relative"
               onMouseEnter={() => setIsDropdownOpen(true)}
             >
-              <div className="flex items-center cursor-pointer gap-1 hover:text-black">
+              <div className="flex items-center cursor-pointer gap-1 hover:text-teal-700">
                 What is a VPN?
                 <ChevronDown className="w-4 h-4" />
               </div>
@@ -71,16 +71,16 @@ export default function Navbar() {
               >
                 <Link
                   href="/what-is-vpn"
-                  className={`block px-4 py-2 rounded-lg hover:text-teal-500 ${
-                    pathname === '/what-is-vpn' ? 'text-teal-500 font-medium' : ''
+                  className={`block px-4 py-2 rounded-lg hover:text-teal-700 ${
+                    pathname === '/what-is-vpn' ? 'text-teal-700 font-medium' : ''
                   }`}
                 >
                   Why VPN?
                 </Link>
                 <Link
                   href="/vpnFeature"
-                  className={`block px-4 py-2 rounded-lg hover:text-teal-500 ${
-                    pathname === '/vpnFeature' ? 'text-teal-500 font-medium' : ''
+                  className={`block px-4 py-2 rounded-lg hover:text-teal-700 ${
+                    pathname === '/vpnFeature' ? 'text-teal-700 font-medium' : ''
                   }`}
                 >
                   Feature
@@ -90,12 +90,12 @@ export default function Navbar() {
 
             <Link
               href="/download-device"
-              className={`hover:text-black ${pathname === '/download-device' ? 'text-teal-500 font-semibold' : ''}`}
+              className={`hover:text-teal-700 ${pathname === '/download-device' ? 'text-teal-700' : ''}`}
             >
               Download
             </Link>
 
-            <Link href="/help" className="hover:text-black">Help</Link>
+            <Link href="/help" className={`hover:text-teal-700 block ${pathname === '/help' ? 'text-teal-700' : ''}`}>Help</Link>
           </div>
 
           {/* Right CTA Button (Desktop) */}
@@ -104,13 +104,13 @@ export default function Navbar() {
               <>
                 <span
                   onClick={() => setIsLogoutModalOpen(true)}
-                  className="px-4 py-2 rounded-full bg-white border border-neutral-300  text-black text-sm hover:bg-teal-400 hover:text-white transition cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30  text-black text-sm hover:bg-teal-700 hover:text-white transition cursor-pointer"
                 >
                   Log Out
                 </span>
                 <Link
                   href="/Dashboard"
-                  className="ml-4 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
+                  className="ml-4 px-4 py-2 rounded-full border border-teal-700/30 bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
                 >
                   Client Area
                 </Link>
@@ -119,13 +119,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="px-4 py-2 rounded-full bg-white border border-neutral-300 text-black text-sm hover:bg-teal-500 hover:text-white transition"
+                  className="px-4 py-2 rounded-full bg-white border border-teal-700/30 text-black text-sm hover:bg-teal-500 hover:text-white transition"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/pricing"
-                  className="ml-4 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
+                  className="ml-4 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
                 >
                   Get SeelVpn
                 </Link>
@@ -147,25 +147,25 @@ export default function Navbar() {
         <div className="lg:hidden px-6 pb-4 space-y-3 text-gray-700 text-sm">
           <Link
             href="/pricing"
-            className={`hover:text-black ${pathname === '/pricing' ? 'text-teal-500 font-semibold' : ''}`}
+            className={`hover:text-teal-700 ${pathname === '/pricing' ? 'text-teal-500' : ''}`}
           >
             Plans
           </Link>
 
           <details className="group">
-            <summary className="flex items-center justify-between cursor-pointer hover:text-black">
+            <summary className="flex items-center justify-between cursor-pointer hover:text-teal-700">
               What is a VPN?
             </summary>
             <div className="ml-4 mt-2 space-y-2">
               <Link
                 href="/what-is-vpn"
-                className={`hover:text-black ${pathname === '/what-is-vpn' ? 'text-teal-500 font-semibold' : ''}`}
+                className={`hover:text-teal-700 ${pathname === '/what-is-vpn' ? 'text-teal-700' : ''}`}
               >
                 Why VPN?
               </Link>
               <Link
                 href="/vpnFeature"
-                className={`hover:text-black block ${pathname === '/vpnFeature' ? 'text-teal-500 font-semibold' : ''}`}
+                className={`hover:text-teal-700 block ${pathname === '/vpnFeature' ? 'text-teal-700' : ''}`}
               >
                 Feature
               </Link>
@@ -174,33 +174,33 @@ export default function Navbar() {
 
           <Link
             href="/download-device"
-            className={`hover:text-black block ${pathname === '/download-device' ? 'text-teal-500 font-semibold' : ''}`}
+            className={`hover:text-teal-700 block ${pathname === '/download-device' ? 'text-teal-700' : ''}`}
           >
             Download
           </Link>
-          <Link href="/help" className="block hover:text-black">Help</Link>
+          <Link href="/help" className={`hover:text-teal-700 block ${pathname === '/help' ? 'text-teal-700' : ''}`}>Help</Link>
 
           {isMounted && user ? (
             <>
               <span
                 onClick={() => setIsLogoutModalOpen(true)}
-                className="block hover:text-black cursor-pointer"
+                className="block hover:text-teal-700 cursor-pointer"
               >
                 Log Out
               </span>
               <Link
                 href="/Dashboard"
-                className="px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition block"
+                className="px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition block"
               >
                 Client Area
               </Link>
             </>
           ) : (
             <>
-              <Link href="/login" className="block hover:text-black">Log In</Link>
+              <Link href="/login" className="block hover:text-teal-700">Log In</Link>
               <Link
                 href="/pricing"
-                className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-400 text-white text-sm hover:bg-teal-500 transition"
+                className="inline-block mt-2 px-4 py-2 rounded-full bg-teal-600 text-white text-sm hover:bg-teal-700 transition"
               >
                 Get SeelVpn
               </Link>
