@@ -41,7 +41,7 @@ export default function Navbar() {
 
   return (
     <nav className={`relative w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
-      <div className="w-[75%] mx-auto px-4 py-4 flex items-center justify-between cursor-pointer">
+      <div className="w-[90%] md:w-[75%] mx-auto px-4 py-4 flex items-center align-center justify-between cursor-pointer">
         <Link href="/">
           <div className={`w-44 h-9 flex items-center text-4xl leading-[52px] text-neutral-600 font-bold cursor-pointer ${oleoScript.className}`}>
             SeelVpn
@@ -138,7 +138,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Hamburger */}
-          <div className="lg:hidden text-black">
+          <div className="lg:hidden text-black mt-1">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -214,8 +214,6 @@ export default function Navbar() {
           )}
         </div>
       )}
-
-
 
       <LogOutModal
         isOpen={isLogoutModalOpen}
