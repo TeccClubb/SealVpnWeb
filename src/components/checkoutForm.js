@@ -16,7 +16,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-function PaymentForm({ amount, planId, billingAddress, promoCode }) {
+function PaymentForm({ amount, planId, billingAddress, promoCode, setLoginModal }) {
   const { user } = useUserCookie();
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -46,6 +46,12 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
   }, [billingAddress]);
 
   const onSubmit = async (values) => {
+    // open login pop up if user does not exist
+    if(!user) {
+      setLoginModal(true)
+      return;
+    }
+
     if (!stripe || !elements) {
       return;
     }
@@ -196,7 +202,7 @@ function PaymentForm({ amount, planId, billingAddress, promoCode }) {
   );
 }
 
-function PaymentElement({ amount, planId, billingAddress, promoCode }) {
+function PaymentElement({ amount, planId, billingAddress, promoCode, setLoginModal }) {
   const options = {
     mode: "payment",
     amount,
@@ -221,12 +227,14 @@ function PaymentElement({ amount, planId, billingAddress, promoCode }) {
         planId={planId}
         billingAddress={billingAddress}
         promoCode={promoCode}
+        setLoginModal={setLoginModal}
+
       />
     </Elements>
   );
 }
 
-export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
+export default function CheckOutForm({ isPlansLoading, selectedPlan, setLoginModal }) {
   const { user } = useUserCookie();
   const [billingAddress, setBillingAddress] = useState(null);
   const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
@@ -334,6 +342,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
           planId={selectedPlan.id}
           billingAddress={billingAddress}
           promoCode={promoCode}
+          setLoginModal={setLoginModal}
         />
       )}
 
@@ -344,7 +353,7 @@ export default function CheckOutForm({ isPlansLoading, selectedPlan }) {
           <div>
             <input
               type="text"
-              placeholder="Enter your prompt code"
+              placeholder="Promo code"
               onChange={(e) => setPromoCode(e.target.value)}
               className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
