@@ -75,7 +75,7 @@ const BrowseCountries = () => {
         </div>
 
         {/* Text + Countries List */}
-        <div  className="flex flex-col justify-center items-center   space-y-6">
+        <div  className="flex flex-col justify-center items-center text-center lg:text-left lg:items-left  space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Browse the internet from  47 countries 
           </h2>
@@ -83,7 +83,7 @@ const BrowseCountries = () => {
             Discover something new, or tunnel back home to enjoy your favourite websites and apps while travelling or living abroad.
           </p>
 
-          <div className="grid grid-cols-2  sm:grid-cols-4 gap-2 text-sm text-gray-100">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm text-gray-100">
             {countries.map((country) => (
               <div key={country.name} className="flex items-center space-x-2">
                 <img src={country.flag} alt={`${country.name} flag`} className="w-6 h-4" />

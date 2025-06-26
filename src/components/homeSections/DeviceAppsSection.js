@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function DeviceAppsSection() {
   return (
-    <div className="w-full bg-[#2d4a4e] text-white  mb-20 px-6 md:px-10">
+    <div className="w-full bg-[#2d4a4e] text-white mb-10 px-6 md:px-10">
       <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-8 pt-[60px]">
         
         {/* Text Section */}
@@ -42,7 +42,7 @@ export default function DeviceAppsSection() {
         </div>
 
         {/* CTA Button */}
-        <Link href="/plans" className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20 transition duration-200">
+        <Link href="/pricing" className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20 transition duration-200">
           Get SeelVpn now
         </Link>
 
