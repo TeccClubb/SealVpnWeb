@@ -13,7 +13,7 @@ export default function DeviceAppsSection() {
             Easy-to-use apps for <br className="hidden sm:block" />
             all your devices
           </h2>
-          <p className="text-base sm:text-lg mb-4 text-[#6E6E6E]">
+          <p className="text-base sm:text-lg mb-4 opacity-50">
             Just open the SeelVpn app, select a country,<br />
             and flip the switch. Once you're connected,<br />
             SeelVpn will work quietly in the background<br />

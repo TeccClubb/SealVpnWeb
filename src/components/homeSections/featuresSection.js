@@ -43,7 +43,7 @@ export default function FeaturesSection() {
             <Image src={feature.img} alt={feature.title} width={60} height={60} className="flex-shrink-0" />
             <div >
               <h3 className="text-lg font-semibold text-neutral-600 mb-1">{feature.title}</h3>
-              <p className=" text-neutral-500 text-sm">{feature.desc}</p>
+              <p className=" text-neutral-500 text-base">{feature.desc}</p>
             </div>
           </div>
         ))}

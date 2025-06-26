@@ -22,7 +22,7 @@ export default function SpringSaleSection() {
           </p>
 
           {/* CTA Button */}
-          <div className="my-10">
+          <div className="my-8">
             <Link
               href="/pricing"
               className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white text-[20px] px-10 py-6 rounded-full transition duration-200"

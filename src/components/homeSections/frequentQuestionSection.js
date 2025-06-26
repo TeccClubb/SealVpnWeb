@@ -55,10 +55,10 @@ export default function FAQSection() {
                 className="flex justify-between items-center w-full px-6 py-4 cursor-pointer hover:bg-gray-50"
                 onClick={() => toggle(index)}
               >
-                <span className="text-sm text-[#6E6E6E] font-medium leading-6 tracking-tight text-left">
+                <span className="text-md font-semibold text-[#6E6E6E] leading-6 tracking-tight text-left">
                   {item.question}
                 </span>
-                <span className="text-green-600 shrink-0">
+                <span className="text-teal-700 shrink-0">
                   {openIndex === index ? <Minus size={18} /> : <Plus size={18} />}
                 </span>
               </button>
@@ -68,7 +68,7 @@ export default function FAQSection() {
                   openIndex === index ? 'max-h-96 py-2' : 'max-h-0'
                 }`}
               >
-                <div className="text-sm text-gray-600 leading-6 tracking-tight">
+                <div className="text-base text-gray-600 leading-6 tracking-tight">
                   {item.answer}
                 </div>
               </div>
