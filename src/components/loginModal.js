@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useUserCookie } from "../components/use-cookies";
 
@@ -27,11 +27,12 @@ export default function LogInModal({ isOpen, onClose }) {
 
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/signup",
+        process.env.NEXT_PUBLIC_REST_API_BASE_URL + "/signup",
         {
           name: data.username,
           email: data.email,
           password: data.password,
+          spa: true,
         },
         { headers: { Accept: "application/json" } }
       );
@@ -42,6 +43,13 @@ export default function LogInModal({ isOpen, onClose }) {
 
       if (response.status === 200 || response.status === 201) {
         toast.success(message);
+        setUserCookie({
+          id: response.data.user.id,
+          name: response.data.user.name,
+          email: response.data.user.email,
+          isVerified: response.data.user.email_verified,
+          access_token: response.data.access_token,
+        });
         reset();
         onClose();
       } else {
@@ -49,8 +57,14 @@ export default function LogInModal({ isOpen, onClose }) {
         setServerMessage("Please try again");
       }
     } catch (error) {
-      toast.error("Sign up failed.");
-      setServerMessage("Sign up failed.");
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response.data.errors[0]
+          : error instanceof Error
+          ? error.message
+          : "Sign up failed.";
+      toast.error(errorMessage);
+      setServerMessage(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -72,6 +86,7 @@ export default function LogInModal({ isOpen, onClose }) {
           id: response.data.user.id,
           name: response.data.user.name,
           email: response.data.user.email,
+          isVerified: response.data.user.email_verified,
           access_token: response.data.access_token,
         });
 
@@ -123,7 +138,9 @@ export default function LogInModal({ isOpen, onClose }) {
                 className="w-full block px-4 py-2 border border-gray-300 rounded-md"
               />
               {errors.username && (
-                <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.username.message}
+                </p>
               )}
             </div>
           )}
@@ -142,7 +159,9 @@ export default function LogInModal({ isOpen, onClose }) {
               className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -152,15 +171,19 @@ export default function LogInModal({ isOpen, onClose }) {
               placeholder="Password"
               {...register("password", {
                 required: "Password is required",
-                minLength: isLogin ? undefined : {
-                  value: 8,
-                  message: "Minimum 8 characters",
-                },
+                minLength: isLogin
+                  ? undefined
+                  : {
+                      value: 8,
+                      message: "Minimum 8 characters",
+                    },
               })}
               className="w-full block px-4 py-2 border border-gray-300 rounded-md"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
 

@@ -217,7 +217,6 @@ const CheckoutPage = () => {
       <LogInModal 
         isOpen={loginModal}
         onClose={() => setLoginModal(false)}
-        onConfirm={() => console.log("confirmed modal")}
       />
     </section>
   );
