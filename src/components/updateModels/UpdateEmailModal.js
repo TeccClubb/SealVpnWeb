@@ -20,7 +20,7 @@ export default function UpdateEmailModal({ open, onClose }) {
     try {
       const response = await axios
         .post(
-          "https://seelvpn.tecclubb.com/api/user/update",
+          process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/update",
           {
             name: user.name, // Replace with dynamic value: data.name if needed
             email: data.email,

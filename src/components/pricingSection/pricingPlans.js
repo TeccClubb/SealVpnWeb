@@ -48,15 +48,7 @@ export default function PricingPlans() {
   }, []);
 
   const handleClick = (planId) => {
-    if (!user) {
-      router.push(
-        `/login?redirect=${encodeURIComponent(
-          `/account/checkout?planId=${planId}`
-        )}`
-      );
-    } else {
-      router.push(`/account/checkout?planId=${planId}`);
-    }
+    router.push(`/account/checkout?planId=${planId}`);
   };
 
   return (

@@ -35,7 +35,7 @@ export default function FeaturesSection() {
     },
   ];
   return (
-    <section className="md:py-10 py-5 px-6 sm:px-10 lg:px-20 bg-white text-center" style={{color:"black"}}>
+    <section className="md:py-10 py-5 px-6 sm:px-10 lg:px-20 bg-white text-center mb-10" style={{color:"black"}}>
       <h2 className="text-3xl font-bold mb-12 text-neutral-600">Why millions of people are using SeeIVpn</h2>
       <div   className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left max-w-5xl mx-auto">
         {features.map((feature, i) => (
@@ -43,7 +43,7 @@ export default function FeaturesSection() {
             <Image src={feature.img} alt={feature.title} width={60} height={60} className="flex-shrink-0" />
             <div >
               <h3 className="text-lg font-semibold text-neutral-600 mb-1">{feature.title}</h3>
-              <p className=" text-neutral-500 text-sm">{feature.desc}</p>
+              <p className=" text-neutral-500 text-base">{feature.desc}</p>
             </div>
           </div>
         ))}

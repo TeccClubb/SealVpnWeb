@@ -6,24 +6,24 @@ import FeaturesSection from "@/components/homeSections/featuresSection";
 import PartnersSection from "@/components/partnersSection/partnersSection";
 
 import VpnFeature from "@/components/homeSections/vpn-feature";
-import DawnloadSection from "@/components/homeSections/dawnloadSection";
+import DownloadSection from "@/components/homeSections/downloadSection";
 import FAQSection from "@/components/homeSections/frequentQuestionSection";
 import SpringSaleSection from "@/components/homeSections/springSeleSection";
 
 export default function HomePage() {
   return (
-    <div className="w-full  bg-white">
-       <SpringSaleSection></SpringSaleSection>
+    <div className="w-full bg-white">
+       <SpringSaleSection />
 
       {/* Logos / Partners Section */}
-        <PartnersSection></PartnersSection>
-        <DeviceAppsSection></DeviceAppsSection>
+        <PartnersSection />
+        <DeviceAppsSection />
 
-        <FeaturesSection></FeaturesSection>
-        <BrowseCountries></BrowseCountries>
-        <VpnFeature></VpnFeature>
-        <FAQSection></FAQSection>
-        <DawnloadSection></DawnloadSection>
+        <FeaturesSection />
+        <BrowseCountries />
+        <VpnFeature />
+        <FAQSection />
+        <DownloadSection />
     </div>
   );
 }

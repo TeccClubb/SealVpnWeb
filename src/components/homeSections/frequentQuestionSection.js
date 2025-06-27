@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 const faqData = [
@@ -43,30 +43,35 @@ export default function FAQSection() {
 
   return (
     <section className="bg-[#F7F7F7] py-16 px-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-xl sm:text-2xl font-bold text-[#3D3D3D] mb-6">
           Frequently Asked Questions
         </h2>
 
-        <div className="bg-white rounded-md border border-gray-200 divide-y divide-white shadow-sm">
+        <div className="bg-white rounded-md border border-gray-200 divide-y divide-white shadow-sm w-full">
           {faqData.map((item, index) => (
             <div key={index}>
-              <div
-                className="flex justify-between items-center px-6 py-4 cursor-pointer hover:bg-gray-50"
+              <button
+                className="flex justify-between items-center w-full px-6 py-4 cursor-pointer hover:bg-gray-50"
                 onClick={() => toggle(index)}
               >
-                <span className="text-sm text-[#6E6E6E] font-medium leading-6 tracking-tight">
+                <span className="text-md font-semibold text-[#6E6E6E] leading-6 tracking-tight text-left">
                   {item.question}
                 </span>
-                <span className="text-green-600">
+                <span className="text-teal-700 shrink-0">
                   {openIndex === index ? <Minus size={18} /> : <Plus size={18} />}
                 </span>
-              </div>
-              {openIndex === index && (
-                <div className="px-6 pb-4 text-sm text-gray-600 leading-6 tracking-tight">
+              </button>
+
+              <div
+                className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${
+                  openIndex === index ? 'max-h-96 py-2' : 'max-h-0'
+                }`}
+              >
+                <div className="text-base text-gray-600 leading-6 tracking-tight">
                   {item.answer}
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

@@ -31,7 +31,7 @@ export default function UpdatePasswordModal({ open, onClose }) {
 
   try {
     const response = await axios.post(
-      "https://seelvpn.tecclubb.com/api/user/update-password",
+      process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/update-password",
       {
         old_password: oldPassword,
         new_password: newPassword,

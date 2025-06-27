@@ -19,7 +19,7 @@ export default function UpdateNameModal({ open, onClose }) {
 
     try {
       const response = await axios.post(
-        "https://seelvpn.tecclubb.com/api/user/update",
+        process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/update",
         {
           name: data.name,
           email: user.email, // replace with dynamic value if needed

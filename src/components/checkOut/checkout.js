@@ -7,6 +7,7 @@ import axios from "axios";
 
 import CheckOutForm from "../checkoutForm";
 import CheckedIcon from "../CheckedIcon";
+import LogInModal from "../loginModal"
 import { calculateDiscountPercentage } from "../pricingSection/pricingPlans";
 const CheckoutPage = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const CheckoutPage = () => {
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState();
   const [isPlansLoading, setIsPlansLoading] = useState(true);
+  const [loginModal, setLoginModal] = useState(false);
 
   if (!planId) {
     notFound();
@@ -135,6 +137,7 @@ const CheckoutPage = () => {
         <CheckOutForm
           isPlansLoading={isPlansLoading}
           selectedPlan={selectedPlan}
+          setLoginModal={setLoginModal}
         />
 
         {/* Right: Plan details */}
@@ -211,6 +214,11 @@ const CheckoutPage = () => {
           </ul>
         </div>
       </div>
+      <LogInModal 
+        isOpen={loginModal}
+        onClose={() => setLoginModal(false)}
+        onConfirm={() => console.log("confirmed modal")}
+      />
     </section>
   );
 };

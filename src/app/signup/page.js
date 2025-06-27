@@ -22,7 +22,7 @@ export default function SignUpForm() {
 
   try {
     const response = await axios.post(
-      "https://seelvpn.tecclubb.com/api/signup",
+      process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/signup",
       {
         name: data.username,
         email: data.email,
@@ -120,13 +120,11 @@ export default function SignUpForm() {
 
           {/* Server message below button */}
           {serverMessage && (
-  <p className="text-center text-sm mt-2 text-red-500">
-    {serverMessage}
-  </p>
-)}
-
-
-
+            <p className="text-center text-sm mt-2 text-red-500">
+              {serverMessage}
+            </p>
+          )}
+          
           {/* Already have an account */}
           <div className="text-center mt-2 text-sm">
             Already have a SeelVpn account?{" "}

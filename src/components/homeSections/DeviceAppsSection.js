@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function DeviceAppsSection() {
   return (
-    <div className="w-full bg-[#2d4a4e] text-white  mb-20 px-6 md:px-10">
+    <div className="w-full bg-[#2d4a4e] text-white mb-10 px-6 md:px-10">
       <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-8 pt-[60px]">
         
         {/* Text Section */}
@@ -13,7 +13,7 @@ export default function DeviceAppsSection() {
             Easy-to-use apps for <br className="hidden sm:block" />
             all your devices
           </h2>
-          <p className="text-base sm:text-lg mb-4 text-[#6E6E6E]">
+          <p className="text-base sm:text-lg mb-4 opacity-50">
             Just open the SeelVpn app, select a country,<br />
             and flip the switch. Once you're connected,<br />
             SeelVpn will work quietly in the background<br />
@@ -42,12 +42,12 @@ export default function DeviceAppsSection() {
         </div>
 
         {/* CTA Button */}
-        <Link href="/download-device" className="bg-teal-400 hover:bg-teal-500 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20">
+        <Link href="/pricing" className="bg-teal-500 hover:bg-teal-600 active:opacity-70 text-white px-10 py-4 text-[20px] rounded-full text-base mb-20 transition duration-200">
           Get SeelVpn now
         </Link>
 
         {/* Image Section aligned to left + moved further up */}
-        <div className="w-full flex justify-start -mt-55 pointer-events-none">
+        <div className="w-full flex justify-start -mt-55 mr-20 lg:-mt-95 lg:mr-0 pointer-events-none">
           <img
             src="/mobileMapImg.png"
             alt="Mobile App"

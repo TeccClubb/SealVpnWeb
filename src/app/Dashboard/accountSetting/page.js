@@ -19,7 +19,7 @@ export default function AccountPage() {
   const handleDelete = async () => {
     try {
       const response = await axios
-        .delete("https://seelvpn.tecclubb.com/api/user/delete", {
+        .delete(process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/delete", {
           headers: {
             Accept: "application/json",
             Authorization: `Bearer ${user.access_token}`,
