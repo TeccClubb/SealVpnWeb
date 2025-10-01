@@ -15,7 +15,7 @@ const DashboardPage = () => {
     const fetchActivePlan = async () => {
       try {
         const res = await axios
-          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/purchase/active`, {
+          .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/subscription/active`, {
             headers: {
               Accept: "application/json",
               Authorization: `Bearer ${user.access_token}`,
@@ -23,7 +23,7 @@ const DashboardPage = () => {
           }).then((res) => res.data);
 
           if(res.status) {
-            setActivePlan(response.plan);
+            setActivePlan(res.subscription);
           }
 
       } catch (error) {}
@@ -35,7 +35,7 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading={`Welcome back,${user ? user.name : ""}  `}>
+    <DashboardSection title="Dashboard" heading={`Welcome back, ${user ? user.name : ""}`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">
@@ -90,21 +90,19 @@ const DashboardPage = () => {
           {activePlan ? (
             <>
               <div className="flex items-center justify-between text-xl text-default-500 font-normal">
-                <p> {activePlan.plan?.name || "N/A"}</p>
+              <p>{activePlan.plan?.name || "N/A"}</p>
                 <p className="text-base">
-                  {activePlan.plan?.duration || "N/A"}{" "}
-                  {activePlan.plan?.duration_unit || ""}
+                  {activePlan.plan?.trial_period
+                    ? `${activePlan.plan?.trial_period} ${activePlan.plan?.trial_interval}`
+                    : `${activePlan.plan?.invoice_period} ${activePlan.plan?.invoice_interval}`}
                 </p>
               </div>
               <div className="flex items-center justify-between gap-4 text-xl text-default-500 font-normal">
                 <p>
                   {" "}
-                  {new Date(activePlan.end_date).toLocaleDateString()}
+                  {new Date(activePlan.ends_at).toLocaleDateString()}
                 </p>
-                <p className="text-base">
-                  ${activePlan.amount_paid || 0}/
-                  {activePlan.plan?.duration_unit || ""}
-                </p>
+                <p className="text-base">${activePlan.amount_paid || 0}</p>
               </div>
             </>
           ) : (

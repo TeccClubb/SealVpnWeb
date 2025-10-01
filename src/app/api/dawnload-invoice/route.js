@@ -15,7 +15,7 @@ export async function GET(request) {
   const url = `${protocol}://${host}/invoice?purchaseId=${purchaseId}&token=${token}&userId=${userId}`;
   try {
     const browser = await chromium.launch({
-      headless: false,
+      headless: true,
     });
     const page = await browser.newPage();
 

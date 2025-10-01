@@ -40,7 +40,7 @@ const BillingHistory = () => {
     const fetchBillingHistory = async () => {
       try {
         const res = await axios
-          .get(`${Api_Url}/purchase/history`, {
+          .get(`${Api_Url}/subscription/history`, {
             headers: {
               Accept: "application/json",
               Authorization: `Bearer ${user.access_token}`,
@@ -48,7 +48,7 @@ const BillingHistory = () => {
           }).then(res => res.data);
 
         if (res.status) {
-          setBillingData(res.purchases);
+          setBillingData(res.data);
         }
       } catch (error) {
       } finally {
@@ -151,10 +151,10 @@ const BillingHistory = () => {
                       ${item.amount_paid}
                     </td>
                     <td className="p-3 border-b border-gray-200">
-                      {new Date(item.start_date).toLocaleDateString()}
+                      {new Date(item.starts_at).toLocaleDateString()}
                     </td>
                     <td className="p-3 border-b border-gray-200">
-                      {new Date(item.end_date).toLocaleDateString()}
+                      {new Date(item.ends_at).toLocaleDateString()}
                     </td>
                     <td className="p-3 border-b border-gray-200 capitalize">
                       {item.status}

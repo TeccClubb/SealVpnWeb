@@ -24,33 +24,7 @@ const PaymentProcessingPage = () => {
           .post("/api/verify-payment", { paymentIntent })
           .then((res) => res.data);
 
-        if (res.paymentStatus) {
-          setPaymentStatus(true);
-          let Api_Url = process.env.NEXT_PUBLIC_REST_API_BASE_URL;
-          const response = await axios
-            .post(
-              `${Api_Url}/purchase/add`,
-              {
-                plan_id: planId,
-                payment_intent: paymentIntent,
-                promo_code: promoCode,
-              },
-              {
-                headers: {
-                  Accept: "application/json",
-                  Authorization: `Bearer ${user.access_token}`,
-                },
-              }
-            )
-            .then((response) => response.data);
-
-          if (response.status) {
-            setSuccessMessage(response.message);
-            toast.success(response.message);
-          }
-        } else {
-          setPaymentStatus(false);
-        }
+          setPaymentStatus(res.paymentStatus);
       } catch (error) {
         const errorMessage =
           error instanceof AxiosError
