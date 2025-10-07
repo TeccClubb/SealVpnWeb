@@ -12,29 +12,35 @@ export async function fetchClientSecret(priceId) {
 
   const userSession = await auth();
 
-  // if (userSession) {
-  //   const customer = await stripe.customers.list({
-  //     email: userSession.user.email,
-  //   });
+  let customerId = null;
 
-  //   if (customer.data.length < 1) {
-  //     await stripe.customers.create({
-  //       name: userSession.user.name,
-  //       email: userSession.user.email,
-  //     });
-  //   }
-  // }
+  if (userSession) {
+    // Check if customer already exists
+    const existingCustomers = await stripe.customers.list({
+      email: userSession.user.email,
+      limit: 1,
+    });
+
+    if (existingCustomers.data.length > 0) {
+      // Use existing customer
+      customerId = existingCustomers.data[0].id;
+    } else {
+      // Create new customer
+      const newCustomer = await stripe.customers.create({
+        name: userSession.user.name,
+        email: userSession.user.email,
+      });
+      customerId = newCustomer.id;
+    }
+  }
 
   // Create Checkout Sessions from body params.
   const session = await stripe.checkout.sessions.create({
     billing_address_collection: "required",
     ui_mode: "embedded",
-    customer_creation:"always",
-    customer_email:userSession.user.email,
+    customer: customerId,
     line_items: [
       {
-        // Provide the exact Price ID (for example, price_1234) of
-        // the product you want to sell
         price: priceId,
         quantity: 1,
       },
@@ -44,6 +50,10 @@ export async function fetchClientSecret(priceId) {
     return_url: `${origin}/return?session_id={CHECKOUT_SESSION_ID}`,
     metadata: {
       price_id: priceId,
+    },
+    saved_payment_method_options: {
+      payment_method_save: 'enabled',
+      payment_method_remove: 'enabled',
     },
   });
 
