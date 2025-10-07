@@ -45,6 +45,11 @@ export async function fetchClientSecret(priceId) {
         quantity: 1,
       },
     ],
+    // discounts: [
+    //   {
+    //     coupon: 'hA9PFW9J',
+    //   },
+    // ],
     mode: "payment",
     allow_promotion_codes: true,
     return_url: `${origin}/return?session_id={CHECKOUT_SESSION_ID}`,
