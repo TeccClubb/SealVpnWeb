@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useUserCookie } from "../use-cookies";
 import CheckedIcon from "../CheckedIcon";
 import { toast } from "react-toastify";
 
@@ -17,7 +16,6 @@ export const calculateDiscountPercentage = (originalPrice, discountedPrice) => {
 
 export default function PricingPlans() {
   const router = useRouter();
-  const { user } = useUserCookie();
   const [plans, setPlans] = useState([]);
   const [isPlansLoading, setIsPlansLoading] = useState(true);
 

@@ -3,11 +3,10 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import LogOutModal from './logoutModal';
-import { useUserCookie } from './use-cookies';
+import { signOut } from 'next-auth/react';
 
 const Sidebar = () => {
   const router = useRouter();
-  const { removeUserCookie } = useUserCookie();
   const pathname = usePathname();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
@@ -18,8 +17,8 @@ const Sidebar = () => {
     { name: 'Log Out', href: '/logout' },
   ];
 
-  const handleLogout = () => {
-    removeUserCookie();
+  const handleLogout = async () => {
+    await signOut()
     router.refresh();
     setIsLogoutModalOpen(false);
   };

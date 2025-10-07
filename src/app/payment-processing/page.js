@@ -7,12 +7,10 @@ import ErrorIcon from "@/components/icon/ErrorIcon";
 import VerifiedIcon from "@/components/icon/VerifiedIcon";
 import Link from "next/link";
 import { toast } from "react-toastify";
-import { useUserCookie } from "@/components/use-cookies";
 import { Loader } from "lucide-react";
 
 const PaymentProcessingPage = () => {
   const searchParams = useSearchParams();
-  const { user } = useUserCookie();
   const [isPaymentSuccessful, setPaymentStatus] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");

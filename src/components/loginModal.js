@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { useUserCookie } from "../components/use-cookies";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LogInModal({ isOpen, onClose }) {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-  const { setUserCookie } = useUserCookie();
 
   const {
     register,
@@ -43,13 +44,16 @@ export default function LogInModal({ isOpen, onClose }) {
 
       if (response.status === 200 || response.status === 201) {
         toast.success(message);
-        setUserCookie({
+        signIn("credentials", {
+          redirect: false,
           id: response.data.user.id,
-          name: response.data.user.name,
           email: response.data.user.email,
+          name: response.data.user.name,
           isVerified: response.data.user.email_verified,
           access_token: response.data.access_token,
         });
+
+        router.refresh();
         reset();
         onClose();
       } else {
@@ -82,14 +86,16 @@ export default function LogInModal({ isOpen, onClose }) {
       });
 
       if (response.data.status) {
-        setUserCookie({
+        signIn("credentials", {
+          redirect: false,
           id: response.data.user.id,
-          name: response.data.user.name,
           email: response.data.user.email,
+          name: response.data.user.name,
           isVerified: response.data.user.email_verified,
           access_token: response.data.access_token,
         });
 
+        router.refresh();
         toast.success("Login successful!");
         reset();
         onClose();

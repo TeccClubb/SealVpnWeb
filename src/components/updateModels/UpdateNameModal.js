@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useUserCookie } from "../use-cookies";
+import { useSession } from "next-auth/react";
 
 export default function UpdateNameModal({ open, onClose }) {
-  const { user, setUserCookie } = useUserCookie();
+  const { data: session, update: sessionUpdate } = useSession()
   const { register, handleSubmit, reset } = useForm({
-    values: { name: user?.name || "" },
+    values: { name: session?.user.name || "" },
   });
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
@@ -22,19 +22,19 @@ export default function UpdateNameModal({ open, onClose }) {
         process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/update",
         {
           name: data.name,
-          email: user.email, // replace with dynamic value if needed
+          email: session?.user.email, // replace with dynamic value if needed
         },
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${session?.user.access_token}`,
           },
         }
       ).then((res) => res.data);
 
 
       if (response.status) {
-        setUserCookie({ ...user, name: response.user.name });
+        sessionUpdate({ user: response.user })
         toast.success("Name update successful");
         reset();
         onClose();

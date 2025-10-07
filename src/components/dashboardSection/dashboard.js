@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { useUserCookie } from "../use-cookies";
+import { useSession } from "next-auth/react";
 
 const DashboardSection = ({ title, heading, children }) => {
-  const { user } = useUserCookie();
+  const { data: session } = useSession()
   const [isLoading, setLoading] = useState(false);
 
   const handleResendEmail = async () => {
@@ -15,11 +15,11 @@ const DashboardSection = ({ title, heading, children }) => {
       const res = await axios
         .post(
           `${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/email/resend-verification`,
-          { email: user.email },
+          { email: session?.user.email },
           {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${session?.user.access_token}`,
             },
           }
         )
@@ -45,7 +45,7 @@ const DashboardSection = ({ title, heading, children }) => {
 
   return (
     <section className="flex flex-col gap-y-6 lg:px-8 px-6 pb-20 lg:pb-14">
-      {user && !user.isVerified && (
+      {session && !session.user.isVerified && (
         <div className="self-center text-lg font-semibold flex items-center gap-2 border border-red-500 text-red-500 bg-red-100 px-5 py-3 rounded-md">
           User not verified
           <button

@@ -1,15 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
-import { useUserCookie } from "../use-cookies";
+import { useSession } from "next-auth/react";
 
 export default function UpdatePasswordModal({ open, onClose }) {
-  const { user } = useUserCookie();
+  const { data: session } = useSession()
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
 
   if (!open) return null;
 
@@ -39,7 +40,7 @@ export default function UpdatePasswordModal({ open, onClose }) {
       {
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${user.access_token}`,
+          Authorization: `Bearer ${session?.user.access_token}`,
         },
       }
     );

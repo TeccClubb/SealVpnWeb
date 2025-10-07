@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useUserCookie } from "../use-cookies";
+import { useSession } from "next-auth/react";
 
 export default function UpdateEmailModal({ open, onClose }) {
-  const { user, setUserCookie } = useUserCookie();
+  const { data: session, update: sessionUpdate } = useSession()
   const { register, handleSubmit, reset } = useForm({
-    values: { email: user?.email || "" },
+    values: { email: session?.user.email || "" },
   });
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
@@ -22,20 +22,20 @@ export default function UpdateEmailModal({ open, onClose }) {
         .post(
           process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/update",
           {
-            name: user.name, // Replace with dynamic value: data.name if needed
+            name: session?.user.name, // Replace with dynamic value: data.name if needed
             email: data.email,
           },
           {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${session?.user.access_token}`,
             },
           }
         )
         .then((res) => res.data);
 
       if (response.status) {
-        setUserCookie({ ...user, email: response.user.email });
+        sessionUpdate({ user: response.user })
         toast.success("Email update successful");
         reset();
         onClose();

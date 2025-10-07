@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardSection from "@/components/dashboardSection/dashboard";
-import { useUserCookie } from "@/components/use-cookies";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { useSession } from "next-auth/react";
 
 const DashboardPage = () => {
-  const { user } = useUserCookie();
+  const { data: session } = useSession();
   const [activePlan, setActivePlan] = useState(null);
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const DashboardPage = () => {
           .get(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/subscription/active`, {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${session?.user.access_token}`,
             },
           }).then((res) => res.data);
 
@@ -35,7 +34,7 @@ const DashboardPage = () => {
 
 
   return (
-    <DashboardSection title="Dashboard" heading={`Welcome back, ${user ? user.name : ""}`}>
+    <DashboardSection title="Dashboard" heading={`Welcome back, ${session ? session.user.name : ""}`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-neutral-500">
         {/* Connect Box */}
         <div className="flex flex-col items-center justify-center gap-4 p-6 border-2 border-gray-100 rounded-xl">

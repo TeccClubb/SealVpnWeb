@@ -135,9 +135,10 @@ const CheckoutPage = () => {
       <div className="grid md:grid-cols-2 gap-12 w-full">
         {/* Left: Plan & Payment */}
         <CheckOutForm
-          isPlansLoading={isPlansLoading}
-          selectedPlan={selectedPlan}
-          setLoginModal={setLoginModal}
+        priceId="price_1SDjesI5ceW3nuKBmgxT8bOI"
+          // isPlansLoading={isPlansLoading}
+          // selectedPlan={selectedPlan}
+          // setLoginModal={setLoginModal}
         />
 
         {/* Right: Plan details */}

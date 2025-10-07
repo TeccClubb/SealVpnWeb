@@ -4,10 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DownloadInvoiceButton from "@/components/downloadInvoiceButton";
 import BillingAddressModal from "@/components/billilingAddressModal";
-import { useUserCookie } from "@/components/use-cookies";
+import { useSession } from "next-auth/react";
 
 const BillingHistory = () => {
-  const { user } = useUserCookie();
+  const { data: session } = useSession();
   const [billingAddress, setBillingAddress] = useState(null);
   const [isBillingAddressLoading, setIsBillingAddressLoading] = useState(true);
   const [billingData, setBillingData] = useState([]);
@@ -23,7 +23,7 @@ const BillingHistory = () => {
           .get(`${Api_Url}/billing-address`, {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${session?.user.access_token}`,
             },
           })
           .then((res) => res.data);
@@ -43,7 +43,7 @@ const BillingHistory = () => {
           .get(`${Api_Url}/subscription/history`, {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${session?.user.access_token}`,
             },
           }).then(res => res.data);
 
@@ -162,8 +162,8 @@ const BillingHistory = () => {
                     <td>
                       <DownloadInvoiceButton
                         purchaseId={item.id}
-                        userId={user.id}
-                        token={user.access_token}
+                        userId={session?.user.id}
+                        token={session?.user.access_token}
                       />
                     </td>
                   </tr>

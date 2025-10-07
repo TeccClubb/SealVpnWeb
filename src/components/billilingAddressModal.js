@@ -3,10 +3,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useUserCookie } from "./use-cookies";
+import { useSession } from "next-auth/react";
 
 export default function BillingAddressModal({ isOpen, onClose, onAddressAdded }) {
-  const { user } = useUserCookie();
+  const { data: session } = useSession()
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -40,7 +40,7 @@ export default function BillingAddressModal({ isOpen, onClose, onAddressAdded })
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${session?.user.access_token}`,
           },
         }
       );

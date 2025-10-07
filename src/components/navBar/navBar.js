@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import LogOutModal from '../logoutModal';
 import { Oleo_Script } from 'next/font/google';
-import { useUserCookie } from '../use-cookies';
+import { signOut, useSession } from 'next-auth/react';
 
 const oleoScript = Oleo_Script({
   subsets: ['latin'],
@@ -15,25 +15,17 @@ const oleoScript = Oleo_Script({
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, removeUserCookie } = useUserCookie();
-  const [isMounted, setIsMounted] = useState(false);
+  const { status: authStatus } = useSession()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogout = () => {
-    removeUserCookie();
+    signOut()
     router.refresh();
     setIsLogoutModalOpen(false);
   };
-
-  useEffect(() => {
-    setIsMounted(true);
-    return () => {
-      setIsMounted(false);
-    };
-  }, []);
 
   useEffect(() => {
     setIsMobileMenuOpen(false); // Close the menu on route change
@@ -53,7 +45,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`relative w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
+    <nav className={`w-full sticky z-50 top-0 shadow-sm ${pathname === '/what-is-vpn' ? 'bg-[#F6F6F6]' : 'bg-white'}`}>
       <div className="w-[90%] md:w-[75%] mx-auto px-4 py-4 flex items-center align-center justify-between cursor-pointer">
         <Link href="/">
           <div className={`w-44 h-9 flex items-center text-4xl leading-[52px] text-neutral-600 font-bold cursor-pointer ${oleoScript.className}`}>
@@ -118,7 +110,7 @@ export default function Navbar() {
 
           {/* Right CTA Button (Desktop) */}
           <div className="hidden lg:flex items-center">
-            {isMounted && user ? (
+            {authStatus === "authenticated" && (
               <>
                 <span
                   onClick={() => setIsLogoutModalOpen(true)}
@@ -133,7 +125,9 @@ export default function Navbar() {
                   Client Area
                 </Link>
               </>
-            ) : (
+            )}
+            
+            {authStatus === "unauthenticated" && (
               <>
                 <Link
                   href="/login"
@@ -200,7 +194,7 @@ export default function Navbar() {
             Help
           </Link>
 
-          {isMounted && user ? (
+          {authStatus === "authenticated" && (
             <>
               <span
                 onClick={() => setIsLogoutModalOpen(true)}
@@ -215,7 +209,8 @@ export default function Navbar() {
                 Client Area
               </Link>
             </>
-          ) : (
+          )}
+          {authStatus === "unauthenticated" && (
             <>
               <Link href="/login" className="block hover:text-teal-700">Log In</Link>
               <Link

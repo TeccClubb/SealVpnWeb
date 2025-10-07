@@ -5,12 +5,13 @@ import UpdateEmailModal from "@/components/updateModels/UpdateEmailModal";
 import UpdateNameModal from "@/components/updateModels/UpdateNameModal";
 import UpdatePasswordModal from "@/components/updateModels/UpdatePasswordModal";
 import { toast } from "react-toastify";
-import { useUserCookie } from "@/components/use-cookies";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+
 
 export default function AccountPage() {
   const router = useRouter();
-  const { user, removeUserCookie } = useUserCookie();
+  const { data: session } = useSession();
   const [showNameModal, setShowNameModal] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -22,12 +23,12 @@ export default function AccountPage() {
         .delete(process.env.NEXT_PUBLIC_REST_API_BASE_URL+"/user/delete", {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${session?.user.access_token}`,
           },
         })
         .then((res) => res.data);
       if (response.status) {
-        removeUserCookie();
+        await signOut();
         toast.success(response.message);
         router.refresh();
       }
@@ -50,8 +51,8 @@ export default function AccountPage() {
 
         <div>
           <p className="text-xl font-bold text-gray-800">Name</p>
-          {user && <p className="text-lg text-gray-600">{user.name}</p>}
-          {!user && (
+          {session?.user && <p className="text-lg text-gray-600">{session?.user.name}</p>}
+          {!session?.user && (
             <div className="h-4 bg-gray-300 rounded w-32 animate-pulse"></div>
           )}
         </div>
@@ -67,8 +68,8 @@ export default function AccountPage() {
       <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
           <p className="text-xl font-bold text-gray-800">Email Address</p>
-          {user ? (
-            <p className="text-lg text-gray-700">{user.email}</p>
+          {session?.user ? (
+            <p className="text-lg text-gray-700">{session?.user.email}</p>
           ) : (
             <div className="h-4 bg-gray-300 rounded w-32 animate-pulse"></div>
           )}
