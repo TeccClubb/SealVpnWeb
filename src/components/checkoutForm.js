@@ -10,16 +10,16 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-export default function Checkout({priceId}) {
+export default function Checkout({priceId, couponId = null}) {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Reset loading state when priceId changes
+  // Reset loading state when priceId or couponId changes
   useEffect(() => {
     setIsLoading(true);
     // Small delay to show loading state
     const timer = setTimeout(() => setIsLoading(false), 500);
     return () => clearTimeout(timer);
-  }, [priceId]);
+  }, [priceId, couponId]);
 
   return (
     <div id="checkout" className="w-full">
@@ -34,9 +34,9 @@ export default function Checkout({priceId}) {
       
       <div className={isLoading ? "hidden" : "block"}>
         <EmbeddedCheckoutProvider
-          key={priceId} // This forces re-initialization when priceId changes
+          key={`${priceId}-${couponId || 'no-coupon'}`} // This forces re-initialization when priceId or couponId changes
           stripe={stripePromise}
-          options={{ fetchClientSecret: () => fetchClientSecret(priceId) }}
+          options={{ fetchClientSecret: () => fetchClientSecret(priceId, couponId) }}
         >
           <EmbeddedCheckout className="w-full" />
         </EmbeddedCheckoutProvider>

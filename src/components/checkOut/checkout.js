@@ -12,7 +12,7 @@ import { calculateDiscountPercentage } from "../pricingSection/pricingPlans";
 import { useSession } from "next-auth/react";
 const CheckoutPage = () => {
   const router = useRouter();
-  const {status: authStatus} = useSession();
+  const {data: session, status: authStatus} = useSession();
   const searchParams = useSearchParams();
   const planId = searchParams.get("planId");
   const [plans, setPlans] = useState([]);
@@ -20,6 +20,12 @@ const CheckoutPage = () => {
   const [isPlansLoading, setIsPlansLoading] = useState(true);
   const [loginModal, setLoginModal] = useState(authStatus === "unauthenticated");
   const [isPlanChanging, setIsPlanChanging] = useState(false);
+  
+  // Promo code state
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState(null);
+  const [promoLoading, setPromoLoading] = useState(false);
+  const [promoError, setPromoError] = useState("");
 
   if (!planId) {
     notFound();
@@ -55,6 +61,87 @@ const CheckoutPage = () => {
       // Reset the changing state after a short delay
       setTimeout(() => setIsPlanChanging(false), 1000);
     }
+  };
+
+  const validatePromoCode = async (code) => {
+    try {
+      if (!session?.user?.access_token) {
+        return { valid: false, message: 'Authentication required' };
+      }
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_REST_API_BASE_URL}/validate-promo-code`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.user.access_token}`,
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      const result = await response.json();
+  
+      if (result.status && result.valid && result.promo_code) {
+        return {
+          valid: true,
+          promoCode: result.promo_code,
+          discountInfo: result.discount_info,
+          stripeCouponId: result.promo_code.stripe_coupon_id,
+          stripePromotionCodeId: result.promo_code.stripe_promotion_code_id,
+          message: result.message,
+        };
+      }
+  
+      return { 
+        valid: false, 
+        message: result.message || 'Invalid promo code' 
+      };
+    } catch (error) {
+      console.error('Error validating promo code:', error);
+      return { 
+        valid: false, 
+        message: 'Error validating promo code. Please try again.' 
+      };
+    }
+  }
+
+  const handleApplyPromo = async () => {
+    if (!promoCode.trim()) return;
+    
+    setPromoLoading(true);
+    setPromoError("");
+    
+    try {
+      const result = await validatePromoCode(promoCode.trim());
+      
+      if (result.valid) {
+        setAppliedPromo(result);
+        setPromoError("");
+      } else {
+        setPromoError(result.message || "Invalid promo code");
+        setAppliedPromo(null);
+      }
+    } catch (error) {
+      setPromoError("Error validating promo code");
+      setAppliedPromo(null);
+    } finally {
+      setPromoLoading(false);
+    }
+  };
+
+  // Handle remove promo code
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoCode("");
+    setPromoError("");
+  };
+
+  // Calculate discounted price
+  const getDiscountedPrice = () => {
+    if (!appliedPromo || !selectedPlan) return selectedPlan?.discount_price;
+    
+    const discountPercent = appliedPromo.promoCode.discount_percent;
+    return (selectedPlan.discount_price * (1 - discountPercent / 100)).toFixed(2);
   };
 
 
@@ -148,7 +235,7 @@ const CheckoutPage = () => {
 
       <div className="grid md:grid-cols-2 gap-12 w-full">
         {/* Left: Plan & Payment */}
-        <div className="relative">
+        <div className="relative space-y-6">
           {isPlanChanging && (
             <div className="absolute inset-0 bg-white/80 z-10 flex items-center justify-center rounded-lg">
               <div className="text-center">
@@ -157,10 +244,80 @@ const CheckoutPage = () => {
               </div>
             </div>
           )}
+
+          {/* Promo Code Section */}
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-3">Have a promo code?</h3>
+            
+            {!appliedPromo ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  placeholder="Enter promo code"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  onKeyPress={(e) => e.key === 'Enter' && handleApplyPromo()}
+                />
+                <button
+                  onClick={handleApplyPromo}
+                  disabled={promoLoading || !promoCode.trim()}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
+                  {promoLoading ? "Applying..." : "Apply"}
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-md p-3">
+                <div className="flex items-center gap-2">
+                  <CheckedIcon />
+                  <span className="text-green-700 font-medium">
+                    Promo code "{appliedPromo.promoCode.code}" applied
+                  </span>
+                  <span className="text-green-600 text-sm">
+                    ({appliedPromo.promoCode.discount_percent}% off)
+                  </span>
+                </div>
+                <button
+                  onClick={handleRemovePromo}
+                  className="text-red-600 hover:text-red-700 text-sm underline"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+            
+            {promoError && (
+              <p className="text-red-600 text-sm mt-2">{promoError}</p>
+            )}
+          </div>
+
+          {/* Price Summary */}
+          {selectedPlan && appliedPromo && (
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="text-lg font-semibold mb-3">Price Summary</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Original Price:</span>
+                  <span>${selectedPlan.discount_price}</span>
+                </div>
+                <div className="flex justify-between text-green-600">
+                  <span>Promo Discount:</span>
+                  <span>-{appliedPromo.promoCode.discount_percent}%</span>
+                </div>
+                <hr className="my-2" />
+                <div className="flex justify-between font-semibold text-lg">
+                  <span>Total:</span>
+                  <span>${getDiscountedPrice()}</span>
+                </div>
+              </div>
+            </div>
+          )}
           
           {selectedPlan && 
           <CheckOutForm 
             priceId={selectedPlan.stripe_price_id}
+            couponId={appliedPromo?.stripeCouponId || null}
           />
           }
         </div>
