@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function LogInModal({ isOpen, onClose }) {
+export default function LogInModal({ isOpen, onClose, onSuccess }) {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
 
@@ -55,7 +55,7 @@ export default function LogInModal({ isOpen, onClose }) {
 
         router.refresh();
         reset();
-        onClose();
+        onSuccess();
       } else {
         toast.error("Sign up failed.");
         setServerMessage("Please try again");
@@ -98,7 +98,7 @@ export default function LogInModal({ isOpen, onClose }) {
         router.refresh();
         toast.success("Login successful!");
         reset();
-        onClose();
+        onSuccess();
       } else {
         setServerMessage("Login failed. Please try again.");
       }

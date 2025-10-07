@@ -12,25 +12,25 @@ export async function fetchClientSecret(priceId) {
 
   const userSession = await auth();
 
-  if(userSession) {
+  // if (userSession) {
+  //   const customer = await stripe.customers.list({
+  //     email: userSession.user.email,
+  //   });
 
-
-//   const customer = await stripe.customers.list({
-//     email: user.email,
-//   });
-
-//   if(customer.data.length < 1){    
-      await stripe.customers.create({
-        name: userSession.user.name,
-        email: userSession.user.email,
-      });
-//   }
-  }
+  //   if (customer.data.length < 1) {
+  //     await stripe.customers.create({
+  //       name: userSession.user.name,
+  //       email: userSession.user.email,
+  //     });
+  //   }
+  // }
 
   // Create Checkout Sessions from body params.
   const session = await stripe.checkout.sessions.create({
     billing_address_collection: "required",
     ui_mode: "embedded",
+    customer_creation:"always",
+    customer_email:userSession.user.email,
     line_items: [
       {
         // Provide the exact Price ID (for example, price_1234) of
@@ -43,8 +43,8 @@ export async function fetchClientSecret(priceId) {
     allow_promotion_codes: true,
     return_url: `${origin}/return?session_id={CHECKOUT_SESSION_ID}`,
     metadata: {
-        price_id: priceId,
-    }
+      price_id: priceId,
+    },
   });
 
   return session.client_secret;

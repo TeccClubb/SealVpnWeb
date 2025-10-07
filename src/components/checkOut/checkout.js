@@ -9,14 +9,16 @@ import CheckOutForm from "../checkoutForm";
 import CheckedIcon from "../CheckedIcon";
 import LogInModal from "../loginModal"
 import { calculateDiscountPercentage } from "../pricingSection/pricingPlans";
+import { useSession } from "next-auth/react";
 const CheckoutPage = () => {
   const router = useRouter();
+  const {status: authStatus} = useSession();
   const searchParams = useSearchParams();
   const planId = searchParams.get("planId");
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState();
   const [isPlansLoading, setIsPlansLoading] = useState(true);
-  const [loginModal, setLoginModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(authStatus === "unauthenticated");
 
   if (!planId) {
     notFound();
@@ -134,12 +136,14 @@ const CheckoutPage = () => {
 
       <div className="grid md:grid-cols-2 gap-12 w-full">
         {/* Left: Plan & Payment */}
-        <CheckOutForm
-        priceId="price_1SDjesI5ceW3nuKBmgxT8bOI"
+        {selectedPlan && 
+        <CheckOutForm 
+        priceId={selectedPlan.stripe_price_id}
           // isPlansLoading={isPlansLoading}
           // selectedPlan={selectedPlan}
           // setLoginModal={setLoginModal}
         />
+        }
 
         {/* Right: Plan details */}
         <div className="flex md:mt-40 flex-col bg-black/5 px-10 rounded-2xl">
@@ -217,7 +221,8 @@ const CheckoutPage = () => {
       </div>
       <LogInModal 
         isOpen={loginModal}
-        onClose={() => setLoginModal(false)}
+        // onClose={() => setLoginModal(false)}
+        onSuccess={() => setLoginModal(false)}
       />
     </section>
   );
